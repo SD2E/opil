@@ -1,0 +1,60 @@
+# baseURI: http://bbn.com/synbio/sd2/timeseries
+# imports: http://bbn.com/synbio/opil
+
+@prefix : <http://bbn.com/synbio/sd2/timeseries#> .
+@prefix abox: <http://bbn.com/synbio/sd2/abox#> .
+@prefix ncit: <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#> .
+@prefix om: <http://www.ontology-of-units-of-measure.org/resource/om-2/> .
+@prefix opil: <http://bbn.com/synbio/opil#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://bbn.com/synbio/sd2/timeseries>
+  a owl:Ontology ;
+  rdfs:comment "This is a representation of the Time Series protocol as described in the 2019 Q4 - 2020 Q1 Strateos Capabilities Overview document using the OPIL ontology. It is currently incomplete." ;
+  owl:imports <http://bbn.com/synbio/opil> ;
+  owl:versionInfo "0.1" ;
+.
+:FlowCytometer
+  a opil:Instrument ;
+  a ncit:C78806 ;
+  rdfs:comment "" ;
+  rdfs:label "Flow Cytometer" ;
+.
+:Hour24
+  a om:Measure ;
+  om:hasNumericalValue "24" ;
+  om:hasUnit om:hour ;
+  rdfs:comment "" ;
+  rdfs:label "24 hours" ;
+.
+:PlateReader
+  a opil:Instrument ;
+  a ncit:C70661 ;
+  rdfs:comment "" ;
+  rdfs:label "Plate Reader" ;
+.
+:TImeSeriesPlateReader
+  a opil:MeasurementType ;
+  opil:instrument :PlateReader ;
+  opil:maxMeasurements 6 ;
+  :maxTime :Hour24 ;
+  rdfs:comment "" ;
+  rdfs:label "PLATE_READER" ;
+.
+:TimeSeriesFlowCytometer
+  a opil:MeasurementType ;
+  opil:maxMeasurements 6 ;
+  :maxTime :Hour24 ;
+  rdfs:comment "" ;
+  rdfs:label "Time Series Flow Cytometer" ;
+.
+:maxTime
+  a owl:ObjectProperty ;
+  rdfs:comment "" ;
+  rdfs:domain opil:MeasurementType ;
+  rdfs:label "max time" ;
+  rdfs:range om:Measure ;
+.

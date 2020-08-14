@@ -1,0 +1,100 @@
+# baseURI: http://bbn.com/synbio/opil
+# imports: http://sbols.org/v3
+# imports: http://www.ontology-of-units-of-measure.org/resource/om-2/
+# prefix: opil
+
+@prefix MathM: <http://www.w3.org/1998/Math/MathML> .
+@prefix om: <http://www.ontology-of-units-of-measure.org/resource/om-2/> .
+@prefix opil: <http://bbn.com/synbio/opil#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sbol: <http://sbols.org/v3#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://bbn.com/synbio/opil>
+  a owl:Ontology ;
+  rdfs:comment "This is the first draft of the Open Protocol Interface Languge (OPIL) ontology." ;
+  owl:imports <http://sbols.org/v3> ;
+  owl:imports om: ;
+  owl:versionInfo "0.1" ;
+.
+opil:ExecutionRequest
+  a owl:Class ;
+  rdfs:comment "" ;
+  rdfs:label "Execution request" ;
+  rdfs:subClassOf owl:Thing ;
+.
+opil:Instrument
+  a owl:Class ;
+  rdfs:comment "" ;
+  rdfs:label "Instrument" ;
+  rdfs:subClassOf owl:Thing ;
+.
+opil:Measurement
+  a owl:Class ;
+  rdfs:comment "" ;
+  rdfs:label "Measurement" ;
+  rdfs:subClassOf owl:Thing ;
+.
+opil:MeasurementType
+  a owl:Class ;
+  rdfs:comment "" ;
+  rdfs:label "Measurement type" ;
+  rdfs:subClassOf owl:Thing ;
+.
+opil:SampleSet
+  a owl:Class ;
+  rdfs:comment "" ;
+  rdfs:label "Sample set" ;
+  rdfs:subClassOf sbol:CombinatorialDerivation ;
+  rdfs:subClassOf owl:Thing ;
+.
+opil:instrument
+  a owl:ObjectProperty ;
+  rdfs:comment "" ;
+  rdfs:domain opil:MeasurementType ;
+  rdfs:label "instrument" ;
+  rdfs:range opil:Instrument ;
+.
+opil:maxMeasurements
+  a owl:DatatypeProperty ;
+  rdfs:comment "" ;
+  rdfs:domain opil:MeasurementType ;
+  rdfs:label "max measurements" ;
+  rdfs:range xsd:integer ;
+.
+opil:measurement
+  a owl:ObjectProperty ;
+  rdfs:comment "" ;
+  rdfs:domain opil:SampleSet ;
+  rdfs:label "measurement" ;
+  rdfs:range opil:Measurement ;
+.
+opil:measurementType
+  a owl:ObjectProperty ;
+  rdfs:comment "" ;
+  rdfs:domain opil:Measurement ;
+  rdfs:label "measurement type" ;
+  rdfs:range opil:MeasurementType ;
+.
+opil:sampleSet
+  a owl:ObjectProperty ;
+  rdfs:comment "" ;
+  rdfs:domain opil:ExecutionRequest ;
+  rdfs:label "sample set" ;
+  rdfs:range opil:SampleSet ;
+.
+opil:time
+  a owl:ObjectProperty ;
+  rdfs:comment "" ;
+  rdfs:domain opil:Measurement ;
+  rdfs:label "time" ;
+  rdfs:range om:Measure ;
+.
+opil:variantValue
+  a owl:DatatypeProperty ;
+  rdfs:comment "" ;
+  rdfs:domain sbol:Component ;
+  rdfs:label "variant value" ;
+.

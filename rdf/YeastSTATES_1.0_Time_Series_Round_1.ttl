@@ -1,0 +1,168 @@
+# baseURI: http://bbn.com/synbio/sd2/abox
+# imports: http://bbn.com/synbio/opil
+# imports: http://bbn.com/synbio/sd2/timeseries
+# imports: http://biomodels.net/SBO/
+# imports: http://www.ontology-of-units-of-measure.org/resource/om-2/
+# prefix: abox
+
+@prefix abox: <http://bbn.com/synbio/sd2/abox#> .
+@prefix ncit: <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#> .
+@prefix om: <http://www.ontology-of-units-of-measure.org/resource/om-2/> .
+@prefix opil: <http://bbn.com/synbio/opil#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sbo: <http://biomodels.net/SBO/> .
+@prefix sbol: <http://sbols.org/v3#> .
+@prefix timeseries: <http://bbn.com/synbio/sd2/timeseries#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://bbn.com/synbio/sd2/abox>
+  a owl:Ontology ;
+  rdfs:comment "This is a representation of the YeastSTATES 1.0 Time Series Round 1 experimental request using the OPIL ontology. It is currently incomplete." ;
+  owl:imports <http://bbn.com/synbio/opil> ;
+  owl:imports <http://bbn.com/synbio/sd2/timeseries> ;
+  owl:imports sbo: ;
+  owl:imports om: ;
+  owl:versionInfo "0.1" ;
+.
+abox:Hour0
+  a om:Measure ;
+  om:hasNumericalValue "0" ;
+  om:hasUnit om:hour ;
+  rdfs:comment "" ;
+  rdfs:label "Hour 0" ;
+.
+abox:Hour12
+  a om:Measure ;
+  om:hasNumericalValue "12" ;
+  om:hasUnit om:hour ;
+  rdfs:comment "" ;
+  rdfs:label "Hour 12" ;
+.
+abox:Hour16
+  a om:Measure ;
+  om:hasNumericalValue "16" ;
+  om:hasUnit om:hour ;
+  rdfs:comment "" ;
+  rdfs:label "Hour 16" ;
+.
+abox:Hour4
+  a om:Measure ;
+  om:hasNumericalValue "4" ;
+  om:hasUnit om:hour ;
+  rdfs:comment "" ;
+  rdfs:label "Hour 4" ;
+.
+abox:Hour8
+  a om:Measure ;
+  om:hasNumericalValue "8" ;
+  om:hasUnit om:hour ;
+  rdfs:comment "" ;
+  rdfs:label "Hour 8" ;
+.
+abox:MediaSubComponent
+  a sbol:SubComponent ;
+  rdfs:comment "" ;
+  rdfs:label "Media SubComponent" ;
+.
+abox:Replicate6
+  a sbol:Component ;
+  opil:variantValue 6 ;
+  rdfs:comment "" ;
+  rdfs:label "Replicate 6" ;
+.
+abox:ReplicateSubComponent
+  a sbol:SubComponent ;
+  rdfs:comment "" ;
+  rdfs:label "Replicate SubComponent" ;
+.
+abox:Row1PlateReader
+  a opil:Measurement ;
+  opil:measurementType timeseries:TImeSeriesPlateReader ;
+  opil:time abox:Hour0 ;
+  opil:time abox:Hour12 ;
+  opil:time abox:Hour16 ;
+  opil:time abox:Hour4 ;
+  opil:time abox:Hour8 ;
+  rdfs:comment "" ;
+  rdfs:label "Row1 plate reader" ;
+.
+abox:Row1Replicate
+  a ncit:C47886 ;
+  a sbol:VariableComponent ;
+  sbol:variable abox:ReplicateSubComponent ;
+  sbol:variant abox:Replicate6 ;
+  rdfs:comment "" ;
+  rdfs:label "replicates" ;
+.
+abox:Row1Strains
+  a sbo:SBO_0000241 ;
+  a sbol:VariableComponent ;
+  sbol:variable abox:StrainsSubComponent ;
+  sbol:variant <https://hub.sd2e.org/user/sd2e/design/UWBF_6390/1> ;
+  sbol:variant <https://hub.sd2e.org/user/sd2e/design/W303/1> ;
+  rdfs:comment "" ;
+  rdfs:label "strains" ;
+.
+abox:Row1Temp
+  a sbo:SBO_0000147 ;
+  a sbol:VariableComponent ;
+  sbol:variable abox:TempSubComponent ;
+  sbol:variant abox:Temp30C ;
+  rdfs:comment "" ;
+  rdfs:label "temperatures" ;
+.
+abox:StrainsSubComponent
+  a sbol:SubComponent ;
+  rdfs:comment "" ;
+  rdfs:label "Strains SubComponent" ;
+.
+abox:TableRow1
+  a opil:SampleSet ;
+  opil:measurement abox:Row1PlateReader ;
+  sbol:template abox:TableTemplate ;
+  sbol:variableComponent abox:Row1Replicate ;
+  sbol:variableComponent abox:Row1Strains ;
+  sbol:variableComponent abox:Row1Temp ;
+  rdfs:comment "" ;
+  rdfs:label "Table row1" ;
+.
+abox:TableTemplate
+  a sbol:Component ;
+  sbol:hasFeature abox:MediaSubComponent ;
+  sbol:hasFeature abox:ReplicateSubComponent ;
+  sbol:hasFeature abox:StrainsSubComponent ;
+  sbol:hasFeature abox:TempSubComponent ;
+  rdfs:comment "" ;
+  rdfs:label "Table template" ;
+.
+abox:Temp30C
+  a sbol:Component ;
+  a om:Measure ;
+  om:hasNumericalValue "30"^^xsd:decimal ;
+  om:hasUnit om:degreeCelsius ;
+  rdfs:comment "" ;
+  rdfs:label "Temp 30 deg C" ;
+.
+abox:TempSubComponent
+  a sbol:SubComponent ;
+  rdfs:comment "" ;
+  rdfs:label "Temp SubComponent" ;
+.
+abox:Time_Series_Round_1
+  a opil:ExecutionRequest ;
+  opil:sampleSet abox:TableRow1 ;
+  rdfs:comment "" ;
+  rdfs:label "Time Series Round 1" ;
+.
+<https://hub.sd2e.org/user/sd2e/design/UWBF_6390/1>
+  a sbol:Component ;
+  rdfs:comment "" ;
+  rdfs:label "Row1 Strain 1" ;
+.
+<https://hub.sd2e.org/user/sd2e/design/W303/1>
+  a sbol:Component ;
+  rdfs:comment "" ;
+  rdfs:label "Row1 Strain 2" ;
+.
