@@ -4,7 +4,7 @@ from decimal import Decimal
 from rdflib import Graph
 
 class OpilJsonGenerator:
-        '''This class shows how the expect JSON can be generated from an RDF
+        '''This class shows how the expected JSON can be generated from an RDF
         representation of an experimental request using the OPIL ontology. 
         The current example is the YeastSTATES 1.0 Time Series Round 1 request.  
         Only part of the first row of the structured request table from this
