@@ -17,12 +17,6 @@
   owl:imports <http://bbn.com/synbio/opil> ;
   owl:versionInfo "0.1" ;
 .
-:FlowCytometer
-  a opil:Instrument ;
-  a ncit:C78806 ;
-  rdfs:comment "" ;
-  rdfs:label "Flow Cytometer" ;
-.
 :Hour24
   a om:Measure ;
   om:hasNumericalValue "24" ;
@@ -30,15 +24,9 @@
   rdfs:comment "" ;
   rdfs:label "24 hours" ;
 .
-:PlateReader
-  a opil:Instrument ;
-  a ncit:C70661 ;
-  rdfs:comment "" ;
-  rdfs:label "Plate Reader" ;
-.
 :TImeSeriesPlateReader
   a opil:MeasurementType ;
-  opil:instrument :PlateReader ;
+  a ncit:C70661 ;
   opil:maxMeasurements 6 ;
   :maxTime :Hour24 ;
   rdfs:comment "" ;
@@ -46,10 +34,11 @@
 .
 :TimeSeriesFlowCytometer
   a opil:MeasurementType ;
+  a ncit:C78806 ;
   opil:maxMeasurements 6 ;
   :maxTime :Hour24 ;
   rdfs:comment "" ;
-  rdfs:label "Time Series Flow Cytometer" ;
+  rdfs:label "FLOW" ;
 .
 :maxTime
   a owl:ObjectProperty ;

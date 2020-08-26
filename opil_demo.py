@@ -4,7 +4,7 @@ from decimal import Decimal
 from rdflib import Graph
 
 class OpilJsonGenerator:
-        '''This class shows how the expected JSON can be generated from an RDF
+        '''This class shows how JSON can be generated from an RDF
         representation of an experimental request using the OPIL ontology. 
         The current example is the YeastSTATES 1.0 Time Series Round 1 request.  
         Only part of the first row of the structured request table from this
@@ -25,6 +25,7 @@ class OpilJsonGenerator:
             # Load the various SPARQL queries
             ss_query = self.load_sparql('sparql/sampleSet.sparql')
             m_t_query = self.load_sparql('sparql/measurementType.sparql')
+            rep_query = self.load_sparql('sparql/replicates.sparql')
             var_comp_query = self.load_sparql('sparql/variableComponents.sparql')
             variants_query = self.load_sparql('sparql/variants.sparql')
             timepoints_query = self.load_sparql('sparql/timepoints.sparql')
@@ -47,6 +48,11 @@ class OpilJsonGenerator:
                 query = m_t_query.format(iri=ss_iri)
                 for row in g.query(query):
                     sample_set_dict.update({'measurement_type': row.type.value})
+
+                # Get number of replicates for this sample set
+                query = rep_query.format(iri=ss_iri)
+                for row in g.query(query):
+                    sample_set_dict.update({'replicates': row.rep.value})
 
                 # Get all VariableComponents for this SampleSet
                 var_comp_iris = []

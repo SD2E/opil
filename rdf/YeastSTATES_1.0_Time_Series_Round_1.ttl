@@ -121,8 +121,8 @@ abox:StrainsSubComponent
 abox:TableRow1
   a opil:SampleSet ;
   opil:measurement abox:Row1PlateReader ;
+  opil:replicates 6 ;
   sbol:template abox:TableTemplate ;
-  sbol:variableComponent abox:Row1Replicate ;
   sbol:variableComponent abox:Row1Strains ;
   sbol:variableComponent abox:Row1Temp ;
   rdfs:comment "" ;

@@ -25,12 +25,6 @@ opil:ExecutionRequest
   rdfs:label "Execution request" ;
   rdfs:subClassOf owl:Thing ;
 .
-opil:Instrument
-  a owl:Class ;
-  rdfs:comment "" ;
-  rdfs:label "Instrument" ;
-  rdfs:subClassOf owl:Thing ;
-.
 opil:Measurement
   a owl:Class ;
   rdfs:comment "" ;
@@ -49,13 +43,6 @@ opil:SampleSet
   rdfs:label "Sample set" ;
   rdfs:subClassOf sbol:CombinatorialDerivation ;
   rdfs:subClassOf owl:Thing ;
-.
-opil:instrument
-  a owl:ObjectProperty ;
-  rdfs:comment "" ;
-  rdfs:domain opil:MeasurementType ;
-  rdfs:label "instrument" ;
-  rdfs:range opil:Instrument ;
 .
 opil:maxMeasurements
   a owl:DatatypeProperty ;
@@ -77,6 +64,13 @@ opil:measurementType
   rdfs:domain opil:Measurement ;
   rdfs:label "measurement type" ;
   rdfs:range opil:MeasurementType ;
+.
+opil:replicates
+  a owl:DatatypeProperty ;
+  rdfs:comment "" ;
+  rdfs:domain opil:SampleSet ;
+  rdfs:label "replicates" ;
+  rdfs:range xsd:integer ;
 .
 opil:sampleSet
   a owl:ObjectProperty ;
