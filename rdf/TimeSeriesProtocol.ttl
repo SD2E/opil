@@ -24,14 +24,6 @@
   rdfs:comment "" ;
   rdfs:label "24 hours" ;
 .
-:TImeSeriesPlateReader
-  a opil:MeasurementType ;
-  a ncit:C70661 ;
-  opil:maxMeasurements 6 ;
-  :maxTime :Hour24 ;
-  rdfs:comment "" ;
-  rdfs:label "PLATE_READER" ;
-.
 :TimeSeriesFlowCytometer
   a opil:MeasurementType ;
   a ncit:C78806 ;
@@ -39,6 +31,14 @@
   :maxTime :Hour24 ;
   rdfs:comment "" ;
   rdfs:label "FLOW" ;
+.
+:TimeSeriesPlateReader
+  a opil:MeasurementType ;
+  a ncit:C70661 ;
+  opil:maxMeasurements 6 ;
+  :maxTime :Hour24 ;
+  rdfs:comment "" ;
+  rdfs:label "PLATE_READER" ;
 .
 :maxTime
   a owl:ObjectProperty ;
