@@ -73,6 +73,55 @@ abox:Parameter_1
   rdfs:comment "" ;
   rdfs:label "Parameter 1" ;
 .
+abox:Parameter_10
+  a opil:Parameter ;
+  opil:key "induction_info.dil_volume" ;
+  opil:value "1700:microliter" ;
+  rdfs:comment "" ;
+  rdfs:label "Parameter 10" ;
+.
+abox:Parameter_11
+  a opil:Parameter ;
+  opil:key "induction_info.induction_reagents.media_vol" ;
+  opil:value "300:microliter" ;
+  rdfs:comment "" ;
+  rdfs:label "Parameter 11" ;
+.
+abox:Parameter_12
+  a opil:Parameter ;
+  opil:key "induction_info.induction_time.induction_plate_info" ;
+  opil:value "new-induction-plate" ;
+  rdfs:comment "" ;
+  rdfs:label "Parameter 12" ;
+.
+abox:Parameter_13
+  a opil:Parameter ;
+  opil:key "read_info.sampling_info.read_cult_vol" ;
+  opil:value "300:microliter" ;
+  rdfs:comment "" ;
+  rdfs:label "Parameter 13" ;
+.
+abox:Parameter_14
+  a opil:Parameter ;
+  opil:key "plate_reader_info.fluor_ex" ;
+  opil:value "488:nanometer" ;
+  rdfs:comment "" ;
+  rdfs:label "Parameter 14" ;
+.
+abox:Parameter_15
+  a opil:Parameter ;
+  opil:key "plate_reader_info.fluor_em" ;
+  opil:value "530:nanometer" ;
+  rdfs:comment "" ;
+  rdfs:label "Parameter 15" ;
+.
+abox:Parameter_16
+  a opil:Parameter ;
+  opil:key "plate_reader_info.gain" ;
+  opil:value "0.16" ;
+  rdfs:comment "" ;
+  rdfs:label "Parameter 16" ;
+.
 abox:Parameter_2
   a opil:Parameter ;
   opil:key "inoc_info.inoc_media_vol" ;
@@ -129,55 +178,6 @@ abox:Parameter_9
   rdfs:comment "" ;
   rdfs:label "Parameter 9" ;
 .
-abox:Parameter_10
-  a opil:Parameter ;
-  opil:key "induction_info.dil_volume" ;
-  opil:value "1700:microliter" ;
-  rdfs:comment "" ;
-  rdfs:label "Parameter 10" ;
-.
-abox:Parameter_11
-  a opil:Parameter ;
-  opil:key "induction_info.induction_reagents.media_vol" ;
-  opil:value "300:microliter" ;
-  rdfs:comment "" ;
-  rdfs:label "Parameter 11" ;
-.
-abox:Parameter_12
-  a opil:Parameter ;
-  opil:key "induction_info.induction_time.induction_plate_info" ;
-  opil:value "new-induction-plate" ;
-  rdfs:comment "" ;
-  rdfs:label "Parameter 12" ;
-.
-abox:Parameter_13
-  a opil:Parameter ;
-  opil:key "read_info.sampling_info.read_cult_vol" ;
-  opil:value "300:microliter" ;
-  rdfs:comment "" ;
-  rdfs:label "Parameter 13" ;
-.
-abox:Parameter_14
-  a opil:Parameter ;
-  opil:key "plate_reader_info.fluor_ex" ;
-  opil:value "488:nanometer" ;
-  rdfs:comment "" ;
-  rdfs:label "Parameter 14" ;
-.
-abox:Parameter_15
-  a opil:Parameter ;
-  opil:key "plate_reader_info.fluor_em" ;
-  opil:value "530:nanometer" ;
-  rdfs:comment "" ;
-  rdfs:label "Parameter 15" ;
-.
-abox:Parameter_16
-  a opil:Parameter ;
-  opil:key "plate_reader_info.gain" ;
-  opil:value "0.16" ;
-  rdfs:comment "" ;
-  rdfs:label "Parameter 16" ;
-.
 abox:Replicate6
   a sbol:Component ;
   opil:variantValue 6 ;
@@ -217,6 +217,33 @@ abox:Row1Temp
   rdfs:comment "" ;
   rdfs:label "temperatures" ;
 .
+abox:Row2Strains
+  a sbo:SBO_0000241 ;
+  a sbol:VariableComponent ;
+  sbol:variable abox:StrainsSubComponent ;
+  sbol:variant abox:UWBF_6390 ;
+  sbol:variant abox:W303 ;
+  rdfs:comment "" ;
+  rdfs:label "strains" ;
+.
+abox:Row2Temp
+  a sbo:SBO_0000147 ;
+  a sbol:VariableComponent ;
+  sbol:variable abox:TempSubComponent ;
+  sbol:variant abox:Temp30C ;
+  rdfs:comment "" ;
+  rdfs:label "temperatures" ;
+.
+abox:Row2Flow
+  a opil:Measurement ;
+  opil:measurementType timeseries:TimeSeriesFlowCytometer ;
+  opil:time abox:Hour12 ;
+  opil:time abox:Hour16 ;
+  opil:time abox:Hour4 ;
+  opil:time abox:Hour8 ;
+  rdfs:comment "" ;
+  rdfs:label "Row2Flow" ;
+.
 abox:StrainsSubComponent
   a sbol:SubComponent ;
   rdfs:comment "" ;
@@ -231,6 +258,14 @@ abox:TableRow1
   sbol:variableComponent abox:Row1Temp ;
   rdfs:comment "" ;
   rdfs:label "Table row1" ;
+.
+abox:TableRow2
+  a opil:SampleSet ;
+  opil:measurement abox:Row2Flow ;
+  opil:replicates 6 ;
+  sbol:template abox:TableTemplate ;
+  rdfs:comment "" ;
+  rdfs:label "Table row2" ;
 .
 abox:TableTemplate
   a sbol:Component ;
@@ -257,6 +292,7 @@ abox:TempSubComponent
 abox:Time_Series_Round_1
   a opil:ExecutionRequest ;
   opil:sampleSet abox:TableRow1 ;
+  opil:sampleSet abox:TableRow2 ;
   rdfs:comment "" ;
   rdfs:label "Time Series Round 1" ;
 .
@@ -274,13 +310,164 @@ abox:W303
   rdfs:comment "" ;
   rdfs:label "W303" ;
 .
-<https://hub.sd2e.org/user/sd2e/design/UWBF_6390/1>
-  a sbol:Component ;
+abox:UWBF_NOR_01
+  a opil:Strain ;
+  opil:labID "name.transcriptic.UWBF_6389" ;
+  opil:uri "https://hub.sd2e.org/user/sd2e/design/UWBF_6389/1" ;
   rdfs:comment "" ;
-  rdfs:label "Row1 Strain 1" ;
+  rdfs:label "UWBF_NOR_01" ;
 .
-<https://hub.sd2e.org/user/sd2e/design/W303/1>
-  a sbol:Component ;
+abox:UWBF_AND_01
+  a opil:Strain ;
+  opil:labID "name.transcriptic.UWBF_7375" ;
+  opil:uri "https://hub.sd2e.org/user/sd2e/design/UWBF_7375/1" ;
   rdfs:comment "" ;
-  rdfs:label "Row1 Strain 2" ;
+  rdfs:label "UWBF_AND_01" ;
+.
+abox:UWBF_OR_00
+  a opil:Strain ;
+  opil:labID "name.transcriptic.UWBF_8225" ;
+  opil:uri "https://hub.sd2e.org/user/sd2e/design/UWBF_8225/1" ;
+  rdfs:comment "" ;
+  rdfs:label "UWBF_OR_00" ;
+.
+abox:UWBF_OR_01
+  a opil:Strain ;
+  opil:labID "name.transcriptic.UWBF_5783" ;
+  opil:uri "https://hub.sd2e.org/user/sd2e/design/UWBF_5783/1" ;
+  rdfs:comment "" ;
+  rdfs:label "UWBF_OR_01" ;
+.
+abox:UWBF_NAND_01
+  a opil:Strain ;
+  opil:labID "name.transcriptic.UWBF_8545" ;
+  opil:uri "https://hub.sd2e.org/user/sd2e/design/UWBF_8545/1" ;
+  rdfs:comment "" ;
+  rdfs:label "UWBF_NAND_01" ;
+.
+abox:UWBF_XOR_00
+  a opil:Strain ;
+  opil:labID "name.transcriptic.UWBF_16970" ;
+  opil:uri "https://hub.sd2e.org/user/sd2e/design/UWBF_16970/1" ;
+  rdfs:comment "" ;
+  rdfs:label "UWBF_XOR_00" ;
+.
+abox:UWBF_XOR_10
+  a opil:Strain ;
+  opil:labID "name.transcriptic.UWBF_16968" ;
+  opil:uri "https://hub.sd2e.org/user/sd2e/design/UWBF_16968/1" ;
+  rdfs:comment "" ;
+  rdfs:label "UWBF_XOR_10" ;
+.
+abox:UWBF_XNOR_01
+  a opil:Strain ;
+  opil:labID "name.transcriptic.UWBF_8231" ;
+  opil:uri "https://hub.sd2e.org/user/sd2e/design/UWBF_8231/1" ;
+  rdfs:comment "" ;
+  rdfs:label "UWBF_XNOR_01" ;
+.
+abox:UWBF_NOR_11
+  a opil:Strain ;
+  opil:labID "name.transcriptic.UWBF_6391" ;
+  opil:uri "https://hub.sd2e.org/user/sd2e/design/UWBF_6391/1" ;
+  rdfs:comment "" ;
+  rdfs:label "UWBF_NOR_11" ;
+.
+abox:UWBF_OR_11
+  a opil:Strain ;
+  opil:labID "name.transcriptic.UWBF_5992" ;
+  opil:uri "https://hub.sd2e.org/user/sd2e/design/UWBF_5992/1" ;
+  rdfs:comment "" ;
+  rdfs:label "UWBF_OR_11" ;
+.
+abox:UWBF_XOR_11
+  a opil:Strain ;
+  opil:labID "name.transcriptic.UWBF_16967" ;
+  opil:uri "https://hub.sd2e.org/user/sd2e/design/UWBF_16967/1" ;
+  rdfs:comment "" ;
+  rdfs:label "UWBF_XOR_11" ;
+.
+abox:UWBF_AND_10
+  a opil:Strain ;
+  opil:labID "name.transcriptic.UWBF_7373" ;
+  opil:uri "https://hub.sd2e.org/user/sd2e/design/UWBF_7373/1" ;
+  rdfs:comment "" ;
+  rdfs:label "UWBF_AND_10" ;
+.
+abox:UWBF_NAND_10
+  a opil:Strain ;
+  opil:labID "name.transcriptic.UWBF_8543" ;
+  opil:uri "https://hub.sd2e.org/user/sd2e/design/UWBF_8543/1" ;
+  rdfs:comment "" ;
+  rdfs:label "UWBF_NAND_10" ;
+.
+abox:UWBF_XNOR_10
+  a opil:Strain ;
+  opil:labID "name.transcriptic.UWBF_7377" ;
+  opil:uri "https://hub.sd2e.org/user/sd2e/design/UWBF_7377/1" ;
+  rdfs:comment "" ;
+  rdfs:label "UWBF_XNOR_10" ;
+.
+abox:UWBF_NOR_10
+  a opil:Strain ;
+  opil:labID "name.transcriptic.UWBF_6388" ;
+  opil:uri "https://hub.sd2e.org/user/sd2e/design/UWBF_6388/1" ;
+  rdfs:comment "" ;
+  rdfs:label "UWBF_NOR_10" ;
+.
+abox:UWBF_OR_10
+  a opil:Strain ;
+  opil:labID "name.transcriptic.UWBF_5993" ;
+  opil:uri "https://hub.sd2e.org/user/sd2e/design/UWBF_5993/1" ;
+  rdfs:comment "" ;
+  rdfs:label "UWBF_OR_10" ;
+.
+abox:UWBF_XOR_01
+  a opil:Strain ;
+  opil:labID "name.transcriptic.UWBF_16969" ;
+  opil:uri "https://hub.sd2e.org/user/sd2e/design/UWBF_16969/1" ;
+  rdfs:comment "" ;
+  rdfs:label "UWBF_XOR_01" ;
+.
+abox:UWBF_AND_00
+  a opil:Strain ;
+  opil:labID "name.transcriptic.UWBF_7376" ;
+  opil:uri "https://hub.sd2e.org/user/sd2e/design/UWBF_7376/1" ;
+  rdfs:comment "" ;
+  rdfs:label "UWBF_AND_00" ;
+.
+abox:UWBF_NAND_00
+  a opil:Strain ;
+  opil:labID "name.transcriptic.UWBF_8544" ;
+  opil:uri "https://hub.sd2e.org/user/sd2e/design/UWBF_8544/1" ;
+  rdfs:comment "" ;
+  rdfs:label "UWBF_NAND_00" ;
+.
+abox:UWBF_XNOR_00
+  a opil:Strain ;
+  opil:labID "name.transcriptic.UWBF_7300" ;
+  opil:uri "https://hub.sd2e.org/user/sd2e/design/UWBF_7300/1" ;
+  rdfs:comment "" ;
+  rdfs:label "UWBF_XNOR_00" ;
+.
+abox:UWBF_AND_11
+  a opil:Strain ;
+  opil:labID "name.transcriptic.UWBF_7374" ;
+  opil:uri "https://hub.sd2e.org/user/sd2e/design/UWBF_7374/1" ;
+  rdfs:comment "" ;
+  rdfs:label "UWBF_AND_11" ;
+.
+abox:UWBF_NAND_11
+  a opil:Strain ;
+  opil:labID "name.transcriptic.UWBF_8542" ;
+  opil:uri "https://hub.sd2e.org/user/sd2e/design/UWBF_8542/1" ;
+  rdfs:comment "" ;
+  rdfs:label "UWBF_NAND_11" ;
+.
+abox:UWBF_XNOR_11
+  a opil:Strain ;
+  opil:labID "name.transcriptic.UWBF_7299" ;
+  opil:uri "https://hub.sd2e.org/user/sd2e/design/UWBF_7299/1" ;
+  rdfs:comment "" ;
+  rdfs:label "UWBF_XNOR_11" ;
 .
