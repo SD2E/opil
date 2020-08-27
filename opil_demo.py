@@ -73,9 +73,12 @@ class OpilJsonGenerator:
 
                     # Get variants that are om:Measures with units and values
                     query = om_measure_query.format(iri=vc_iri)
-                    numerical_values_and_units = []
                     for row in g.query(query):
                         variantName = row.label.value
+                        if variantName in sample_set_dict:
+                            numerical_values_and_units = sample_set_dict[variantName]
+                        else:
+                            numerical_values_and_units = []
                         measures = {}
                         if type(row.numericalValue.value) == Decimal:
                             numerical_value = float(row.numericalValue.value)
