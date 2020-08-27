@@ -25,7 +25,8 @@ class OpilJsonGenerator:
             m_t_query = self.load_sparql('sparql/measurementType.sparql')
             rep_query = self.load_sparql('sparql/replicates.sparql')
             var_comp_query = self.load_sparql('sparql/variableComponents.sparql')
-            variants_query = self.load_sparql('sparql/variants.sparql')
+            om_measure_query = self.load_sparql('sparql/omMeasures.sparql')
+            strains_query = self.load_sparql('sparql/strains.sparql')
             timepoints_query = self.load_sparql('sparql/timepoints.sparql')
             
             # Execute SPARQL query to find all sample sets
@@ -44,6 +45,8 @@ class OpilJsonGenerator:
             print('Generating JSON...')
             experimental_request = {'runs' : []}
             measurements = []
+
+            # Iterate over sample sets
             for ss_iri in sample_set_iris:
                 sample_set_dict = {}
 
@@ -65,34 +68,35 @@ class OpilJsonGenerator:
                 for row in g.query(query):
                     var_comp_iris.append(row.varComp)
 
-                # Get all variants for each VariableComponent
+               # Iterate over VariableComponents
                 for vc_iri in var_comp_iris:
-                    query = variants_query.format(iri=vc_iri)
-                    numerical_values_and_units = {}
+
+                    # Get variants that are om:Measures with units and values
+                    query = om_measure_query.format(iri=vc_iri)
+                    numerical_values_and_units = []
+                    for row in g.query(query):
+                        variantName = row.label.value
+                        measures = {}
+                        if type(row.numericalValue.value) == Decimal:
+                            numerical_value = float(row.numericalValue.value)
+                        else:
+                            numerical_value = row.numericalValue.value
+                        measures.update({'value': numerical_value,
+                                        'unit': row.unitName.value})
+                        numerical_values_and_units.append(measures)
+                        sample_set_dict.update({variantName: numerical_values_and_units})
+
+                    # Get variants that are strains
+                    query = strains_query.format(iri=vc_iri)
                     strains = []
                     for row in g.query(query):
-                        strain = {}
                         variantName = row.label.value
-                        if not row.numericalValue is None:
-                            if type(row.numericalValue.value) == Decimal:
-                                numerical_value = float(row.numericalValue.value)
-                            else:
-                                numerical_value = row.numericalValue.value
-                            numerical_values_and_units.update({'value': numerical_value,
-                                                               'unit': row.unitName.value})
-
-                        else:
-                            strain.update({'sbh_uri': row.uri.value,
-                                            'label': row.strain_label.value,
-                                            'lab_id': row.lab_id.value})
-                            strains.append(strain)
-					# Variants can have measures with values and units (e.g. temperatures) or
-					# they are strains
-
-                    if strains:
+                        strain = {}
+                        strain.update({'sbh_uri': row.uri.value,
+                                        'label': row.strain_label.value,
+                                        'lab_id': row.lab_id.value})
+                        strains.append(strain)
                         sample_set_dict.update({variantName: strains})
-                    elif numerical_values_and_units:
-                        sample_set_dict.update({variantName: numerical_values_and_units})
 
                 # Get the timepoints for this SampleSet's Measurement
                 query = timepoints_query.format(iri=ss_iri)
