@@ -64,30 +64,30 @@ class OpilJsonGenerator:
                 for vc_iri in var_comp_iris:
                     query = variants_query.format(iri=vc_iri)
                     numerical_values_and_units = {}
-                    value = None
                     strains = []
                     for row in g.query(query):
+                        strain = {}
                         variantName = row.label.value
                         if not row.numericalValue is None:
                             if type(row.numericalValue.value) == Decimal:
                                 numerical_value = float(row.numericalValue.value)
                             else:
                                 numerical_value = row.numericalValue.value
-                            numerical_values_and_units.update({'value': numerical_value, 'unit': row.unitName.value})
-                        elif not row.varValue is None:
-                            value = row.varValue.value
-                            sample_set_dict.update({variantName: value})
-                        else:
-                            strains.append(str(row.var))
+                            numerical_values_and_units.update({'value': numerical_value,
+                                                               'unit': row.unitName.value})
 
-					# Variants can have values (e.g. replicates have numbers) or
-					# they can have measures with values and units (e.g. temperatures) or
-					# they are stand alone individuals (e.g. strains)
-                    if value is None:
-                        if not numerical_values_and_units:
-                            sample_set_dict.update({variantName: strains})
                         else:
-                            sample_set_dict.update({variantName: numerical_values_and_units})
+                            strain.update({'sbh_uri': row.uri.value,
+                                            'label': row.strain_label.value,
+                                            'lab_id': row.lab_id.value})
+                            strains.append(strain)
+					# Variants can have measures with values and units (e.g. temperatures) or
+					# they are strains
+
+                    if strains:
+                        sample_set_dict.update({variantName: strains})
+                    elif numerical_values_and_units:
+                        sample_set_dict.update({variantName: numerical_values_and_units})
 
                 # Get the timepoints for this SampleSet's Measurement
                 query = timepoints_query.format(iri=ss_iri)

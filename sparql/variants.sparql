@@ -9,10 +9,13 @@ PREFIX sbo: <http://biomodels.net/SBO/>
 PREFIX sbol: <http://sbols.org/v3#>
 PREFIX timeseries: <http://bbn.com/synbio/sd2/timeseries#>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
-select ?label ?var ?varValue ?numericalValue ?unitName where {{
+select ?label ?uri ?lab_id ?strain_label ?numericalValue ?unitName where {{
     <{iri}> rdfs:label ?label ;
              sbol:variant ?var .
-    OPTIONAL {{ ?var opil:variantValue ?varValue . }}
+    OPTIONAL {{ ?var opil:uri ?uri ;
+                     opil:labID ?lab_id ;
+                     rdfs:label ?strain_label .
+              }}
     OPTIONAL {{ ?var om:hasNumericalValue ?numericalValue ;
                     om:hasUnit ?unit .
                ?unit rdfs:label ?unitName . 

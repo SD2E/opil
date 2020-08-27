@@ -88,20 +88,12 @@ abox:Row1PlateReader
   rdfs:comment "" ;
   rdfs:label "Row1 plate reader" ;
 .
-abox:Row1Replicate
-  a ncit:C47886 ;
-  a sbol:VariableComponent ;
-  sbol:variable abox:ReplicateSubComponent ;
-  sbol:variant abox:Replicate6 ;
-  rdfs:comment "" ;
-  rdfs:label "replicates" ;
-.
 abox:Row1Strains
   a sbo:SBO_0000241 ;
   a sbol:VariableComponent ;
   sbol:variable abox:StrainsSubComponent ;
-  sbol:variant <https://hub.sd2e.org/user/sd2e/design/UWBF_6390/1> ;
-  sbol:variant <https://hub.sd2e.org/user/sd2e/design/W303/1> ;
+  sbol:variant abox:UWBF_6390 ;
+  sbol:variant abox:W303 ;
   rdfs:comment "" ;
   rdfs:label "strains" ;
 .
@@ -155,6 +147,20 @@ abox:Time_Series_Round_1
   opil:sampleSet abox:TableRow1 ;
   rdfs:comment "" ;
   rdfs:label "Time Series Round 1" ;
+.
+abox:UWBF_6390
+  a opil:Strain ;
+  opil:labID "name.transcriptic.UWBF_6390" ;
+  opil:uri "https://hub.sd2e.org/user/sd2e/design/UWBF_6390/1" ;
+  rdfs:comment "" ;
+  rdfs:label "UWBF_6390" ;
+.
+abox:W303
+  a opil:Strain ;
+  opil:labID "name.transcriptic.W303" ;
+  opil:uri "https://hub.sd2e.org/user/sd2e/design/W303/1" ;
+  rdfs:comment "" ;
+  rdfs:label "W303" ;
 .
 <https://hub.sd2e.org/user/sd2e/design/UWBF_6390/1>
   a sbol:Component ;

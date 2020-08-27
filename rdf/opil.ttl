@@ -44,6 +44,20 @@ opil:SampleSet
   rdfs:subClassOf sbol:CombinatorialDerivation ;
   rdfs:subClassOf owl:Thing ;
 .
+opil:Strain
+  a owl:Class ;
+  rdfs:comment "" ;
+  rdfs:label "Strain" ;
+  rdfs:subClassOf sbol:Component ;
+  rdfs:subClassOf owl:Thing ;
+.
+opil:labID
+  a owl:DatatypeProperty ;
+  rdfs:comment "" ;
+  rdfs:domain opil:Strain ;
+  rdfs:label "lab_id" ;
+  rdfs:range xsd:string ;
+.
 opil:maxMeasurements
   a owl:DatatypeProperty ;
   rdfs:comment "" ;
@@ -85,6 +99,12 @@ opil:time
   rdfs:domain opil:Measurement ;
   rdfs:label "time" ;
   rdfs:range om:Measure ;
+.
+opil:uri
+  a owl:DatatypeProperty ;
+  rdfs:comment "" ;
+  rdfs:label "uri" ;
+  rdfs:range xsd:string ;
 .
 opil:variantValue
   a owl:DatatypeProperty ;
