@@ -66,6 +66,118 @@ abox:MediaSubComponent
   rdfs:comment "" ;
   rdfs:label "Media SubComponent" ;
 .
+abox:Parameter_1
+  a opil:Parameter ;
+  opil:key "inoc_info.inoc_vol" ;
+  opil:value "10:microliter" ;
+  rdfs:comment "" ;
+  rdfs:label "Parameter 1" ;
+.
+abox:Parameter_2
+  a opil:Parameter ;
+  opil:key "inoc_info.inoc_media_vol" ;
+  opil:value "700:microliter" ;
+  rdfs:comment "" ;
+  rdfs:label "Parameter 2" ;
+.
+abox:Parameter_3
+  a opil:Parameter ;
+  opil:key "inoc_info.inc_time_1" ;
+  opil:value "16:hour" ;
+  rdfs:comment "" ;
+  rdfs:label "Parameter 3" ;
+.
+abox:Parameter_4
+  a opil:Parameter ;
+  opil:key "inoc_info.inoculation_media" ;
+  opil:value "sc_media" ;
+  rdfs:comment "" ;
+  rdfs:label "Parameter 4" ;
+.
+abox:Parameter_5
+  a opil:Parameter ;
+  opil:key "incubation_info.shaking" ;
+  opil:value "high_speed" ;
+  rdfs:comment "" ;
+  rdfs:label "Parameter 5" ;
+.
+abox:Parameter_6
+  a opil:Parameter ;
+  opil:key "recovery_info.recovery_sample_vol" ;
+  opil:value "50:microliter" ;
+  rdfs:comment "" ;
+  rdfs:label "Parameter 6" ;
+.
+abox:Parameter_7
+  a opil:Parameter ;
+  opil:key "recovery_info.recovery_media_vol" ;
+  opil:value "1000:microliter" ;
+  rdfs:comment "" ;
+  rdfs:label "Parameter 7" ;
+.
+abox:Parameter_8
+  a opil:Parameter ;
+  opil:key "induction_info.induction_time.total_induction_time" ;
+  opil:value "8:hour" ;
+  rdfs:comment "" ;
+  rdfs:label "Parameter 8" ;
+.
+abox:Parameter_9
+  a opil:Parameter ;
+  opil:key "induction_info.induction_time.doubling_time" ;
+  opil:value "2:hour" ;
+  rdfs:comment "" ;
+  rdfs:label "Parameter 9" ;
+.
+abox:Parameter_10
+  a opil:Parameter ;
+  opil:key "induction_info.dil_volume" ;
+  opil:value "1700:microliter" ;
+  rdfs:comment "" ;
+  rdfs:label "Parameter 10" ;
+.
+abox:Parameter_11
+  a opil:Parameter ;
+  opil:key "induction_info.induction_reagents.media_vol" ;
+  opil:value "300:microliter" ;
+  rdfs:comment "" ;
+  rdfs:label "Parameter 11" ;
+.
+abox:Parameter_12
+  a opil:Parameter ;
+  opil:key "induction_info.induction_time.induction_plate_info" ;
+  opil:value "new-induction-plate" ;
+  rdfs:comment "" ;
+  rdfs:label "Parameter 12" ;
+.
+abox:Parameter_13
+  a opil:Parameter ;
+  opil:key "read_info.sampling_info.read_cult_vol" ;
+  opil:value "300:microliter" ;
+  rdfs:comment "" ;
+  rdfs:label "Parameter 13" ;
+.
+abox:Parameter_14
+  a opil:Parameter ;
+  opil:key "plate_reader_info.fluor_ex" ;
+  opil:value "488:nanometer" ;
+  rdfs:comment "" ;
+  rdfs:label "Parameter 14" ;
+.
+abox:Parameter_15
+  a opil:Parameter ;
+  opil:key "plate_reader_info.fluor_em" ;
+  opil:value "530:nanometer" ;
+  rdfs:comment "" ;
+  rdfs:label "Parameter 15" ;
+.
+abox:Parameter_16
+  a opil:Parameter ;
+  opil:key "plate_reader_info.gain" ;
+  opil:value "0.16" ;
+  rdfs:comment "" ;
+  rdfs:label "Parameter 16" ;
+.
 abox:Replicate6
   a sbol:Component ;
   opil:variantValue 6 ;

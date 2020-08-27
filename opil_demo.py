@@ -6,16 +6,13 @@ from rdflib import Graph
 class OpilJsonGenerator:
         '''This class shows how JSON can be generated from an RDF
         representation of an experimental request using the OPIL ontology. 
-        The current example is the YeastSTATES 1.0 Time Series Round 1 request.  
-        Only part of the first row of the structured request table from this
-        document is currently represent as RDF'''
+        '''
 
         def main(self):
 
-            g = Graph()
-
-            # Load RDF files
+            # Load Turtle files into a RDF graph
             print('Loading RDF files...')
+            g = Graph()
             g.parse('rdf/sbol3.ttl', format='ttl')
             g.parse('rdf/opil.ttl', format='ttl')
             g.parse('rdf/TimeSeriesProtocol.ttl', format='ttl')
@@ -24,16 +21,24 @@ class OpilJsonGenerator:
 
             # Load the various SPARQL queries
             ss_query = self.load_sparql('sparql/sampleSet.sparql')
+            param_query = self.load_sparql('sparql/parameters.sparql')
             m_t_query = self.load_sparql('sparql/measurementType.sparql')
             rep_query = self.load_sparql('sparql/replicates.sparql')
             var_comp_query = self.load_sparql('sparql/variableComponents.sparql')
             variants_query = self.load_sparql('sparql/variants.sparql')
             timepoints_query = self.load_sparql('sparql/timepoints.sparql')
             
-             # Execute SPARQL query to find all sample sets
+            # Execute SPARQL query to find all sample sets
             sample_set_iris = []
             for row in g.query(ss_query):
                 sample_set_iris.append(row.ss)
+
+            # Execute SPARQL query to find all parameters
+            param_list = []
+            parameters = {}
+            for row in g.query(param_query):
+                parameters.update({row.key.value: row.value.value})
+            param_list.append(parameters)
 
             # Generate the JSON
             print('Generating JSON...')
@@ -101,6 +106,10 @@ class OpilJsonGenerator:
                 measurements.append(sample_set_dict)
 
             experimental_request.get('runs').append({'measurements': measurements})
+
+            # Add the parameters
+            experimental_request.update({'parameters': param_list})
+
             print(json.dumps(experimental_request, indent=4, sort_keys=False))
 
         def load_sparql(self, file_path):

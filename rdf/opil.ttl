@@ -37,6 +37,12 @@ opil:MeasurementType
   rdfs:label "Measurement type" ;
   rdfs:subClassOf owl:Thing ;
 .
+opil:Parameter
+  a owl:Class ;
+  rdfs:comment "Parameters are simple key-value pairs, where both keys and values are strings" ;
+  rdfs:label "Parameter" ;
+  rdfs:subClassOf owl:Thing ;
+.
 opil:SampleSet
   a owl:Class ;
   rdfs:comment "" ;
@@ -50,6 +56,13 @@ opil:Strain
   rdfs:label "Strain" ;
   rdfs:subClassOf sbol:Component ;
   rdfs:subClassOf owl:Thing ;
+.
+opil:key
+  a owl:DatatypeProperty ;
+  rdfs:comment "" ;
+  rdfs:domain opil:Parameter ;
+  rdfs:label "key" ;
+  rdfs:range xsd:string ;
 .
 opil:labID
   a owl:DatatypeProperty ;
@@ -104,6 +117,13 @@ opil:uri
   a owl:DatatypeProperty ;
   rdfs:comment "" ;
   rdfs:label "uri" ;
+  rdfs:range xsd:string ;
+.
+opil:value
+  a owl:DatatypeProperty ;
+  rdfs:comment "" ;
+  rdfs:domain opil:Parameter ;
+  rdfs:label "value" ;
   rdfs:range xsd:string ;
 .
 opil:variantValue
