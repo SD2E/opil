@@ -37,6 +37,13 @@ opil:MeasurementType
   rdfs:label "Measurement type" ;
   rdfs:subClassOf owl:Thing ;
 .
+opil:Media
+  a owl:Class ;
+  rdfs:comment "Media instances have a string value (such as a name) and could also have SynBioHub URI" ;
+  rdfs:label "Media" ;
+  rdfs:subClassOf sbol:Component ;
+  rdfs:subClassOf owl:Thing ;
+.
 opil:Parameter
   a owl:Class ;
   rdfs:comment "Parameters are simple key-value pairs, where both keys and values are strings" ;
@@ -52,7 +59,7 @@ opil:SampleSet
 .
 opil:Strain
   a owl:Class ;
-  rdfs:comment "Strains have URIs pointing to SynBiohub instances. This is intended as equivalent to owl:sameAs." ;
+  rdfs:comment "Strains have URIs pointing to SynBioHub instances. This is equivalent to owl:sameAs." ;
   rdfs:label "Strain" ;
   rdfs:subClassOf sbol:Component ;
   rdfs:subClassOf owl:Thing ;
@@ -108,7 +115,7 @@ opil:time
 .
 opil:uri
   a owl:DatatypeProperty ;
-  rdfs:comment "" ;
+  rdfs:comment "Intended to represent SynBioHub URIs" ;
   rdfs:label "uri" ;
   rdfs:range xsd:string ;
 .
@@ -117,10 +124,4 @@ opil:value
   rdfs:comment "" ;
   rdfs:label "value" ;
   rdfs:range xsd:string ;
-.
-opil:variantValue
-  a owl:DatatypeProperty ;
-  rdfs:comment "" ;
-  rdfs:domain sbol:Component ;
-  rdfs:label "variant value" ;
 .
