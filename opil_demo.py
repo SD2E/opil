@@ -25,6 +25,7 @@ class OpilJsonGenerator:
             param_query = self.load_sparql('sparql/parameters.sparql')
             m_t_query = self.load_sparql('sparql/measurementType.sparql')
             rep_query = self.load_sparql('sparql/replicates.sparql')
+            ft_query = self.load_sparql('sparql/fileType.sparql')
             var_comp_query = self.load_sparql('sparql/variableComponents.sparql')
             om_measure_query = self.load_sparql('sparql/omMeasures.sparql')
             strains_query = self.load_sparql('sparql/strains.sparql')
@@ -63,6 +64,13 @@ class OpilJsonGenerator:
                 query = rep_query.format(iri=ss_iri)
                 for row in g.query(query):
                     sample_set_dict.update({'replicates': row.rep.value})
+
+                # Get file types for this sample set
+                query = ft_query.format(iri=ss_iri)
+                file_types = []
+                for row in g.query(query):
+                    file_types.append(row.fileType.value)
+                sample_set_dict.update({'file_type': file_types})
 
                 # Get all VariableComponents for this SampleSet
                 var_comp_iris = []

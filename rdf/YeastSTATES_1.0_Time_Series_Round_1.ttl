@@ -328,6 +328,7 @@ abox:TableRow1
   a opil:SampleSet ;
   opil:measurement abox:Row1PlateReader ;
   opil:replicates 6 ;
+  sd2:fileType "CSV" ;
   sbol:template abox:TableTemplate ;
   sbol:variableComponent abox:Row1Strains ;
   sbol:variableComponent abox:Row1Temp ;
@@ -338,6 +339,7 @@ abox:TableRow2
   a opil:SampleSet ;
   opil:measurement abox:Row2Flow ;
   opil:replicates 6 ;
+  sd2:fileType "FCS" ;
   sbol:template abox:TableTemplate ;
   sbol:variableComponent abox:Row2Media ;
   sbol:variableComponent abox:Row2Strains ;
@@ -349,6 +351,7 @@ abox:TableRow3
   a opil:SampleSet ;
   opil:measurement abox:Row3PlateReader ;
   opil:replicates 3 ;
+  sd2:fileType "CSV" ;
   sbol:template abox:TableTemplate ;
   sbol:variableComponent abox:Row3Media ;
   sbol:variableComponent abox:Row3Strains ;

@@ -18,6 +18,12 @@
   owl:imports <http://bbn.com/synbio/opil> ;
   owl:versionInfo "0.1" ;
 .
+sd2:fileType
+  a owl:DatatypeProperty ;
+  rdfs:comment "" ;
+  rdfs:label "file type" ;
+  rdfs:range xsd:string ;
+.
 sd2:labID
   a owl:DatatypeProperty ;
   rdfs:comment "" ;
