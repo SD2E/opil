@@ -1,4 +1,5 @@
 import json
+from collections import OrderedDict
 from decimal import Decimal
 
 from rdflib import Graph
@@ -21,6 +22,7 @@ class OpilJsonGenerator:
             g.parse('rdf/om-2.0.rdf')
 
             # Load the various SPARQL queries
+            metadata_query = self.load_sparql('sparql/metadata.sparql')
             ss_query = self.load_sparql('sparql/sampleSet.sparql')
             param_query = self.load_sparql('sparql/parameters.sparql')
             m_t_query = self.load_sparql('sparql/measurementType.sparql')
@@ -46,7 +48,19 @@ class OpilJsonGenerator:
 
             # Generate the JSON
             print('Generating JSON...')
-            experimental_request = {'runs' : []}
+            experimental_request = OrderedDict()
+
+            # Get the experimental request metadata
+            for row in g.query(metadata_query):
+                experimental_request.update({'name': row.label.value})
+                experimental_request.update({'experiment_id': row.id.value})
+                experimental_request.update({'challenge_problem': row.cp.value})
+                experimental_request.update({'experiment_reference': row.ref.value})
+                experimental_request.update({'experiment_reference_url': row.url.value})
+                experimental_request.update({'experiment_version': row.ver.value})
+                experimental_request.update({'lab': row.lab.value})
+
+            experimental_request.update({'runs' : []})
             measurements = []
 
             # Iterate over sample sets

@@ -18,10 +18,53 @@
   owl:imports <http://bbn.com/synbio/opil> ;
   owl:versionInfo "0.1" ;
 .
+sd2:challengeProblem
+  a owl:DatatypeProperty ;
+  rdfs:comment "" ;
+  rdfs:domain opil:ExperimentalRequest ;
+  rdfs:label "challenge problem" ;
+  rdfs:range xsd:string ;
+.
+sd2:experimentId
+  a owl:DatatypeProperty ;
+  rdfs:comment "" ;
+  rdfs:domain opil:ExperimentalRequest ;
+  rdfs:label "experiment id" ;
+  rdfs:range xsd:string ;
+.
+sd2:experimentReference
+  a owl:DatatypeProperty ;
+  rdfs:comment "" ;
+  rdfs:domain opil:ExperimentalRequest ;
+  rdfs:label "experiment reference" ;
+  rdfs:range xsd:string ;
+.
+sd2:experimentReferenceUrl
+  a owl:DatatypeProperty ;
+  rdfs:comment "" ;
+  rdfs:domain opil:ExperimentalRequest ;
+  rdfs:label "experiment reference url" ;
+  rdfs:range xsd:anyURI ;
+.
+sd2:experimentVersion
+  a owl:DatatypeProperty ;
+  rdfs:comment "" ;
+  rdfs:domain opil:ExperimentalRequest ;
+  rdfs:label "experiment version" ;
+  rdfs:range xsd:string ;
+.
 sd2:fileType
   a owl:DatatypeProperty ;
   rdfs:comment "" ;
+  rdfs:domain opil:SampleSet ;
   rdfs:label "file type" ;
+  rdfs:range xsd:string ;
+.
+sd2:lab
+  a owl:DatatypeProperty ;
+  rdfs:comment "" ;
+  rdfs:domain opil:ExperimentalRequest ;
+  rdfs:label "lab" ;
   rdfs:range xsd:string ;
 .
 sd2:labID

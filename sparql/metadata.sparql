@@ -7,10 +7,16 @@ PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX sbo: <http://biomodels.net/SBO/> 
 PREFIX sbol: <http://sbols.org/v3#>
+PREFIX sd2: <http://bbn.com/synbio/sd2#>
 PREFIX timeseries: <http://bbn.com/synbio/sd2/timeseries#>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
-select ?key ?value where {
-    ?param a opil:SimpleParameter ;
-    		 opil:key ?key ;
-    		 opil:value ?value .
+select ?label ?id ?cp ?ref ?url ?ver ?lab  
+where {
+	?x rdfs:label ?label ;
+       sd2:experimentId ?id ;
+       sd2:challengeProblem ?cp ;
+       sd2:experimentReference ?ref ;
+       sd2:experimentReferenceUrl ?url ;
+       sd2:experimentVersion ?ver ;
+       sd2:lab ?lab .
 }

@@ -19,10 +19,10 @@
   owl:imports om: ;
   owl:versionInfo "0.1" ;
 .
-opil:ExecutionRequest
+opil:ExperimentalRequest
   a owl:Class ;
   rdfs:comment "" ;
-  rdfs:label "Execution request" ;
+  rdfs:label "Experimental request" ;
   rdfs:subClassOf owl:Thing ;
 .
 opil:Measurement
@@ -44,17 +44,17 @@ opil:Media
   rdfs:subClassOf sbol:Component ;
   rdfs:subClassOf owl:Thing ;
 .
-opil:Parameter
-  a owl:Class ;
-  rdfs:comment "Parameters are simple key-value pairs, where both keys and values are strings" ;
-  rdfs:label "Parameter" ;
-  rdfs:subClassOf owl:Thing ;
-.
 opil:SampleSet
   a owl:Class ;
   rdfs:comment "" ;
   rdfs:label "Sample set" ;
   rdfs:subClassOf sbol:CombinatorialDerivation ;
+  rdfs:subClassOf owl:Thing ;
+.
+opil:SimpleParameter
+  a owl:Class ;
+  rdfs:comment "Simpe parameters are key-value pairs, where both keys and values are strings" ;
+  rdfs:label "SImple Parameter" ;
   rdfs:subClassOf owl:Thing ;
 .
 opil:Strain
@@ -67,7 +67,7 @@ opil:Strain
 opil:key
   a owl:DatatypeProperty ;
   rdfs:comment "" ;
-  rdfs:domain opil:Parameter ;
+  rdfs:domain opil:SimpleParameter ;
   rdfs:label "key" ;
   rdfs:range xsd:string ;
 .
@@ -102,7 +102,7 @@ opil:replicates
 opil:sampleSet
   a owl:ObjectProperty ;
   rdfs:comment "" ;
-  rdfs:domain opil:ExecutionRequest ;
+  rdfs:domain opil:ExperimentalRequest ;
   rdfs:label "sample set" ;
   rdfs:range opil:SampleSet ;
 .
@@ -117,7 +117,7 @@ opil:uri
   a owl:DatatypeProperty ;
   rdfs:comment "Intended to represent SynBioHub URIs" ;
   rdfs:label "uri" ;
-  rdfs:range xsd:string ;
+  rdfs:range xsd:anyURI ;
 .
 opil:value
   a owl:DatatypeProperty ;
