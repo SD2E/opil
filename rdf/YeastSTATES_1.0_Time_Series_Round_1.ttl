@@ -187,7 +187,7 @@ abox:Row1Media
   sbol:variant abox:rich_media ;
   sbol:variant abox:slow_media ;
   rdfs:comment "" ;
-  rdfs:label "Row1Media" ;
+  rdfs:label "media" ;
 .
 abox:Row1PlateReader
   a opil:Measurement ;
@@ -235,7 +235,7 @@ abox:Row2Media
   sbol:variant abox:rich_media ;
   sbol:variant abox:slow_media ;
   rdfs:comment "" ;
-  rdfs:label "Row2Media" ;
+  rdfs:label "media" ;
 .
 abox:Row2Strains
   a sbo:SBO_0000241 ;
@@ -262,7 +262,7 @@ abox:Row3Media
   sbol:variant abox:rich_media ;
   sbol:variant abox:slow_media ;
   rdfs:comment "" ;
-  rdfs:label "Row3Media" ;
+  rdfs:label "media" ;
 .
 abox:Row3PlateReader
   a opil:Measurement ;

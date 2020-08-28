@@ -28,6 +28,7 @@ class OpilJsonGenerator:
             var_comp_query = self.load_sparql('sparql/variableComponents.sparql')
             om_measure_query = self.load_sparql('sparql/omMeasures.sparql')
             strains_query = self.load_sparql('sparql/strains.sparql')
+            media_query = self.load_sparql('sparql/media.sparql')
             timepoints_query = self.load_sparql('sparql/timepoints.sparql')
             
             # Execute SPARQL query to find all sample sets
@@ -75,9 +76,9 @@ class OpilJsonGenerator:
                     # Get variants that are om:Measures with units and values
                     query = om_measure_query.format(iri=vc_iri)
                     for row in g.query(query):
-                        variantName = row.label.value
-                        if variantName in sample_set_dict:
-                            numerical_values_and_units = sample_set_dict[variantName]
+                        variableName = row.label.value
+                        if variableName in sample_set_dict:
+                            numerical_values_and_units = sample_set_dict[variableName]
                         else:
                             numerical_values_and_units = []
                         measures = {}
@@ -88,19 +89,32 @@ class OpilJsonGenerator:
                         measures.update({'value': numerical_value,
                                         'unit': row.unitName.value})
                         numerical_values_and_units.append(measures)
-                        sample_set_dict.update({variantName: numerical_values_and_units})
+                        sample_set_dict.update({variableName: numerical_values_and_units})
 
                     # Get variants that are strains
                     query = strains_query.format(iri=vc_iri)
                     strains = []
                     for row in g.query(query):
-                        variantName = row.label.value
+                        variableName = row.label.value
                         strain = {}
                         strain.update({'sbh_uri': row.uri.value,
                                         'label': row.strain_label.value,
                                         'lab_id': row.lab_id.value})
                         strains.append(strain)
-                        sample_set_dict.update({variantName: strains})
+                        sample_set_dict.update({variableName: strains})
+
+                    # Get variants that are media. Conform to the legacy JSON format
+                    query = media_query.format(iri=vc_iri)
+                    media = []
+                    for row in g.query(query):
+                        variableName = row.label.value
+                        value = row.value.value
+                        medium = { 'name' : { 'label': variableName }, 'value': value }
+                        media.append(medium)
+                    contents = []
+                    if media:
+                        contents.append(media)
+                        sample_set_dict.update({'contents': contents})
 
                 # Get the timepoints for this SampleSet's Measurement
                 query = timepoints_query.format(iri=ss_iri)
