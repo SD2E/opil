@@ -92,6 +92,12 @@ opil:measurementType
   rdfs:label "measurement type" ;
   rdfs:range opil:MeasurementType ;
 .
+opil:name
+  a owl:DatatypeProperty ;
+  rdfs:comment "Entities might be required to have a name that could be distinct from rdfs:label" ;
+  rdfs:label "name" ;
+  rdfs:range xsd:string ;
+.
 opil:replicates
   a owl:DatatypeProperty ;
   rdfs:comment "" ;
@@ -123,5 +129,5 @@ opil:value
   a owl:DatatypeProperty ;
   rdfs:comment "" ;
   rdfs:label "value" ;
-  rdfs:range xsd:string ;
+  rdfs:range xsd:anySimpleType ;
 .

@@ -52,7 +52,7 @@ class OpilJsonGenerator:
 
             # Get the experimental request metadata
             for row in g.query(metadata_query):
-                experimental_request.update({'name': row.label.value})
+                experimental_request.update({'name': row.name.value})
                 experimental_request.update({'experiment_id': row.id.value})
                 experimental_request.update({'challenge_problem': row.cp.value})
                 experimental_request.update({'experiment_reference': row.ref.value})
