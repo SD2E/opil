@@ -15,6 +15,7 @@ class OpilJsonGenerator:
             g = Graph()
             g.parse('rdf/sbol3.ttl', format='ttl')
             g.parse('rdf/opil.ttl', format='ttl')
+            g.parse('rdf/sd2.ttl', format='ttl')
             g.parse('rdf/TimeSeriesProtocol.ttl', format='ttl')
             g.parse('rdf/YeastSTATES_1.0_Time_Series_Round_1.ttl', format='ttl')
             g.parse('rdf/om-2.0.rdf')

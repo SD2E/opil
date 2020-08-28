@@ -1,5 +1,5 @@
 # baseURI: http://bbn.com/synbio/sd2/timeseries
-# imports: http://bbn.com/synbio/opil
+# imports: http://bbn.com/synbio/sd2
 
 @prefix : <http://bbn.com/synbio/sd2/timeseries#> .
 @prefix abox: <http://bbn.com/synbio/sd2/abox#> .
@@ -10,11 +10,12 @@
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix sd2: <http://bbn.com/synbio/sd2#> .
 
 <http://bbn.com/synbio/sd2/timeseries>
   a owl:Ontology ;
   rdfs:comment "This is a representation of the Time Series protocol as described in the 2019 Q4 - 2020 Q1 Strateos Capabilities Overview document using the OPIL ontology. It is currently incomplete." ;
-  owl:imports <http://bbn.com/synbio/opil> ;
+  owl:imports <http://bbn.com/synbio/sd2> ;
   owl:versionInfo "0.1" ;
 .
 :Hour24

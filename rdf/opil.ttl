@@ -52,7 +52,7 @@ opil:SampleSet
 .
 opil:Strain
   a owl:Class ;
-  rdfs:comment "" ;
+  rdfs:comment "Strains have URIs pointing to SynBiohub instances. This is intended as equivalent to owl:sameAs." ;
   rdfs:label "Strain" ;
   rdfs:subClassOf sbol:Component ;
   rdfs:subClassOf owl:Thing ;
@@ -62,13 +62,6 @@ opil:key
   rdfs:comment "" ;
   rdfs:domain opil:Parameter ;
   rdfs:label "key" ;
-  rdfs:range xsd:string ;
-.
-opil:labID
-  a owl:DatatypeProperty ;
-  rdfs:comment "" ;
-  rdfs:domain opil:Strain ;
-  rdfs:label "lab_id" ;
   rdfs:range xsd:string ;
 .
 opil:maxMeasurements
@@ -122,7 +115,6 @@ opil:uri
 opil:value
   a owl:DatatypeProperty ;
   rdfs:comment "" ;
-  rdfs:domain opil:Parameter ;
   rdfs:label "value" ;
   rdfs:range xsd:string ;
 .

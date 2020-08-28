@@ -7,12 +7,13 @@ PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX sbo: <http://biomodels.net/SBO/>
 PREFIX sbol: <http://sbols.org/v3#>
+PREFIX sd2: <http://bbn.com/synbio/sd2#>
 PREFIX timeseries: <http://bbn.com/synbio/sd2/timeseries#>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 select ?label ?uri ?lab_id ?strain_label where {{
     <{iri}> rdfs:label ?label ;
              sbol:variant ?var .
     ?var opil:uri ?uri ;
-         opil:labID ?lab_id ;
+         sd2:labID ?lab_id ;
          rdfs:label ?strain_label .
 }}

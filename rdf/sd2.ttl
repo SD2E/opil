@@ -1,0 +1,27 @@
+# baseURI: http://bbn.com/synbio/sd2
+# imports: http://bbn.com/synbio/opil
+# prefix: sd2
+
+@prefix om: <http://www.ontology-of-units-of-measure.org/resource/om-2/> .
+@prefix opil: <http://bbn.com/synbio/opil#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sbo: <http://biomodels.net/SBO/> .
+@prefix sbol: <http://sbols.org/v3#> .
+@prefix sd2: <http://bbn.com/synbio/sd2#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://bbn.com/synbio/sd2>
+  a owl:Ontology ;
+  rdfs:comment "This onotology provides SD2-specific extensions to OPIL." ;
+  owl:imports <http://bbn.com/synbio/opil> ;
+  owl:versionInfo "0.1" ;
+.
+sd2:labID
+  a owl:DatatypeProperty ;
+  rdfs:comment "" ;
+  rdfs:domain opil:Strain ;
+  rdfs:label "lab ID" ;
+  rdfs:range xsd:string ;
+.

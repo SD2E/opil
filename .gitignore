@@ -5,6 +5,7 @@ __pycache__/
 
 .DS_Store
 .idea/
+catalog-v001.xml
 
 # C extensions
 *.so
