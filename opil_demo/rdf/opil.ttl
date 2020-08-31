@@ -1,0 +1,452 @@
+# baseURI: http://bbn.com/synbio/opil
+# imports: http://sbols.org/v3
+# imports: http://www.ontology-of-units-of-measure.org/resource/om-2/
+# prefix: opil
+
+@prefix MathM: <http://www.w3.org/1998/Math/MathML> .
+@prefix om: <http://www.ontology-of-units-of-measure.org/resource/om-2/> .
+@prefix opil: <http://bbn.com/synbio/opil#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sbol: <http://sbols.org/v3#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://bbn.com/synbio/opil>
+  a owl:Ontology ;
+  rdfs:comment "This is the first draft of the Open Protocol Interface Languge (OPIL) ontology." ;
+  owl:imports <http://sbols.org/v3> ;
+  owl:imports om: ;
+  owl:versionInfo "0.1" ;
+.
+opil:BooleanParameter
+  a owl:Class ;
+  rdfs:comment "" ;
+  rdfs:label "Boolean parameter" ;
+  rdfs:subClassOf opil:Parameter ;
+.
+opil:BooleanValue
+  a owl:Class ;
+  rdfs:comment "" ;
+  rdfs:label "Boolean value" ;
+  rdfs:subClassOf opil:ParameterValue ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom opil:BooleanParameter ;
+      owl:onProperty opil:valueOf ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom xsd:boolean ;
+      owl:onProperty opil:value ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:int ;
+      owl:onProperty opil:value ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:int ;
+      owl:onProperty opil:valueOf ;
+    ] ;
+.
+opil:EnumeratedParameter
+  a owl:Class ;
+  rdfs:label "Enumerated parameter" ;
+  rdfs:subClassOf opil:Parameter ;
+.
+opil:EnumeratedValue
+  a owl:Class ;
+  rdfs:comment "The best way to support enumerated parameters would be to create subclasses of this class that are nominial classes, that is, the classes are defined by enumerating their instances using owl:oneOf." ;
+  rdfs:label "Enumerated value" ;
+  rdfs:subClassOf opil:ParameterValue ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom opil:EnumeratedParameter ;
+      owl:onProperty opil:valueOf ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:int ;
+      owl:onProperty opil:valueOf ;
+    ] ;
+.
+opil:ExperimentalRequest
+  a owl:Class ;
+  rdfs:comment "" ;
+  rdfs:label "Experimental request" ;
+  rdfs:subClassOf owl:Thing ;
+.
+opil:IntegerParameter
+  a owl:Class ;
+  rdfs:comment "" ;
+  rdfs:label "Integer parameter" ;
+  rdfs:subClassOf opil:Parameter ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom xsd:integer ;
+      owl:onProperty opil:maxValue ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom xsd:integer ;
+      owl:onProperty opil:minValue ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:int ;
+      owl:onProperty opil:maxValue ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty opil:minValue ;
+    ] ;
+.
+opil:IntegerValue
+  a owl:Class ;
+  rdfs:comment "" ;
+  rdfs:label "Integer value" ;
+  rdfs:subClassOf opil:ParameterValue ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom opil:IntegerParameter ;
+      owl:onProperty opil:valueOf ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom xsd:integer ;
+      owl:onProperty opil:value ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:int ;
+      owl:onProperty opil:value ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:int ;
+      owl:onProperty opil:valueOf ;
+    ] ;
+.
+opil:MeasureParameter
+  a owl:Class ;
+  rdfs:comment "" ;
+  rdfs:label "Measure parameter" ;
+  rdfs:subClassOf opil:Parameter ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom om:Measure ;
+      owl:onProperty opil:maxMeasure ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom om:Measure ;
+      owl:onProperty opil:minMeasure ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty opil:maxMeasure ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty opil:minMeasure ;
+    ] ;
+.
+opil:MeasureValue
+  a owl:Class ;
+  rdfs:comment "" ;
+  rdfs:label "Measure value" ;
+  rdfs:subClassOf opil:ParameterValue ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom opil:MeasureParameter ;
+      owl:onProperty opil:valueOf ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom om:Measure ;
+      owl:onProperty opil:hasValueObject ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:int ;
+      owl:onProperty opil:hasValueObject ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:int ;
+      owl:onProperty opil:valueOf ;
+    ] ;
+.
+opil:Measurement
+  a owl:Class ;
+  rdfs:comment "" ;
+  rdfs:label "Measurement" ;
+  rdfs:subClassOf owl:Thing ;
+.
+opil:MeasurementType
+  a owl:Class ;
+  rdfs:comment "" ;
+  rdfs:label "Measurement type" ;
+  rdfs:subClassOf owl:Thing ;
+.
+opil:Media
+  a owl:Class ;
+  rdfs:comment "Media instances have a string value (such as a name) and could also have SynBioHub URI" ;
+  rdfs:label "Media" ;
+  rdfs:subClassOf sbol:Component ;
+  rdfs:subClassOf owl:Thing ;
+.
+opil:Parameter
+  a owl:Class ;
+  rdfs:comment "Parameters are required to have a name, and can have only one name." ;
+  rdfs:label "Parameter" ;
+  rdfs:subClassOf owl:Thing ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty opil:name ;
+    ] ;
+.
+opil:ParameterValue
+  a owl:Class ;
+  rdfs:comment "Parameter values are holders for the values for a parmeter" ;
+  rdfs:label "Parameter value" ;
+  rdfs:subClassOf owl:Thing ;
+.
+opil:Protocol
+  a owl:Class ;
+  rdfs:comment "" ;
+  rdfs:label "Protocol" ;
+  rdfs:subClassOf owl:Thing ;
+.
+opil:SampleSet
+  a owl:Class ;
+  rdfs:comment "" ;
+  rdfs:label "Sample set" ;
+  rdfs:subClassOf sbol:CombinatorialDerivation ;
+  rdfs:subClassOf owl:Thing ;
+.
+opil:Strain
+  a owl:Class ;
+  rdfs:comment "Strains have URIs pointing to SynBioHub instances. This is equivalent to owl:sameAs." ;
+  rdfs:label "Strain" ;
+  rdfs:subClassOf sbol:Component ;
+  rdfs:subClassOf owl:Thing ;
+.
+opil:StringParameter
+  a owl:Class ;
+  rdfs:comment "" ;
+  rdfs:label "String parameter" ;
+  rdfs:subClassOf opil:Parameter ;
+.
+opil:StringValue
+  a owl:Class ;
+  rdfs:comment "" ;
+  rdfs:label "String value" ;
+  rdfs:subClassOf opil:ParameterValue ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom opil:StringParameter ;
+      owl:onProperty opil:valueOf ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom xsd:string ;
+      owl:onProperty opil:value ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:int ;
+      owl:onProperty opil:value ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:int ;
+      owl:onProperty opil:valueOf ;
+    ] ;
+.
+opil:URIParameter
+  a owl:Class ;
+  rdfs:comment "" ;
+  rdfs:label "URIParameter" ;
+  rdfs:subClassOf opil:Parameter ;
+.
+opil:URIValue
+  a owl:Class ;
+  rdfs:comment "" ;
+  rdfs:label "URIValue" ;
+  rdfs:subClassOf opil:ParameterValue ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom opil:URIParameter ;
+      owl:onProperty opil:valueOf ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom xsd:anyURI ;
+      owl:onProperty opil:value ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:int ;
+      owl:onProperty opil:value ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:int ;
+      owl:onProperty opil:valueOf ;
+    ] ;
+.
+opil:defaultValue
+  a owl:ObjectProperty ;
+  rdfs:comment "" ;
+  rdfs:domain opil:Parameter ;
+  rdfs:label "default value" ;
+  rdfs:range opil:ParameterValue ;
+.
+opil:hasParameter
+  a owl:ObjectProperty ;
+  rdfs:comment "" ;
+  rdfs:domain opil:Protocol ;
+  rdfs:label "has parameter" ;
+  rdfs:range opil:Parameter ;
+.
+opil:hasValueObject
+  a owl:ObjectProperty ;
+  rdfs:comment "" ;
+  rdfs:domain opil:ParameterValue ;
+  rdfs:label "has value object" ;
+.
+opil:index
+  a owl:DatatypeProperty ;
+  rdfs:comment "The list index for values of list parameters" ;
+  rdfs:domain opil:ParameterValue ;
+  rdfs:label "index" ;
+  rdfs:range xsd:integer ;
+.
+opil:list
+  a owl:DatatypeProperty ;
+  rdfs:comment "" ;
+  rdfs:domain opil:Parameter ;
+  rdfs:label "list" ;
+  rdfs:range xsd:boolean ;
+.
+opil:maxMeasure
+  a owl:ObjectProperty ;
+  rdfs:comment "" ;
+  rdfs:domain opil:MeasureParameter ;
+  rdfs:label "max measure" ;
+  rdfs:range om:Measure ;
+.
+opil:maxMeasurements
+  a owl:DatatypeProperty ;
+  rdfs:comment "" ;
+  rdfs:domain opil:MeasurementType ;
+  rdfs:label "max measurements" ;
+  rdfs:range xsd:integer ;
+.
+opil:maxValue
+  a owl:DatatypeProperty ;
+  rdfs:comment "" ;
+  rdfs:domain opil:IntegerParameter ;
+  rdfs:label "max value" ;
+  rdfs:range xsd:integer ;
+.
+opil:measurement
+  a owl:ObjectProperty ;
+  rdfs:comment "" ;
+  rdfs:domain opil:SampleSet ;
+  rdfs:label "measurement" ;
+  rdfs:range opil:Measurement ;
+.
+opil:measurementType
+  a owl:ObjectProperty ;
+  rdfs:comment "" ;
+  rdfs:domain opil:Measurement ;
+  rdfs:label "measurement type" ;
+  rdfs:range opil:MeasurementType ;
+.
+opil:minMeasure
+  a owl:ObjectProperty ;
+  rdfs:comment "" ;
+  rdfs:domain opil:MeasureParameter ;
+  rdfs:label "min measure" ;
+  rdfs:range om:Measure ;
+.
+opil:minValue
+  a owl:DatatypeProperty ;
+  rdfs:comment "" ;
+  rdfs:domain opil:IntegerParameter ;
+  rdfs:label "min value" ;
+  rdfs:range xsd:integer ;
+.
+opil:name
+  a owl:DatatypeProperty ;
+  rdfs:comment "Entities might be required to have a name that could be distinct from rdfs:label" ;
+  rdfs:label "name" ;
+  rdfs:range xsd:string ;
+.
+opil:protocolMeasurementType
+  a owl:ObjectProperty ;
+  rdfs:comment "" ;
+  rdfs:domain opil:Protocol ;
+  rdfs:label "protocol measurement type" ;
+  rdfs:range opil:MeasurementType ;
+.
+opil:pureNumber
+  a om:Unit ;
+  rdfs:comment "A unit type for Measures that are pure numbers, that is, do not have units. If the OM ontology provides such a unit, it cannot be readily found. A blank label is provided for convienence." ;
+  rdfs:label ""@en ;
+.
+opil:replicates
+  a owl:DatatypeProperty ;
+  rdfs:comment "" ;
+  rdfs:domain opil:SampleSet ;
+  rdfs:label "replicates" ;
+  rdfs:range xsd:integer ;
+.
+opil:required
+  a owl:DatatypeProperty ;
+  rdfs:comment "" ;
+  rdfs:domain opil:Parameter ;
+  rdfs:label "required" ;
+  rdfs:range xsd:boolean ;
+.
+opil:sampleSet
+  a owl:ObjectProperty ;
+  rdfs:comment "" ;
+  rdfs:domain opil:ExperimentalRequest ;
+  rdfs:label "sample set" ;
+  rdfs:range opil:SampleSet ;
+.
+opil:time
+  a owl:ObjectProperty ;
+  rdfs:comment "" ;
+  rdfs:domain opil:Measurement ;
+  rdfs:label "time" ;
+  rdfs:range om:Measure ;
+.
+opil:uri
+  a owl:DatatypeProperty ;
+  rdfs:comment "Intended to represent SynBioHub URIs" ;
+  rdfs:label "uri" ;
+  rdfs:range xsd:anyURI ;
+.
+opil:value
+  a owl:DatatypeProperty ;
+  rdfs:comment "" ;
+  rdfs:label "value" ;
+  rdfs:range xsd:anySimpleType ;
+.
+opil:valueOf
+  a owl:ObjectProperty ;
+  rdfs:comment "" ;
+  rdfs:domain opil:ParameterValue ;
+  rdfs:label "value of" ;
+  rdfs:range opil:Parameter ;
+.

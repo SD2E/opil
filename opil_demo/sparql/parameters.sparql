@@ -9,8 +9,17 @@ PREFIX sbo: <http://biomodels.net/SBO/>
 PREFIX sbol: <http://sbols.org/v3#>
 PREFIX timeseries: <http://bbn.com/synbio/sd2/timeseries#>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
-select ?key ?value where {
-    ?param a opil:SimpleParameter ;
-    		 opil:key ?key ;
-    		 opil:value ?value .
+select ?paramName ?value ?numericalValue ?unitName where {
+    ?paramValue a opil:ParameterValue ;
+    		 opil:valueOf ?param.
+    ?param opil:name ?paramName.
+    OPTIONAL {
+          ?paramValue opil:value ?value .
+    }
+    OPTIONAL {
+          ?paramValue opil:hasValueObject ?meas .
+          ?meas om:hasNumericalValue ?numericalValue .
+          ?meas om:hasUnit ?unit .
+          ?unit rdfs:label ?unitName .
+    }
 }

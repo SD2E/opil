@@ -43,7 +43,14 @@ class OpilJsonGenerator:
             param_list = []
             parameters = {}
             for row in g.query(param_query):
-                parameters.update({row.key.value: row.value.value})
+                if not row.value is None:
+                    parameters.update({row.paramName.value: row.value.value})
+                elif not row.numericalValue is None and not row.unitName is None:
+
+                    paramValue = str(row.numericalValue.value)
+                    if len(row.unitName.value) > 0:
+                        paramValue+= ':' + row.unitName.value
+                    parameters.update({row.paramName.value: paramValue})
             param_list.append(parameters)
 
             # Generate the JSON

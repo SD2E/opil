@@ -27,6 +27,90 @@
   owl:imports om: ;
   owl:versionInfo "0.1" ;
 .
+<http://bbn.com/synbio/sd2/abox#1000microliter>
+  a opil:StringValue ;
+  opil:value "1000:microliter" ;
+  opil:valueOf <http://bbn.com/synbio/sd2/abox#recovery_info.recovery_media_vol> ;
+  rdfs:comment "" ;
+  rdfs:label "1000:microliter" ;
+.
+<http://bbn.com/synbio/sd2/abox#10microliter>
+  a opil:StringValue ;
+  opil:value "10:microliter" ;
+  opil:valueOf <http://bbn.com/synbio/sd2/abox#inoc_info.inoc_vol> ;
+  rdfs:comment "" ;
+  rdfs:label "10:microliter" ;
+.
+<http://bbn.com/synbio/sd2/abox#16hour>
+  a opil:StringValue ;
+  opil:value "16:hour" ;
+  opil:valueOf <http://bbn.com/synbio/sd2/abox#inoc_info.inc_time_1> ;
+  rdfs:comment "" ;
+  rdfs:label "16:hour" ;
+.
+<http://bbn.com/synbio/sd2/abox#1700microliter>
+  a opil:StringValue ;
+  opil:value "1700:microliter" ;
+  opil:valueOf <http://bbn.com/synbio/sd2/abox#induction_info.dil_volume> ;
+  rdfs:comment "" ;
+  rdfs:label "1700:microliter" ;
+.
+<http://bbn.com/synbio/sd2/abox#2hour>
+  a opil:StringValue ;
+  opil:value "2:hour" ;
+  opil:valueOf <http://bbn.com/synbio/sd2/abox#induction_info.induction_time.doubling_time> ;
+  rdfs:comment "" ;
+  rdfs:label "2:hour" ;
+.
+<http://bbn.com/synbio/sd2/abox#300microliter0>
+  a opil:StringValue ;
+  opil:value "300:microliter" ;
+  opil:valueOf <http://bbn.com/synbio/sd2/abox#induction_info.induction_reagents.media_vol> ;
+  rdfs:comment "" ;
+  rdfs:label "300:microliter" ;
+.
+<http://bbn.com/synbio/sd2/abox#300microliter1>
+  a opil:StringValue ;
+  opil:value "300:microliter" ;
+  opil:valueOf <http://bbn.com/synbio/sd2/abox#read_info.sampling_info.read_cult_vol> ;
+  rdfs:comment "" ;
+  rdfs:label "300:microliter" ;
+.
+<http://bbn.com/synbio/sd2/abox#488nanometer>
+  a opil:StringValue ;
+  opil:value "488:nanometer" ;
+  opil:valueOf <http://bbn.com/synbio/sd2/abox#plate_reader_info.fluor_ex> ;
+  rdfs:comment "" ;
+  rdfs:label "488:nanometer" ;
+.
+<http://bbn.com/synbio/sd2/abox#50microliter>
+  a opil:StringValue ;
+  opil:value "50:microliter" ;
+  opil:valueOf <http://bbn.com/synbio/sd2/abox#recovery_info.recovery_sample_vol> ;
+  rdfs:comment "" ;
+  rdfs:label "50:microliter" ;
+.
+<http://bbn.com/synbio/sd2/abox#530nanometer>
+  a opil:StringValue ;
+  opil:value "530:nanometer" ;
+  opil:valueOf <http://bbn.com/synbio/sd2/abox#plate_reader_info.fluor_em> ;
+  rdfs:comment "" ;
+  rdfs:label "530:nanometer" ;
+.
+<http://bbn.com/synbio/sd2/abox#700microliter>
+  a opil:StringValue ;
+  opil:value "700:microliter" ;
+  opil:valueOf <http://bbn.com/synbio/sd2/abox#inoc_info.inoc_media_vol> ;
+  rdfs:comment "" ;
+  rdfs:label "700:microliter" ;
+.
+<http://bbn.com/synbio/sd2/abox#8hour>
+  a opil:StringValue ;
+  opil:value "8:hour" ;
+  opil:valueOf <http://bbn.com/synbio/sd2/abox#induction_info.induction_time.total_induction_time> ;
+  rdfs:comment "" ;
+  rdfs:label "8:hour" ;
+.
 abox:Hour0
   a om:Measure ;
   om:hasNumericalValue "0" ;
@@ -66,118 +150,6 @@ abox:MediaSubComponent
   a sbol:SubComponent ;
   rdfs:comment "" ;
   rdfs:label "Media SubComponent" ;
-.
-abox:Parameter_1
-  a opil:SimpleParameter ;
-  opil:key "inoc_info.inoc_vol" ;
-  opil:value "10:microliter"^^xsd:anySimpleType ;
-  rdfs:comment "" ;
-  rdfs:label "Parameter 1" ;
-.
-abox:Parameter_10
-  a opil:SimpleParameter ;
-  opil:key "induction_info.dil_volume" ;
-  opil:value "1700:microliter"^^xsd:anySimpleType ;
-  rdfs:comment "" ;
-  rdfs:label "Parameter 10" ;
-.
-abox:Parameter_11
-  a opil:SimpleParameter ;
-  opil:key "induction_info.induction_reagents.media_vol" ;
-  opil:value "300:microliter"^^xsd:anySimpleType ;
-  rdfs:comment "" ;
-  rdfs:label "Parameter 11" ;
-.
-abox:Parameter_12
-  a opil:SimpleParameter ;
-  opil:key "induction_info.induction_time.induction_plate_info" ;
-  opil:value "new-induction-plate"^^xsd:anySimpleType ;
-  rdfs:comment "" ;
-  rdfs:label "Parameter 12" ;
-.
-abox:Parameter_13
-  a opil:SimpleParameter ;
-  opil:key "read_info.sampling_info.read_cult_vol" ;
-  opil:value "300:microliter"^^xsd:anySimpleType ;
-  rdfs:comment "" ;
-  rdfs:label "Parameter 13" ;
-.
-abox:Parameter_14
-  a opil:SimpleParameter ;
-  opil:key "plate_reader_info.fluor_ex" ;
-  opil:value "488:nanometer"^^xsd:anySimpleType ;
-  rdfs:comment "" ;
-  rdfs:label "Parameter 14" ;
-.
-abox:Parameter_15
-  a opil:SimpleParameter ;
-  opil:key "plate_reader_info.fluor_em" ;
-  opil:value "530:nanometer"^^xsd:anySimpleType ;
-  rdfs:comment "" ;
-  rdfs:label "Parameter 15" ;
-.
-abox:Parameter_16
-  a opil:SimpleParameter ;
-  opil:key "plate_reader_info.gain" ;
-  opil:value "0.16"^^xsd:anySimpleType ;
-  rdfs:comment "" ;
-  rdfs:label "Parameter 16" ;
-.
-abox:Parameter_2
-  a opil:SimpleParameter ;
-  opil:key "inoc_info.inoc_media_vol" ;
-  opil:value "700:microliter"^^xsd:anySimpleType ;
-  rdfs:comment "" ;
-  rdfs:label "Parameter 2" ;
-.
-abox:Parameter_3
-  a opil:SimpleParameter ;
-  opil:key "inoc_info.inc_time_1" ;
-  opil:value "16:hour"^^xsd:anySimpleType ;
-  rdfs:comment "" ;
-  rdfs:label "Parameter 3" ;
-.
-abox:Parameter_4
-  a opil:SimpleParameter ;
-  opil:key "inoc_info.inoculation_media" ;
-  opil:value "sc_media"^^xsd:anySimpleType ;
-  rdfs:comment "" ;
-  rdfs:label "Parameter 4" ;
-.
-abox:Parameter_5
-  a opil:SimpleParameter ;
-  opil:key "incubation_info.shaking" ;
-  opil:value "high_speed"^^xsd:anySimpleType ;
-  rdfs:comment "" ;
-  rdfs:label "Parameter 5" ;
-.
-abox:Parameter_6
-  a opil:SimpleParameter ;
-  opil:key "recovery_info.recovery_sample_vol" ;
-  opil:value "50:microliter"^^xsd:anySimpleType ;
-  rdfs:comment "" ;
-  rdfs:label "Parameter 6" ;
-.
-abox:Parameter_7
-  a opil:SimpleParameter ;
-  opil:key "recovery_info.recovery_media_vol" ;
-  opil:value "1000:microliter"^^xsd:anySimpleType ;
-  rdfs:comment "" ;
-  rdfs:label "Parameter 7" ;
-.
-abox:Parameter_8
-  a opil:SimpleParameter ;
-  opil:key "induction_info.induction_time.total_induction_time" ;
-  opil:value "8:hour"^^xsd:anySimpleType ;
-  rdfs:comment "" ;
-  rdfs:label "Parameter 8" ;
-.
-abox:Parameter_9
-  a opil:SimpleParameter ;
-  opil:key "induction_info.induction_time.doubling_time" ;
-  opil:value "2:hour"^^xsd:anySimpleType ;
-  rdfs:comment "" ;
-  rdfs:label "Parameter 9" ;
 .
 abox:Row1Media
   a sbol:VariableComponent ;
@@ -568,17 +540,148 @@ abox:W303
   rdfs:comment "" ;
   rdfs:label "W303" ;
 .
+abox:gain16
+  a om:Measure ;
+  om:hasNumericalValue "0.16" ;
+  om:hasUnit opil:pureNumber ;
+  rdfs:comment "" ;
+  rdfs:label "0.16" ;
+.
 abox:high_osm_media
   a opil:Media ;
   opil:value "high_osm_media"^^xsd:anySimpleType ;
   rdfs:comment "" ;
   rdfs:label "high_osm_media" ;
 .
+abox:high_speed
+  a opil:StringValue ;
+  opil:value "high_speed" ;
+  opil:valueOf <http://bbn.com/synbio/sd2/abox#incubation_info.shaking> ;
+  rdfs:comment "" ;
+  rdfs:label "high_speed" ;
+.
+<http://bbn.com/synbio/sd2/abox#incubation_info.shaking>
+  a opil:StringParameter ;
+  opil:name "incubation info.shaking" ;
+  rdfs:comment "" ;
+  rdfs:label "incubation info.shaking" ;
+.
+<http://bbn.com/synbio/sd2/abox#induction_info.dil_volume>
+  a opil:StringParameter ;
+  opil:name "induction info.dil volume" ;
+  rdfs:comment "" ;
+  rdfs:label "induction info.dil volume" ;
+.
+<http://bbn.com/synbio/sd2/abox#induction_info.induction_reagents.media_vol>
+  a opil:StringParameter ;
+  opil:name "induction info.induction reagents.media vol" ;
+  rdfs:comment "" ;
+  rdfs:label "induction info.induction reagents.media vol" ;
+.
+<http://bbn.com/synbio/sd2/abox#induction_info.induction_time.doubling_time>
+  a opil:StringParameter ;
+  opil:name "induction info.induction time.doubling time" ;
+  rdfs:comment "" ;
+  rdfs:label "induction info.induction time.doubling time" ;
+.
+<http://bbn.com/synbio/sd2/abox#induction_info.induction_time.induction_plate_info>
+  a opil:StringParameter ;
+  opil:name "induction info.induction time.induction plate info" ;
+  rdfs:comment "" ;
+  rdfs:label "induction info.induction time.induction plate info" ;
+.
+<http://bbn.com/synbio/sd2/abox#induction_info.induction_time.total_induction_time>
+  a opil:StringParameter ;
+  opil:name "induction info.induction time.total induction time" ;
+  rdfs:comment "" ;
+  rdfs:label "induction info.induction time.total induction time" ;
+.
+<http://bbn.com/synbio/sd2/abox#inoc_info.inc_time_1>
+  a opil:StringParameter ;
+  opil:name "inoc info.inc time 1" ;
+  rdfs:comment "" ;
+  rdfs:label "inoc info.inc time 1" ;
+.
+<http://bbn.com/synbio/sd2/abox#inoc_info.inoc_media_vol>
+  a opil:StringParameter ;
+  opil:name "inoc info.inoc media vol" ;
+  rdfs:comment "" ;
+  rdfs:label "inoc info.inoc media vol" ;
+.
+<http://bbn.com/synbio/sd2/abox#inoc_info.inoc_vol>
+  a opil:StringParameter ;
+  opil:name "inoc info.inoc vol" ;
+  rdfs:comment "" ;
+  rdfs:label "inoc info.inoc vol" ;
+.
+<http://bbn.com/synbio/sd2/abox#inoc_info.inoculation_media>
+  a opil:StringParameter ;
+  opil:name "inoc info.inoculation media" ;
+  rdfs:comment "" ;
+  rdfs:label "inoc info.inoculation media" ;
+.
+abox:new-induction-plate
+  a opil:StringValue ;
+  opil:value "new-induction-plate" ;
+  opil:valueOf <http://bbn.com/synbio/sd2/abox#induction_info.induction_time.induction_plate_info> ;
+  rdfs:comment "" ;
+  rdfs:label "new-induction-plate" ;
+.
+abox:plate_reader_gain
+  a opil:MeasureValue ;
+  opil:hasValueObject abox:gain16 ;
+  opil:valueOf <http://bbn.com/synbio/sd2/abox#plate_reader_info.gain> ;
+  rdfs:comment "" ;
+  rdfs:label "plate reader gain" ;
+.
+<http://bbn.com/synbio/sd2/abox#plate_reader_info.fluor_em>
+  a opil:StringParameter ;
+  opil:name "plate reader info.fluor em" ;
+  rdfs:comment "" ;
+  rdfs:label "plate reader info.fluor em" ;
+.
+<http://bbn.com/synbio/sd2/abox#plate_reader_info.fluor_ex>
+  a opil:StringParameter ;
+  opil:name "plate reader info.fluor ex" ;
+  rdfs:comment "" ;
+  rdfs:label "plate reader info.fluor ex" ;
+.
+<http://bbn.com/synbio/sd2/abox#plate_reader_info.gain>
+  a opil:MeasureParameter ;
+  opil:name "plate reader info.gain" ;
+  rdfs:comment "" ;
+  rdfs:label "plate reader info.gain" ;
+.
+<http://bbn.com/synbio/sd2/abox#read_info.sampling_info.read_cult_vol>
+  a opil:StringParameter ;
+  opil:name "read info.sampling info.read cult vol" ;
+  rdfs:comment "" ;
+  rdfs:label "read info.sampling info.read cult vol" ;
+.
+<http://bbn.com/synbio/sd2/abox#recovery_info.recovery_media_vol>
+  a opil:StringParameter ;
+  opil:name "recovery info.recovery media vol" ;
+  rdfs:comment "" ;
+  rdfs:label "recovery info.recovery media vol" ;
+.
+<http://bbn.com/synbio/sd2/abox#recovery_info.recovery_sample_vol>
+  a opil:StringParameter ;
+  opil:name "recovery info.recovery sample vol" ;
+  rdfs:comment "" ;
+  rdfs:label "recovery info.recovery sample vol" ;
+.
 abox:rich_media
   a opil:Media ;
   opil:value "rich_media"^^xsd:anySimpleType ;
   rdfs:comment "" ;
   rdfs:label "rich_media" ;
+.
+abox:sc_media
+  a opil:StringValue ;
+  opil:value "sc_media" ;
+  opil:valueOf <http://bbn.com/synbio/sd2/abox#inoc_info.inoculation_media> ;
+  rdfs:comment "" ;
+  rdfs:label "sc_media" ;
 .
 abox:slow_media
   a opil:Media ;
