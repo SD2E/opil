@@ -46,7 +46,6 @@ class OpilJsonGenerator:
                 if not row.value is None:
                     parameters.update({row.paramName.value: row.value.value})
                 elif not row.numericalValue is None and not row.unitName is None:
-
                     paramValue = str(row.numericalValue.value)
                     if len(row.unitName.value) > 0:
                         paramValue+= ':' + row.unitName.value
