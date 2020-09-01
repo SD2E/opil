@@ -27,90 +27,6 @@
   owl:imports om: ;
   owl:versionInfo "0.1" ;
 .
-<http://bbn.com/synbio/sd2/abox#1000microliter>
-  a opil:StringValue ;
-  opil:value "1000:microliter" ;
-  opil:valueOf <http://bbn.com/synbio/sd2/abox#recovery_info.recovery_media_vol> ;
-  rdfs:comment "" ;
-  rdfs:label "1000:microliter" ;
-.
-<http://bbn.com/synbio/sd2/abox#10microliter>
-  a opil:StringValue ;
-  opil:value "10:microliter" ;
-  opil:valueOf <http://bbn.com/synbio/sd2/abox#inoc_info.inoc_vol> ;
-  rdfs:comment "" ;
-  rdfs:label "10:microliter" ;
-.
-<http://bbn.com/synbio/sd2/abox#16hour>
-  a opil:StringValue ;
-  opil:value "16:hour" ;
-  opil:valueOf <http://bbn.com/synbio/sd2/abox#inoc_info.inc_time_1> ;
-  rdfs:comment "" ;
-  rdfs:label "16:hour" ;
-.
-<http://bbn.com/synbio/sd2/abox#1700microliter>
-  a opil:StringValue ;
-  opil:value "1700:microliter" ;
-  opil:valueOf <http://bbn.com/synbio/sd2/abox#induction_info.dil_volume> ;
-  rdfs:comment "" ;
-  rdfs:label "1700:microliter" ;
-.
-<http://bbn.com/synbio/sd2/abox#2hour>
-  a opil:StringValue ;
-  opil:value "2:hour" ;
-  opil:valueOf <http://bbn.com/synbio/sd2/abox#induction_info.induction_time.doubling_time> ;
-  rdfs:comment "" ;
-  rdfs:label "2:hour" ;
-.
-<http://bbn.com/synbio/sd2/abox#300microliter0>
-  a opil:StringValue ;
-  opil:value "300:microliter" ;
-  opil:valueOf <http://bbn.com/synbio/sd2/abox#induction_info.induction_reagents.media_vol> ;
-  rdfs:comment "" ;
-  rdfs:label "300:microliter" ;
-.
-<http://bbn.com/synbio/sd2/abox#300microliter1>
-  a opil:StringValue ;
-  opil:value "300:microliter" ;
-  opil:valueOf <http://bbn.com/synbio/sd2/abox#read_info.sampling_info.read_cult_vol> ;
-  rdfs:comment "" ;
-  rdfs:label "300:microliter" ;
-.
-<http://bbn.com/synbio/sd2/abox#488nanometer>
-  a opil:StringValue ;
-  opil:value "488:nanometer" ;
-  opil:valueOf <http://bbn.com/synbio/sd2/abox#plate_reader_info.fluor_ex> ;
-  rdfs:comment "" ;
-  rdfs:label "488:nanometer" ;
-.
-<http://bbn.com/synbio/sd2/abox#50microliter>
-  a opil:StringValue ;
-  opil:value "50:microliter" ;
-  opil:valueOf <http://bbn.com/synbio/sd2/abox#recovery_info.recovery_sample_vol> ;
-  rdfs:comment "" ;
-  rdfs:label "50:microliter" ;
-.
-<http://bbn.com/synbio/sd2/abox#530nanometer>
-  a opil:StringValue ;
-  opil:value "530:nanometer" ;
-  opil:valueOf <http://bbn.com/synbio/sd2/abox#plate_reader_info.fluor_em> ;
-  rdfs:comment "" ;
-  rdfs:label "530:nanometer" ;
-.
-<http://bbn.com/synbio/sd2/abox#700microliter>
-  a opil:StringValue ;
-  opil:value "700:microliter" ;
-  opil:valueOf <http://bbn.com/synbio/sd2/abox#inoc_info.inoc_media_vol> ;
-  rdfs:comment "" ;
-  rdfs:label "700:microliter" ;
-.
-<http://bbn.com/synbio/sd2/abox#8hour>
-  a opil:StringValue ;
-  opil:value "8:hour" ;
-  opil:valueOf <http://bbn.com/synbio/sd2/abox#induction_info.induction_time.total_induction_time> ;
-  rdfs:comment "" ;
-  rdfs:label "8:hour" ;
-.
 abox:Hour0
   a om:Measure ;
   om:hasNumericalValue "0" ;
@@ -540,6 +456,47 @@ abox:W303
   rdfs:comment "" ;
   rdfs:label "W303" ;
 .
+abox:doubling_time_meas
+  a om:Measure ;
+  om:hasNumericalValue "2" ;
+  om:hasUnit om:hour ;
+  rdfs:comment "" ;
+  rdfs:label "doubling time meas" ;
+.
+abox:doubling_time_value
+  a opil:MeasureValue ;
+  opil:hasValueObject abox:doubling_time_meas ;
+  opil:valueOf <http://bbn.com/synbio/sd2/abox#induction_info.induction_time.doubling_time> ;
+  rdfs:comment "" ;
+.
+abox:fluor_em_meas
+  a om:Measure ;
+  om:hasNumericalValue "530" ;
+  om:hasUnit om:nanometre ;
+  rdfs:comment "" ;
+  rdfs:label "fluor em meas" ;
+.
+abox:fluor_em_value
+  a opil:MeasureValue ;
+  opil:hasValueObject abox:fluor_em_meas ;
+  opil:valueOf <http://bbn.com/synbio/sd2/abox#plate_reader_info.fluor_em> ;
+  rdfs:comment "" ;
+  rdfs:label "530:nanometer" ;
+.
+abox:fluor_ex_meas
+  a om:Measure ;
+  om:hasNumericalValue "488" ;
+  om:hasUnit om:nanometre ;
+  rdfs:comment "" ;
+  rdfs:label "fluor ex meas" ;
+.
+abox:fluor_ex_value
+  a opil:MeasureValue ;
+  opil:hasValueObject abox:fluor_ex_meas ;
+  opil:valueOf <http://bbn.com/synbio/sd2/abox#plate_reader_info.fluor_ex> ;
+  rdfs:comment "" ;
+  rdfs:label "488:nanometer" ;
+.
 abox:gain16
   a om:Measure ;
   om:hasNumericalValue "0.16" ;
@@ -567,19 +524,19 @@ abox:high_speed
   rdfs:label "incubation info.shaking" ;
 .
 <http://bbn.com/synbio/sd2/abox#induction_info.dil_volume>
-  a opil:StringParameter ;
+  a opil:MeasureParameter ;
   opil:name "induction info.dil volume" ;
   rdfs:comment "" ;
   rdfs:label "induction info.dil volume" ;
 .
 <http://bbn.com/synbio/sd2/abox#induction_info.induction_reagents.media_vol>
-  a opil:StringParameter ;
+  a opil:MeasureParameter ;
   opil:name "induction info.induction reagents.media vol" ;
   rdfs:comment "" ;
   rdfs:label "induction info.induction reagents.media vol" ;
 .
 <http://bbn.com/synbio/sd2/abox#induction_info.induction_time.doubling_time>
-  a opil:StringParameter ;
+  a opil:MeasureParameter ;
   opil:name "induction info.induction time.doubling time" ;
   rdfs:comment "" ;
   rdfs:label "induction info.induction time.doubling time" ;
@@ -591,25 +548,32 @@ abox:high_speed
   rdfs:label "induction info.induction time.induction plate info" ;
 .
 <http://bbn.com/synbio/sd2/abox#induction_info.induction_time.total_induction_time>
-  a opil:StringParameter ;
+  a opil:MeasureParameter ;
   opil:name "induction info.induction time.total induction time" ;
   rdfs:comment "" ;
   rdfs:label "induction info.induction time.total induction time" ;
 .
+<http://bbn.com/synbio/sd2/abox#info.dil.vol_meas>
+  a om:Measure ;
+  om:hasNumericalValue "1700" ;
+  om:hasUnit om:microlitre ;
+  rdfs:comment "" ;
+  rdfs:label "info.dil.vol" ;
+.
 <http://bbn.com/synbio/sd2/abox#inoc_info.inc_time_1>
-  a opil:StringParameter ;
+  a opil:MeasureParameter ;
   opil:name "inoc info.inc time 1" ;
   rdfs:comment "" ;
   rdfs:label "inoc info.inc time 1" ;
 .
 <http://bbn.com/synbio/sd2/abox#inoc_info.inoc_media_vol>
-  a opil:StringParameter ;
+  a opil:MeasureParameter ;
   opil:name "inoc info.inoc media vol" ;
   rdfs:comment "" ;
   rdfs:label "inoc info.inoc media vol" ;
 .
 <http://bbn.com/synbio/sd2/abox#inoc_info.inoc_vol>
-  a opil:StringParameter ;
+  a opil:MeasureParameter ;
   opil:name "inoc info.inoc vol" ;
   rdfs:comment "" ;
   rdfs:label "inoc info.inoc vol" ;
@@ -619,6 +583,40 @@ abox:high_speed
   opil:name "inoc info.inoculation media" ;
   rdfs:comment "" ;
   rdfs:label "inoc info.inoculation media" ;
+.
+abox:inoc_media_vol_meas
+  a om:Measure ;
+  om:hasNumericalValue "700" ;
+  om:hasUnit om:microlitre ;
+  rdfs:comment "" ;
+  rdfs:label "inoc media vol meas" ;
+.
+abox:inoc_media_vol_value
+  a opil:MeasureValue ;
+  opil:hasValueObject abox:inoc_media_vol_meas ;
+  opil:valueOf <http://bbn.com/synbio/sd2/abox#inoc_info.inoc_media_vol> ;
+  rdfs:comment "" ;
+  rdfs:label "700:microliter" ;
+.
+abox:inoc_vol_meas
+  a om:Measure ;
+  om:hasNumericalValue "10" ;
+  om:hasUnit om:microlitre ;
+  rdfs:comment "" ;
+  rdfs:label "inoc vol meas" ;
+.
+abox:inoc_vol_value
+  a opil:MeasureValue ;
+  opil:hasValueObject abox:inoc_vol_meas ;
+  opil:valueOf <http://bbn.com/synbio/sd2/abox#inoc_info.inoc_vol> ;
+  rdfs:comment "" ;
+  rdfs:label "10:microliter" ;
+.
+<http://bbn.com/synbio/sd2/abox#inof.dil_vol_value>
+  a opil:MeasureValue ;
+  opil:hasValueObject <http://bbn.com/synbio/sd2/abox#info.dil.vol_meas> ;
+  opil:valueOf <http://bbn.com/synbio/sd2/abox#induction_info.dil_volume> ;
+  rdfs:comment "" ;
 .
 abox:new-induction-plate
   a opil:StringValue ;
@@ -635,13 +633,13 @@ abox:plate_reader_gain
   rdfs:label "plate reader gain" ;
 .
 <http://bbn.com/synbio/sd2/abox#plate_reader_info.fluor_em>
-  a opil:StringParameter ;
+  a opil:MeasureParameter ;
   opil:name "plate reader info.fluor em" ;
   rdfs:comment "" ;
   rdfs:label "plate reader info.fluor em" ;
 .
 <http://bbn.com/synbio/sd2/abox#plate_reader_info.fluor_ex>
-  a opil:StringParameter ;
+  a opil:MeasureParameter ;
   opil:name "plate reader info.fluor ex" ;
   rdfs:comment "" ;
   rdfs:label "plate reader info.fluor ex" ;
@@ -652,23 +650,78 @@ abox:plate_reader_gain
   rdfs:comment "" ;
   rdfs:label "plate reader info.gain" ;
 .
+abox:read_cult_vol_meas
+  a om:Measure ;
+  om:hasNumericalValue "300" ;
+  om:hasUnit om:microlitre ;
+  rdfs:comment "" ;
+  rdfs:label "read cult vol meas" ;
+.
+abox:read_cult_vol_value
+  a opil:MeasureValue ;
+  opil:hasValueObject abox:read_cult_vol_meas ;
+  opil:valueOf <http://bbn.com/synbio/sd2/abox#read_info.sampling_info.read_cult_vol> ;
+  rdfs:comment "" ;
+  rdfs:label "300:microliter" ;
+.
 <http://bbn.com/synbio/sd2/abox#read_info.sampling_info.read_cult_vol>
-  a opil:StringParameter ;
+  a opil:MeasureParameter ;
   opil:name "read info.sampling info.read cult vol" ;
   rdfs:comment "" ;
   rdfs:label "read info.sampling info.read cult vol" ;
 .
+<http://bbn.com/synbio/sd2/abox#reagents.media_vol_meas>
+  a om:Measure ;
+  om:hasNumericalValue "300" ;
+  om:hasUnit om:microlitre ;
+  rdfs:comment "" ;
+  rdfs:label "reagents.media vol" ;
+.
+<http://bbn.com/synbio/sd2/abox#reagents.media_vol_value>
+  a opil:MeasureValue ;
+  opil:hasValueObject <http://bbn.com/synbio/sd2/abox#reagents.media_vol_meas> ;
+  opil:valueOf <http://bbn.com/synbio/sd2/abox#induction_info.induction_reagents.media_vol> ;
+  rdfs:comment "" ;
+.
 <http://bbn.com/synbio/sd2/abox#recovery_info.recovery_media_vol>
-  a opil:StringParameter ;
+  a opil:MeasureParameter ;
   opil:name "recovery info.recovery media vol" ;
   rdfs:comment "" ;
   rdfs:label "recovery info.recovery media vol" ;
 .
 <http://bbn.com/synbio/sd2/abox#recovery_info.recovery_sample_vol>
-  a opil:StringParameter ;
+  a opil:MeasureParameter ;
   opil:name "recovery info.recovery sample vol" ;
   rdfs:comment "" ;
   rdfs:label "recovery info.recovery sample vol" ;
+.
+abox:recovery_media_vol_meas
+  a om:Measure ;
+  om:hasNumericalValue "1000" ;
+  om:hasUnit om:microlitre ;
+  rdfs:comment "" ;
+  rdfs:label "recovery media vol meas" ;
+.
+abox:recovery_media_vol_value
+  a opil:MeasureValue ;
+  opil:hasValueObject abox:recovery_media_vol_meas ;
+  opil:valueOf <http://bbn.com/synbio/sd2/abox#recovery_info.recovery_media_vol> ;
+  rdfs:comment "" ;
+  rdfs:label "1000:microliter" ;
+.
+abox:recovery_sample_vol_meas
+  a om:Measure ;
+  om:hasNumericalValue "50" ;
+  om:hasUnit om:microlitre ;
+  rdfs:comment "" ;
+  rdfs:label "recovery sample vol meas" ;
+.
+abox:recovery_sample_vol_value
+  a opil:MeasureValue ;
+  opil:hasValueObject abox:recovery_sample_vol_meas ;
+  opil:valueOf <http://bbn.com/synbio/sd2/abox#recovery_info.recovery_sample_vol> ;
+  rdfs:comment "" ;
+  rdfs:label "50:microliter" ;
 .
 abox:rich_media
   a opil:Media ;
@@ -688,4 +741,35 @@ abox:slow_media
   opil:value "slow_media"^^xsd:anySimpleType ;
   rdfs:comment "" ;
   rdfs:label "slow_media" ;
+.
+abox:time_1_meas
+  a om:Measure ;
+  om:hasNumericalValue "16" ;
+  om:hasUnit om:hour ;
+  rdfs:comment "" ;
+  rdfs:label "time 1 meas" ;
+.
+abox:time_1_value
+  a opil:MeasureValue ;
+  opil:hasValueObject abox:time_1_meas ;
+  opil:valueOf <http://bbn.com/synbio/sd2/abox#inoc_info.inc_time_1> ;
+  rdfs:comment "" ;
+  rdfs:label "16:hour" ;
+.
+abox:total_induction_time_meas
+  a om:Measure ;
+  om:hasNumericalValue "8" ;
+  om:hasUnit om:hour ;
+  rdfs:comment "" ;
+  rdfs:label "total induction time meas" ;
+.
+abox:total_induction_time_value
+  a opil:MeasureValue ;
+  opil:hasValueObject abox:total_induction_time_meas ;
+  opil:valueOf <http://bbn.com/synbio/sd2/abox#induction_info.induction_time.total_induction_time> ;
+  rdfs:comment "" ;
+  rdfs:label "8:hour" ;
+.
+om:micromolePerSecond-Time
+  rdfs:comment "om:micromolePerSecond-Time" ;
 .

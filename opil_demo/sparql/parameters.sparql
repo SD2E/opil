@@ -21,5 +21,6 @@ select ?paramName ?value ?numericalValue ?unitName where {
           ?meas om:hasNumericalValue ?numericalValue .
           ?meas om:hasUnit ?unit .
           ?unit rdfs:label ?unitName .
+          FILTER (lang(?unitName) = 'en')
     }
 }
