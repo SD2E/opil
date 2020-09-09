@@ -31,40 +31,34 @@ abox:Hour0
   a om:Measure ;
   om:hasNumericalValue "0" ;
   om:hasUnit om:hour ;
-  rdfs:comment "" ;
   rdfs:label "Hour 0" ;
 .
 abox:Hour12
   a om:Measure ;
   om:hasNumericalValue "12" ;
   om:hasUnit om:hour ;
-  rdfs:comment "" ;
   rdfs:label "Hour 12" ;
 .
 abox:Hour16
   a om:Measure ;
   om:hasNumericalValue "16" ;
   om:hasUnit om:hour ;
-  rdfs:comment "" ;
   rdfs:label "Hour 16" ;
 .
 abox:Hour4
   a om:Measure ;
   om:hasNumericalValue "4" ;
   om:hasUnit om:hour ;
-  rdfs:comment "" ;
   rdfs:label "Hour 4" ;
 .
 abox:Hour8
   a om:Measure ;
   om:hasNumericalValue "8" ;
   om:hasUnit om:hour ;
-  rdfs:comment "" ;
   rdfs:label "Hour 8" ;
 .
 abox:MediaSubComponent
   a sbol:SubComponent ;
-  rdfs:comment "" ;
   rdfs:label "Media SubComponent" ;
 .
 abox:Row1Media
@@ -74,7 +68,6 @@ abox:Row1Media
   sbol:variant abox:high_osm_media ;
   sbol:variant abox:rich_media ;
   sbol:variant abox:slow_media ;
-  rdfs:comment "" ;
   rdfs:label "media" ;
 .
 abox:Row1PlateReader
@@ -85,7 +78,6 @@ abox:Row1PlateReader
   opil:time abox:Hour16 ;
   opil:time abox:Hour4 ;
   opil:time abox:Hour8 ;
-  rdfs:comment "" ;
   rdfs:label "Row1 plate reader" ;
 .
 abox:Row1Strains
@@ -94,7 +86,6 @@ abox:Row1Strains
   sbol:variable abox:StrainsSubComponent ;
   sbol:variant abox:UWBF_6390 ;
   sbol:variant abox:W303 ;
-  rdfs:comment "" ;
   rdfs:label "strains" ;
 .
 abox:Row1Temp
@@ -102,7 +93,6 @@ abox:Row1Temp
   a sbol:VariableComponent ;
   sbol:variable abox:TempSubComponent ;
   sbol:variant abox:Temp30C ;
-  rdfs:comment "" ;
   rdfs:label "temperatures" ;
 .
 abox:Row2Flow
@@ -112,7 +102,6 @@ abox:Row2Flow
   opil:time abox:Hour16 ;
   opil:time abox:Hour4 ;
   opil:time abox:Hour8 ;
-  rdfs:comment "" ;
   rdfs:label "Row2Flow" ;
 .
 abox:Row2Media
@@ -122,7 +111,6 @@ abox:Row2Media
   sbol:variant abox:high_osm_media ;
   sbol:variant abox:rich_media ;
   sbol:variant abox:slow_media ;
-  rdfs:comment "" ;
   rdfs:label "media" ;
 .
 abox:Row2Strains
@@ -131,7 +119,6 @@ abox:Row2Strains
   sbol:variable abox:StrainsSubComponent ;
   sbol:variant abox:UWBF_6390 ;
   sbol:variant abox:W303 ;
-  rdfs:comment "" ;
   rdfs:label "strains" ;
 .
 abox:Row2Temp
@@ -139,7 +126,6 @@ abox:Row2Temp
   a sbol:VariableComponent ;
   sbol:variable abox:TempSubComponent ;
   sbol:variant abox:Temp30C ;
-  rdfs:comment "" ;
   rdfs:label "temperatures" ;
 .
 abox:Row3Media
@@ -149,7 +135,6 @@ abox:Row3Media
   sbol:variant abox:high_osm_media ;
   sbol:variant abox:rich_media ;
   sbol:variant abox:slow_media ;
-  rdfs:comment "" ;
   rdfs:label "media" ;
 .
 abox:Row3PlateReader
@@ -160,7 +145,6 @@ abox:Row3PlateReader
   opil:time abox:Hour16 ;
   opil:time abox:Hour4 ;
   opil:time abox:Hour8 ;
-  rdfs:comment "" ;
   rdfs:label "Row3 plate reader" ;
 .
 abox:Row3Strains
@@ -190,7 +174,6 @@ abox:Row3Strains
   sbol:variant abox:UWBF_XOR_01 ;
   sbol:variant abox:UWBF_XOR_10 ;
   sbol:variant abox:UWBF_XOR_11 ;
-  rdfs:comment "" ;
   rdfs:label "strains" ;
 .
 abox:Row3Temp
@@ -198,18 +181,15 @@ abox:Row3Temp
   a sbol:VariableComponent ;
   sbol:variable abox:TempSubComponent ;
   sbol:variant abox:Temp30C ;
-  rdfs:comment "" ;
   rdfs:label "temperatures" ;
 .
 abox:SC_Media
   a opil:Media ;
   opil:value "SC Media"^^xsd:anySimpleType ;
-  rdfs:comment "" ;
   rdfs:label "SC Media" ;
 .
 abox:StrainsSubComponent
   a sbol:SubComponent ;
-  rdfs:comment "" ;
   rdfs:label "Strains SubComponent" ;
 .
 abox:TableRow1
@@ -220,7 +200,6 @@ abox:TableRow1
   sbol:template abox:TableTemplate ;
   sbol:variableComponent abox:Row1Strains ;
   sbol:variableComponent abox:Row1Temp ;
-  rdfs:comment "" ;
   rdfs:label "Table row1" ;
 .
 abox:TableRow2
@@ -232,7 +211,6 @@ abox:TableRow2
   sbol:variableComponent abox:Row2Media ;
   sbol:variableComponent abox:Row2Strains ;
   sbol:variableComponent abox:Row2Temp ;
-  rdfs:comment "" ;
   rdfs:label "Table row2" ;
 .
 abox:TableRow3
@@ -244,7 +222,6 @@ abox:TableRow3
   sbol:variableComponent abox:Row3Media ;
   sbol:variableComponent abox:Row3Strains ;
   sbol:variableComponent abox:Row3Temp ;
-  rdfs:comment "" ;
   rdfs:label "Table row3" ;
 .
 abox:TableTemplate
@@ -252,7 +229,6 @@ abox:TableTemplate
   sbol:hasFeature abox:MediaSubComponent ;
   sbol:hasFeature abox:StrainsSubComponent ;
   sbol:hasFeature abox:TempSubComponent ;
-  rdfs:comment "" ;
   rdfs:label "Table template" ;
 .
 abox:Temp30C
@@ -260,12 +236,10 @@ abox:Temp30C
   a om:Measure ;
   om:hasNumericalValue "30"^^xsd:decimal ;
   om:hasUnit om:degreeCelsius ;
-  rdfs:comment "" ;
   rdfs:label "Temp 30 deg C" ;
 .
 abox:TempSubComponent
   a sbol:SubComponent ;
-  rdfs:comment "" ;
   rdfs:label "Temp SubComponent" ;
 .
 abox:Time_Series_Round_1
@@ -279,497 +253,409 @@ abox:Time_Series_Round_1
   sd2:experimentReferenceUrl "https://docs.google.com/document/d/1Mba6kqDila4W32Z46NEqXZFx868A3O36I9GIVOvMQ70"^^xsd:anyURI ;
   sd2:experimentVersion "1" ;
   sd2:lab "Transcriptic" ;
-  rdfs:comment "" ;
 .
 abox:UWBF_6390
   a opil:Strain ;
   opil:uri "https://hub.sd2e.org/user/sd2e/design/UWBF_6390/1"^^xsd:anyURI ;
   sd2:labID "name.transcriptic.UWBF_6390" ;
-  rdfs:comment "" ;
   rdfs:label "UWBF_6390" ;
 .
 abox:UWBF_AND_00
   a opil:Strain ;
   opil:uri "https://hub.sd2e.org/user/sd2e/design/UWBF_7376/1"^^xsd:anyURI ;
   sd2:labID "name.transcriptic.UWBF_7376" ;
-  rdfs:comment "" ;
   rdfs:label "UWBF_AND_00" ;
 .
 abox:UWBF_AND_01
   a opil:Strain ;
   opil:uri "https://hub.sd2e.org/user/sd2e/design/UWBF_7375/1"^^xsd:anyURI ;
   sd2:labID "name.transcriptic.UWBF_7375" ;
-  rdfs:comment "" ;
   rdfs:label "UWBF_AND_01" ;
 .
 abox:UWBF_AND_10
   a opil:Strain ;
   opil:uri "https://hub.sd2e.org/user/sd2e/design/UWBF_7373/1"^^xsd:anyURI ;
   sd2:labID "name.transcriptic.UWBF_7373" ;
-  rdfs:comment "" ;
   rdfs:label "UWBF_AND_10" ;
 .
 abox:UWBF_AND_11
   a opil:Strain ;
   opil:uri "https://hub.sd2e.org/user/sd2e/design/UWBF_7374/1"^^xsd:anyURI ;
   sd2:labID "name.transcriptic.UWBF_7374" ;
-  rdfs:comment "" ;
   rdfs:label "UWBF_AND_11" ;
 .
 abox:UWBF_NAND_00
   a opil:Strain ;
   opil:uri "https://hub.sd2e.org/user/sd2e/design/UWBF_8544/1"^^xsd:anyURI ;
   sd2:labID "name.transcriptic.UWBF_8544" ;
-  rdfs:comment "" ;
   rdfs:label "UWBF_NAND_00" ;
 .
 abox:UWBF_NAND_01
   a opil:Strain ;
   opil:uri "https://hub.sd2e.org/user/sd2e/design/UWBF_8545/1"^^xsd:anyURI ;
   sd2:labID "name.transcriptic.UWBF_8545" ;
-  rdfs:comment "" ;
   rdfs:label "UWBF_NAND_01" ;
 .
 abox:UWBF_NAND_10
   a opil:Strain ;
   opil:uri "https://hub.sd2e.org/user/sd2e/design/UWBF_8543/1"^^xsd:anyURI ;
   sd2:labID "name.transcriptic.UWBF_8543" ;
-  rdfs:comment "" ;
   rdfs:label "UWBF_NAND_10" ;
 .
 abox:UWBF_NAND_11
   a opil:Strain ;
   opil:uri "https://hub.sd2e.org/user/sd2e/design/UWBF_8542/1"^^xsd:anyURI ;
   sd2:labID "name.transcriptic.UWBF_8542" ;
-  rdfs:comment "" ;
   rdfs:label "UWBF_NAND_11" ;
 .
 abox:UWBF_NOR_01
   a opil:Strain ;
   opil:uri "https://hub.sd2e.org/user/sd2e/design/UWBF_6389/1"^^xsd:anyURI ;
   sd2:labID "name.transcriptic.UWBF_6389" ;
-  rdfs:comment "" ;
   rdfs:label "UWBF_NOR_01" ;
 .
 abox:UWBF_NOR_10
   a opil:Strain ;
   opil:uri "https://hub.sd2e.org/user/sd2e/design/UWBF_6388/1"^^xsd:anyURI ;
   sd2:labID "name.transcriptic.UWBF_6388" ;
-  rdfs:comment "" ;
   rdfs:label "UWBF_NOR_10" ;
 .
 abox:UWBF_NOR_11
   a opil:Strain ;
   opil:uri "https://hub.sd2e.org/user/sd2e/design/UWBF_6391/1"^^xsd:anyURI ;
   sd2:labID "name.transcriptic.UWBF_6391" ;
-  rdfs:comment "" ;
   rdfs:label "UWBF_NOR_11" ;
 .
 abox:UWBF_OR_00
   a opil:Strain ;
   opil:uri "https://hub.sd2e.org/user/sd2e/design/UWBF_8225/1"^^xsd:anyURI ;
   sd2:labID "name.transcriptic.UWBF_8225" ;
-  rdfs:comment "" ;
   rdfs:label "UWBF_OR_00" ;
 .
 abox:UWBF_OR_01
   a opil:Strain ;
   opil:uri "https://hub.sd2e.org/user/sd2e/design/UWBF_5783/1"^^xsd:anyURI ;
   sd2:labID "name.transcriptic.UWBF_5783" ;
-  rdfs:comment "" ;
   rdfs:label "UWBF_OR_01" ;
 .
 abox:UWBF_OR_10
   a opil:Strain ;
   opil:uri "https://hub.sd2e.org/user/sd2e/design/UWBF_5993/1"^^xsd:anyURI ;
   sd2:labID "name.transcriptic.UWBF_5993" ;
-  rdfs:comment "" ;
   rdfs:label "UWBF_OR_10" ;
 .
 abox:UWBF_OR_11
   a opil:Strain ;
   opil:uri "https://hub.sd2e.org/user/sd2e/design/UWBF_5992/1"^^xsd:anyURI ;
   sd2:labID "name.transcriptic.UWBF_5992" ;
-  rdfs:comment "" ;
   rdfs:label "UWBF_OR_11" ;
 .
 abox:UWBF_XNOR_00
   a opil:Strain ;
   opil:uri "https://hub.sd2e.org/user/sd2e/design/UWBF_7300/1"^^xsd:anyURI ;
   sd2:labID "name.transcriptic.UWBF_7300" ;
-  rdfs:comment "" ;
   rdfs:label "UWBF_XNOR_00" ;
 .
 abox:UWBF_XNOR_01
   a opil:Strain ;
   opil:uri "https://hub.sd2e.org/user/sd2e/design/UWBF_8231/1"^^xsd:anyURI ;
   sd2:labID "name.transcriptic.UWBF_8231" ;
-  rdfs:comment "" ;
   rdfs:label "UWBF_XNOR_01" ;
 .
 abox:UWBF_XNOR_10
   a opil:Strain ;
   opil:uri "https://hub.sd2e.org/user/sd2e/design/UWBF_7377/1"^^xsd:anyURI ;
   sd2:labID "name.transcriptic.UWBF_7377" ;
-  rdfs:comment "" ;
   rdfs:label "UWBF_XNOR_10" ;
 .
 abox:UWBF_XNOR_11
   a opil:Strain ;
   opil:uri "https://hub.sd2e.org/user/sd2e/design/UWBF_7299/1"^^xsd:anyURI ;
   sd2:labID "name.transcriptic.UWBF_7299" ;
-  rdfs:comment "" ;
   rdfs:label "UWBF_XNOR_11" ;
 .
 abox:UWBF_XOR_00
   a opil:Strain ;
   opil:uri "https://hub.sd2e.org/user/sd2e/design/UWBF_16970/1"^^xsd:anyURI ;
   sd2:labID "name.transcriptic.UWBF_16970" ;
-  rdfs:comment "" ;
   rdfs:label "UWBF_XOR_00" ;
 .
 abox:UWBF_XOR_01
   a opil:Strain ;
   opil:uri "https://hub.sd2e.org/user/sd2e/design/UWBF_16969/1"^^xsd:anyURI ;
   sd2:labID "name.transcriptic.UWBF_16969" ;
-  rdfs:comment "" ;
   rdfs:label "UWBF_XOR_01" ;
 .
 abox:UWBF_XOR_10
   a opil:Strain ;
   opil:uri "https://hub.sd2e.org/user/sd2e/design/UWBF_16968/1"^^xsd:anyURI ;
   sd2:labID "name.transcriptic.UWBF_16968" ;
-  rdfs:comment "" ;
   rdfs:label "UWBF_XOR_10" ;
 .
 abox:UWBF_XOR_11
   a opil:Strain ;
   opil:uri "https://hub.sd2e.org/user/sd2e/design/UWBF_16967/1"^^xsd:anyURI ;
   sd2:labID "name.transcriptic.UWBF_16967" ;
-  rdfs:comment "" ;
   rdfs:label "UWBF_XOR_11" ;
 .
 abox:W303
   a opil:Strain ;
   opil:uri "https://hub.sd2e.org/user/sd2e/design/W303/1"^^xsd:anyURI ;
   sd2:labID "name.transcriptic.W303" ;
-  rdfs:comment "" ;
   rdfs:label "W303" ;
 .
 abox:doubling_time_meas
   a om:Measure ;
   om:hasNumericalValue "2" ;
   om:hasUnit om:hour ;
-  rdfs:comment "" ;
   rdfs:label "doubling time meas" ;
 .
 abox:doubling_time_value
   a opil:MeasureValue ;
   opil:hasValueObject abox:doubling_time_meas ;
   opil:valueOf <http://bbn.com/synbio/sd2/abox#induction_info.induction_time.doubling_time> ;
-  rdfs:comment "" ;
 .
 abox:fluor_em_meas
   a om:Measure ;
   om:hasNumericalValue "530" ;
   om:hasUnit om:nanometre ;
-  rdfs:comment "" ;
   rdfs:label "fluor em meas" ;
 .
 abox:fluor_em_value
   a opil:MeasureValue ;
   opil:hasValueObject abox:fluor_em_meas ;
   opil:valueOf <http://bbn.com/synbio/sd2/abox#plate_reader_info.fluor_em> ;
-  rdfs:comment "" ;
   rdfs:label "530:nanometer" ;
 .
 abox:fluor_ex_meas
   a om:Measure ;
   om:hasNumericalValue "488" ;
   om:hasUnit om:nanometre ;
-  rdfs:comment "" ;
   rdfs:label "fluor ex meas" ;
 .
 abox:fluor_ex_value
   a opil:MeasureValue ;
   opil:hasValueObject abox:fluor_ex_meas ;
   opil:valueOf <http://bbn.com/synbio/sd2/abox#plate_reader_info.fluor_ex> ;
-  rdfs:comment "" ;
   rdfs:label "488:nanometer" ;
 .
 abox:gain16
   a om:Measure ;
   om:hasNumericalValue "0.16" ;
   om:hasUnit opil:pureNumber ;
-  rdfs:comment "" ;
   rdfs:label "0.16" ;
 .
 abox:high_osm_media
   a opil:Media ;
   opil:value "high_osm_media"^^xsd:anySimpleType ;
-  rdfs:comment "" ;
   rdfs:label "high_osm_media" ;
 .
 abox:high_speed
   a opil:StringValue ;
   opil:value "high_speed" ;
   opil:valueOf <http://bbn.com/synbio/sd2/abox#incubation_info.shaking> ;
-  rdfs:comment "" ;
   rdfs:label "high_speed" ;
 .
 <http://bbn.com/synbio/sd2/abox#incubation_info.shaking>
   a opil:StringParameter ;
   opil:name "incubation info.shaking" ;
-  rdfs:comment "" ;
-  rdfs:label "incubation info.shaking" ;
 .
 <http://bbn.com/synbio/sd2/abox#induction_info.dil_volume>
   a opil:MeasureParameter ;
   opil:name "induction info.dil volume" ;
-  rdfs:comment "" ;
-  rdfs:label "induction info.dil volume" ;
 .
 <http://bbn.com/synbio/sd2/abox#induction_info.induction_reagents.media_vol>
   a opil:MeasureParameter ;
   opil:name "induction info.induction reagents.media vol" ;
-  rdfs:comment "" ;
-  rdfs:label "induction info.induction reagents.media vol" ;
 .
 <http://bbn.com/synbio/sd2/abox#induction_info.induction_time.doubling_time>
   a opil:MeasureParameter ;
   opil:name "induction info.induction time.doubling time" ;
-  rdfs:comment "" ;
-  rdfs:label "induction info.induction time.doubling time" ;
 .
 <http://bbn.com/synbio/sd2/abox#induction_info.induction_time.induction_plate_info>
   a opil:StringParameter ;
   opil:name "induction info.induction time.induction plate info" ;
-  rdfs:comment "" ;
-  rdfs:label "induction info.induction time.induction plate info" ;
 .
 <http://bbn.com/synbio/sd2/abox#induction_info.induction_time.total_induction_time>
   a opil:MeasureParameter ;
   opil:name "induction info.induction time.total induction time" ;
-  rdfs:comment "" ;
-  rdfs:label "induction info.induction time.total induction time" ;
 .
 <http://bbn.com/synbio/sd2/abox#info.dil.vol_meas>
   a om:Measure ;
   om:hasNumericalValue "1700" ;
   om:hasUnit om:microlitre ;
-  rdfs:comment "" ;
   rdfs:label "info.dil.vol" ;
 .
 <http://bbn.com/synbio/sd2/abox#inoc_info.inc_time_1>
   a opil:MeasureParameter ;
   opil:name "inoc info.inc time 1" ;
-  rdfs:comment "" ;
   rdfs:label "inoc info.inc time 1" ;
 .
 <http://bbn.com/synbio/sd2/abox#inoc_info.inoc_media_vol>
   a opil:MeasureParameter ;
   opil:name "inoc info.inoc media vol" ;
-  rdfs:comment "" ;
   rdfs:label "inoc info.inoc media vol" ;
 .
 <http://bbn.com/synbio/sd2/abox#inoc_info.inoc_vol>
   a opil:MeasureParameter ;
   opil:name "inoc info.inoc vol" ;
-  rdfs:comment "" ;
   rdfs:label "inoc info.inoc vol" ;
 .
 <http://bbn.com/synbio/sd2/abox#inoc_info.inoculation_media>
   a opil:StringParameter ;
   opil:name "inoc info.inoculation media" ;
-  rdfs:comment "" ;
   rdfs:label "inoc info.inoculation media" ;
 .
 abox:inoc_media_vol_meas
   a om:Measure ;
   om:hasNumericalValue "700" ;
   om:hasUnit om:microlitre ;
-  rdfs:comment "" ;
   rdfs:label "inoc media vol meas" ;
 .
 abox:inoc_media_vol_value
   a opil:MeasureValue ;
   opil:hasValueObject abox:inoc_media_vol_meas ;
   opil:valueOf <http://bbn.com/synbio/sd2/abox#inoc_info.inoc_media_vol> ;
-  rdfs:comment "" ;
   rdfs:label "700:microliter" ;
 .
 abox:inoc_vol_meas
   a om:Measure ;
   om:hasNumericalValue "10" ;
   om:hasUnit om:microlitre ;
-  rdfs:comment "" ;
   rdfs:label "inoc vol meas" ;
 .
 abox:inoc_vol_value
   a opil:MeasureValue ;
   opil:hasValueObject abox:inoc_vol_meas ;
   opil:valueOf <http://bbn.com/synbio/sd2/abox#inoc_info.inoc_vol> ;
-  rdfs:comment "" ;
   rdfs:label "10:microliter" ;
 .
 <http://bbn.com/synbio/sd2/abox#inof.dil_vol_value>
   a opil:MeasureValue ;
   opil:hasValueObject <http://bbn.com/synbio/sd2/abox#info.dil.vol_meas> ;
   opil:valueOf <http://bbn.com/synbio/sd2/abox#induction_info.dil_volume> ;
-  rdfs:comment "" ;
 .
 abox:new-induction-plate
   a opil:StringValue ;
   opil:value "new-induction-plate" ;
   opil:valueOf <http://bbn.com/synbio/sd2/abox#induction_info.induction_time.induction_plate_info> ;
-  rdfs:comment "" ;
   rdfs:label "new-induction-plate" ;
 .
 abox:plate_reader_gain
   a opil:MeasureValue ;
   opil:hasValueObject abox:gain16 ;
   opil:valueOf <http://bbn.com/synbio/sd2/abox#plate_reader_info.gain> ;
-  rdfs:comment "" ;
   rdfs:label "plate reader gain" ;
 .
 <http://bbn.com/synbio/sd2/abox#plate_reader_info.fluor_em>
   a opil:MeasureParameter ;
   opil:name "plate reader info.fluor em" ;
-  rdfs:comment "" ;
-  rdfs:label "plate reader info.fluor em" ;
 .
 <http://bbn.com/synbio/sd2/abox#plate_reader_info.fluor_ex>
   a opil:MeasureParameter ;
   opil:name "plate reader info.fluor ex" ;
-  rdfs:comment "" ;
-  rdfs:label "plate reader info.fluor ex" ;
 .
 <http://bbn.com/synbio/sd2/abox#plate_reader_info.gain>
   a opil:MeasureParameter ;
   opil:name "plate reader info.gain" ;
-  rdfs:comment "" ;
-  rdfs:label "plate reader info.gain" ;
 .
 abox:read_cult_vol_meas
   a om:Measure ;
   om:hasNumericalValue "300" ;
   om:hasUnit om:microlitre ;
-  rdfs:comment "" ;
   rdfs:label "read cult vol meas" ;
 .
 abox:read_cult_vol_value
   a opil:MeasureValue ;
   opil:hasValueObject abox:read_cult_vol_meas ;
   opil:valueOf <http://bbn.com/synbio/sd2/abox#read_info.sampling_info.read_cult_vol> ;
-  rdfs:comment "" ;
   rdfs:label "300:microliter" ;
 .
 <http://bbn.com/synbio/sd2/abox#read_info.sampling_info.read_cult_vol>
   a opil:MeasureParameter ;
   opil:name "read info.sampling info.read cult vol" ;
-  rdfs:comment "" ;
   rdfs:label "read info.sampling info.read cult vol" ;
 .
 <http://bbn.com/synbio/sd2/abox#reagents.media_vol_meas>
   a om:Measure ;
   om:hasNumericalValue "300" ;
   om:hasUnit om:microlitre ;
-  rdfs:comment "" ;
   rdfs:label "reagents.media vol" ;
 .
 <http://bbn.com/synbio/sd2/abox#reagents.media_vol_value>
   a opil:MeasureValue ;
   opil:hasValueObject <http://bbn.com/synbio/sd2/abox#reagents.media_vol_meas> ;
   opil:valueOf <http://bbn.com/synbio/sd2/abox#induction_info.induction_reagents.media_vol> ;
-  rdfs:comment "" ;
 .
 <http://bbn.com/synbio/sd2/abox#recovery_info.recovery_media_vol>
   a opil:MeasureParameter ;
   opil:name "recovery info.recovery media vol" ;
-  rdfs:comment "" ;
-  rdfs:label "recovery info.recovery media vol" ;
 .
 <http://bbn.com/synbio/sd2/abox#recovery_info.recovery_sample_vol>
   a opil:MeasureParameter ;
   opil:name "recovery info.recovery sample vol" ;
-  rdfs:comment "" ;
-  rdfs:label "recovery info.recovery sample vol" ;
 .
 abox:recovery_media_vol_meas
   a om:Measure ;
   om:hasNumericalValue "1000" ;
   om:hasUnit om:microlitre ;
-  rdfs:comment "" ;
   rdfs:label "recovery media vol meas" ;
 .
 abox:recovery_media_vol_value
   a opil:MeasureValue ;
   opil:hasValueObject abox:recovery_media_vol_meas ;
   opil:valueOf <http://bbn.com/synbio/sd2/abox#recovery_info.recovery_media_vol> ;
-  rdfs:comment "" ;
   rdfs:label "1000:microliter" ;
 .
 abox:recovery_sample_vol_meas
   a om:Measure ;
   om:hasNumericalValue "50" ;
   om:hasUnit om:microlitre ;
-  rdfs:comment "" ;
   rdfs:label "recovery sample vol meas" ;
 .
 abox:recovery_sample_vol_value
   a opil:MeasureValue ;
   opil:hasValueObject abox:recovery_sample_vol_meas ;
   opil:valueOf <http://bbn.com/synbio/sd2/abox#recovery_info.recovery_sample_vol> ;
-  rdfs:comment "" ;
   rdfs:label "50:microliter" ;
 .
 abox:rich_media
   a opil:Media ;
   opil:value "rich_media"^^xsd:anySimpleType ;
-  rdfs:comment "" ;
   rdfs:label "rich_media" ;
 .
 abox:sc_media
   a opil:StringValue ;
   opil:value "sc_media" ;
   opil:valueOf <http://bbn.com/synbio/sd2/abox#inoc_info.inoculation_media> ;
-  rdfs:comment "" ;
   rdfs:label "sc_media" ;
 .
 abox:slow_media
   a opil:Media ;
   opil:value "slow_media"^^xsd:anySimpleType ;
-  rdfs:comment "" ;
   rdfs:label "slow_media" ;
 .
 abox:time_1_meas
   a om:Measure ;
   om:hasNumericalValue "16" ;
   om:hasUnit om:hour ;
-  rdfs:comment "" ;
   rdfs:label "time 1 meas" ;
 .
 abox:time_1_value
   a opil:MeasureValue ;
   opil:hasValueObject abox:time_1_meas ;
   opil:valueOf <http://bbn.com/synbio/sd2/abox#inoc_info.inc_time_1> ;
-  rdfs:comment "" ;
   rdfs:label "16:hour" ;
 .
 abox:total_induction_time_meas
   a om:Measure ;
   om:hasNumericalValue "8" ;
   om:hasUnit om:hour ;
-  rdfs:comment "" ;
   rdfs:label "total induction time meas" ;
 .
 abox:total_induction_time_value
   a opil:MeasureValue ;
   opil:hasValueObject abox:total_induction_time_meas ;
   opil:valueOf <http://bbn.com/synbio/sd2/abox#induction_info.induction_time.total_induction_time> ;
-  rdfs:comment "" ;
   rdfs:label "8:hour" ;
-.
-om:micromolePerSecond-Time
-  rdfs:comment "om:micromolePerSecond-Time" ;
 .

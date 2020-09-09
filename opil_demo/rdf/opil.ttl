@@ -21,13 +21,11 @@
 .
 opil:BooleanParameter
   a owl:Class ;
-  rdfs:comment "" ;
   rdfs:label "Boolean parameter" ;
   rdfs:subClassOf opil:Parameter ;
 .
 opil:BooleanValue
   a owl:Class ;
-  rdfs:comment "" ;
   rdfs:label "Boolean value" ;
   rdfs:subClassOf opil:ParameterValue ;
   rdfs:subClassOf [
@@ -74,13 +72,11 @@ opil:EnumeratedValue
 .
 opil:ExperimentalRequest
   a owl:Class ;
-  rdfs:comment "" ;
   rdfs:label "Experimental request" ;
   rdfs:subClassOf owl:Thing ;
 .
 opil:IntegerParameter
   a owl:Class ;
-  rdfs:comment "" ;
   rdfs:label "Integer parameter" ;
   rdfs:subClassOf opil:Parameter ;
   rdfs:subClassOf [
@@ -106,7 +102,6 @@ opil:IntegerParameter
 .
 opil:IntegerValue
   a owl:Class ;
-  rdfs:comment "" ;
   rdfs:label "Integer value" ;
   rdfs:subClassOf opil:ParameterValue ;
   rdfs:subClassOf [
@@ -132,7 +127,6 @@ opil:IntegerValue
 .
 opil:MeasureParameter
   a owl:Class ;
-  rdfs:comment "" ;
   rdfs:label "Measure parameter" ;
   rdfs:subClassOf opil:Parameter ;
   rdfs:subClassOf [
@@ -158,7 +152,6 @@ opil:MeasureParameter
 .
 opil:MeasureValue
   a owl:Class ;
-  rdfs:comment "" ;
   rdfs:label "Measure value" ;
   rdfs:subClassOf opil:ParameterValue ;
   rdfs:subClassOf [
@@ -184,13 +177,11 @@ opil:MeasureValue
 .
 opil:Measurement
   a owl:Class ;
-  rdfs:comment "" ;
   rdfs:label "Measurement" ;
   rdfs:subClassOf owl:Thing ;
 .
 opil:MeasurementType
   a owl:Class ;
-  rdfs:comment "" ;
   rdfs:label "Measurement type" ;
   rdfs:subClassOf owl:Thing ;
 .
@@ -220,13 +211,11 @@ opil:ParameterValue
 .
 opil:Protocol
   a owl:Class ;
-  rdfs:comment "" ;
   rdfs:label "Protocol" ;
   rdfs:subClassOf owl:Thing ;
 .
 opil:SampleSet
   a owl:Class ;
-  rdfs:comment "" ;
   rdfs:label "Sample set" ;
   rdfs:subClassOf sbol:CombinatorialDerivation ;
   rdfs:subClassOf owl:Thing ;
@@ -240,13 +229,11 @@ opil:Strain
 .
 opil:StringParameter
   a owl:Class ;
-  rdfs:comment "" ;
   rdfs:label "String parameter" ;
   rdfs:subClassOf opil:Parameter ;
 .
 opil:StringValue
   a owl:Class ;
-  rdfs:comment "" ;
   rdfs:label "String value" ;
   rdfs:subClassOf opil:ParameterValue ;
   rdfs:subClassOf [
@@ -272,13 +259,11 @@ opil:StringValue
 .
 opil:URIParameter
   a owl:Class ;
-  rdfs:comment "" ;
   rdfs:label "URIParameter" ;
   rdfs:subClassOf opil:Parameter ;
 .
 opil:URIValue
   a owl:Class ;
-  rdfs:comment "" ;
   rdfs:label "URIValue" ;
   rdfs:subClassOf opil:ParameterValue ;
   rdfs:subClassOf [
@@ -304,21 +289,18 @@ opil:URIValue
 .
 opil:defaultValue
   a owl:ObjectProperty ;
-  rdfs:comment "" ;
   rdfs:domain opil:Parameter ;
   rdfs:label "default value" ;
   rdfs:range opil:ParameterValue ;
 .
 opil:hasParameter
   a owl:ObjectProperty ;
-  rdfs:comment "" ;
   rdfs:domain opil:Protocol ;
   rdfs:label "has parameter" ;
   rdfs:range opil:Parameter ;
 .
 opil:hasValueObject
   a owl:ObjectProperty ;
-  rdfs:comment "" ;
   rdfs:domain opil:ParameterValue ;
   rdfs:label "has value object" ;
 .
@@ -331,56 +313,48 @@ opil:index
 .
 opil:list
   a owl:DatatypeProperty ;
-  rdfs:comment "" ;
   rdfs:domain opil:Parameter ;
   rdfs:label "list" ;
   rdfs:range xsd:boolean ;
 .
 opil:maxMeasure
   a owl:ObjectProperty ;
-  rdfs:comment "" ;
   rdfs:domain opil:MeasureParameter ;
   rdfs:label "max measure" ;
   rdfs:range om:Measure ;
 .
 opil:maxMeasurements
   a owl:DatatypeProperty ;
-  rdfs:comment "" ;
   rdfs:domain opil:MeasurementType ;
   rdfs:label "max measurements" ;
   rdfs:range xsd:integer ;
 .
 opil:maxValue
   a owl:DatatypeProperty ;
-  rdfs:comment "" ;
   rdfs:domain opil:IntegerParameter ;
   rdfs:label "max value" ;
   rdfs:range xsd:integer ;
 .
 opil:measurement
   a owl:ObjectProperty ;
-  rdfs:comment "" ;
   rdfs:domain opil:SampleSet ;
   rdfs:label "measurement" ;
   rdfs:range opil:Measurement ;
 .
 opil:measurementType
   a owl:ObjectProperty ;
-  rdfs:comment "" ;
   rdfs:domain opil:Measurement ;
   rdfs:label "measurement type" ;
   rdfs:range opil:MeasurementType ;
 .
 opil:minMeasure
   a owl:ObjectProperty ;
-  rdfs:comment "" ;
   rdfs:domain opil:MeasureParameter ;
   rdfs:label "min measure" ;
   rdfs:range om:Measure ;
 .
 opil:minValue
   a owl:DatatypeProperty ;
-  rdfs:comment "" ;
   rdfs:domain opil:IntegerParameter ;
   rdfs:label "min value" ;
   rdfs:range xsd:integer ;
@@ -393,7 +367,6 @@ opil:name
 .
 opil:protocolMeasurementType
   a owl:ObjectProperty ;
-  rdfs:comment "" ;
   rdfs:domain opil:Protocol ;
   rdfs:label "protocol measurement type" ;
   rdfs:range opil:MeasurementType ;
@@ -405,28 +378,24 @@ opil:pureNumber
 .
 opil:replicates
   a owl:DatatypeProperty ;
-  rdfs:comment "" ;
   rdfs:domain opil:SampleSet ;
   rdfs:label "replicates" ;
   rdfs:range xsd:integer ;
 .
 opil:required
   a owl:DatatypeProperty ;
-  rdfs:comment "" ;
   rdfs:domain opil:Parameter ;
   rdfs:label "required" ;
   rdfs:range xsd:boolean ;
 .
 opil:sampleSet
   a owl:ObjectProperty ;
-  rdfs:comment "" ;
   rdfs:domain opil:ExperimentalRequest ;
   rdfs:label "sample set" ;
   rdfs:range opil:SampleSet ;
 .
 opil:time
   a owl:ObjectProperty ;
-  rdfs:comment "" ;
   rdfs:domain opil:Measurement ;
   rdfs:label "time" ;
   rdfs:range om:Measure ;
@@ -439,13 +408,11 @@ opil:uri
 .
 opil:value
   a owl:DatatypeProperty ;
-  rdfs:comment "" ;
   rdfs:label "value" ;
   rdfs:range xsd:anySimpleType ;
 .
 opil:valueOf
   a owl:ObjectProperty ;
-  rdfs:comment "" ;
   rdfs:domain opil:ParameterValue ;
   rdfs:label "value of" ;
   rdfs:range opil:Parameter ;

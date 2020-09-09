@@ -22,15 +22,20 @@
   a om:Measure ;
   om:hasNumericalValue "24" ;
   om:hasUnit om:hour ;
-  rdfs:comment "" ;
   rdfs:label "24 hours" ;
+.
+:TimeSeries
+  a opil:Protocol ;
+  opil:name "Strateos TIme Series" ;
+  opil:protocolMeasurementType :TimeSeriesFlowCytometer ;
+  opil:protocolMeasurementType :TimeSeriesPlateReader ;
+  rdfs:label "Time series" ;
 .
 :TimeSeriesFlowCytometer
   a opil:MeasurementType ;
   a ncit:C78806 ;
   opil:maxMeasurements 6 ;
   :maxTime :Hour24 ;
-  rdfs:comment "" ;
   rdfs:label "FLOW" ;
 .
 :TimeSeriesPlateReader
@@ -38,12 +43,10 @@
   a ncit:C70661 ;
   opil:maxMeasurements 6 ;
   :maxTime :Hour24 ;
-  rdfs:comment "" ;
   rdfs:label "PLATE_READER" ;
 .
 :maxTime
   a owl:ObjectProperty ;
-  rdfs:comment "" ;
   rdfs:domain opil:MeasurementType ;
   rdfs:label "max time" ;
   rdfs:range om:Measure ;
