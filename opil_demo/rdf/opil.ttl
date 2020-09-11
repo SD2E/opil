@@ -208,6 +208,21 @@ opil:ParameterValue
   rdfs:comment "Parameter values are holders for the values for a parmeter" ;
   rdfs:label "Parameter value" ;
   rdfs:subClassOf owl:Thing ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom opil:Parameter ;
+      owl:onProperty opil:valueOf ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty opil:value ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty opil:valueOf ;
+    ] ;
 .
 opil:Protocol
   a owl:Class ;
@@ -328,6 +343,12 @@ opil:maxMeasurements
   rdfs:domain opil:MeasurementType ;
   rdfs:label "max measurements" ;
   rdfs:range xsd:integer ;
+.
+opil:maxTime
+  a owl:ObjectProperty ;
+  rdfs:domain opil:MeasurementType ;
+  rdfs:label "max time" ;
+  rdfs:range om:Measure ;
 .
 opil:maxValue
   a owl:DatatypeProperty ;

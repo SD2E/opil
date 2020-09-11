@@ -35,19 +35,13 @@
   a opil:MeasurementType ;
   a ncit:C78806 ;
   opil:maxMeasurements 6 ;
-  :maxTime :Hour24 ;
+  opil:maxTime :Hour24 ;
   rdfs:label "FLOW" ;
 .
 :TimeSeriesPlateReader
   a opil:MeasurementType ;
   a ncit:C70661 ;
   opil:maxMeasurements 6 ;
-  :maxTime :Hour24 ;
+  opil:maxTime :Hour24 ;
   rdfs:label "PLATE_READER" ;
-.
-:maxTime
-  a owl:ObjectProperty ;
-  rdfs:domain opil:MeasurementType ;
-  rdfs:label "max time" ;
-  rdfs:range om:Measure ;
 .
