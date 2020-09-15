@@ -33,21 +33,6 @@ opil:BooleanValue
       owl:allValuesFrom opil:BooleanParameter ;
       owl:onProperty opil:valueOf ;
     ] ;
-  rdfs:subClassOf [
-      a owl:Restriction ;
-      owl:allValuesFrom xsd:boolean ;
-      owl:onProperty opil:value ;
-    ] ;
-  rdfs:subClassOf [
-      a owl:Restriction ;
-      owl:maxCardinality "1"^^xsd:int ;
-      owl:onProperty opil:value ;
-    ] ;
-  rdfs:subClassOf [
-      a owl:Restriction ;
-      owl:maxCardinality "1"^^xsd:int ;
-      owl:onProperty opil:valueOf ;
-    ] ;
 .
 opil:EnumeratedParameter
   a owl:Class ;
@@ -62,11 +47,6 @@ opil:EnumeratedValue
   rdfs:subClassOf [
       a owl:Restriction ;
       owl:allValuesFrom opil:EnumeratedParameter ;
-      owl:onProperty opil:valueOf ;
-    ] ;
-  rdfs:subClassOf [
-      a owl:Restriction ;
-      owl:maxCardinality "1"^^xsd:int ;
       owl:onProperty opil:valueOf ;
     ] ;
 .
@@ -109,21 +89,6 @@ opil:IntegerValue
       owl:allValuesFrom opil:IntegerParameter ;
       owl:onProperty opil:valueOf ;
     ] ;
-  rdfs:subClassOf [
-      a owl:Restriction ;
-      owl:allValuesFrom xsd:integer ;
-      owl:onProperty opil:value ;
-    ] ;
-  rdfs:subClassOf [
-      a owl:Restriction ;
-      owl:maxCardinality "1"^^xsd:int ;
-      owl:onProperty opil:value ;
-    ] ;
-  rdfs:subClassOf [
-      a owl:Restriction ;
-      owl:maxCardinality "1"^^xsd:int ;
-      owl:onProperty opil:valueOf ;
-    ] ;
 .
 opil:MeasureParameter
   a owl:Class ;
@@ -163,16 +128,6 @@ opil:MeasureValue
       a owl:Restriction ;
       owl:allValuesFrom om:Measure ;
       owl:onProperty opil:hasValueObject ;
-    ] ;
-  rdfs:subClassOf [
-      a owl:Restriction ;
-      owl:maxCardinality "1"^^xsd:int ;
-      owl:onProperty opil:hasValueObject ;
-    ] ;
-  rdfs:subClassOf [
-      a owl:Restriction ;
-      owl:maxCardinality "1"^^xsd:int ;
-      owl:onProperty opil:valueOf ;
     ] ;
 .
 opil:Measurement
@@ -261,16 +216,6 @@ opil:StringValue
       owl:allValuesFrom xsd:string ;
       owl:onProperty opil:value ;
     ] ;
-  rdfs:subClassOf [
-      a owl:Restriction ;
-      owl:maxCardinality "1"^^xsd:int ;
-      owl:onProperty opil:value ;
-    ] ;
-  rdfs:subClassOf [
-      a owl:Restriction ;
-      owl:maxCardinality "1"^^xsd:int ;
-      owl:onProperty opil:valueOf ;
-    ] ;
 .
 opil:URIParameter
   a owl:Class ;
@@ -290,16 +235,6 @@ opil:URIValue
       a owl:Restriction ;
       owl:allValuesFrom xsd:anyURI ;
       owl:onProperty opil:value ;
-    ] ;
-  rdfs:subClassOf [
-      a owl:Restriction ;
-      owl:maxCardinality "1"^^xsd:int ;
-      owl:onProperty opil:value ;
-    ] ;
-  rdfs:subClassOf [
-      a owl:Restriction ;
-      owl:maxCardinality "1"^^xsd:int ;
-      owl:onProperty opil:valueOf ;
     ] ;
 .
 opil:defaultValue
