@@ -1,4 +1,5 @@
 # baseURI: http://bbn.com/synbio/sd2/abox
+# imports: http://bbn.com/synbio/opil
 # imports: http://bbn.com/synbio/sd2
 # imports: http://bbn.com/synbio/sd2/timeseries
 # imports: http://biomodels.net/SBO/
@@ -21,6 +22,7 @@
 <http://bbn.com/synbio/sd2/abox>
   a owl:Ontology ;
   rdfs:comment "This is a representation of the YeastSTATES 1.0 Time Series Round 1 experimental request using the OPIL ontology. It is currently incomplete." ;
+  owl:imports <http://bbn.com/synbio/opil> ;
   owl:imports <http://bbn.com/synbio/sd2> ;
   owl:imports <http://bbn.com/synbio/sd2/timeseries> ;
   owl:imports sbo: ;
