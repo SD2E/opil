@@ -20,11 +20,13 @@ for opil_type in opil_types:
 from opil_factory import *
 
 p = Protocol('foo')
-print(p.type_uri)
 er1 = ExperimentalRequest('foo')
 er2 = ExperimentalRequest('foo')
-print(dir(er1))
-
+print(er1.sample_set)
+print(er2.sample_set)
+er1.sample_set = 'bar'
+print(er1.sample_set)
+print(er2.sample_set)
     # property_types = Query.query_properties(sbol_type)
     # for property_type in property_types:
     #     property_name = Query.query_property_name(property_type)

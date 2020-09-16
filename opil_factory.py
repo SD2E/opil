@@ -31,14 +31,16 @@ class OPILFactory():
         # Query and instantiate properties
         attribute_dict = {}
         attribute_dict['__init__'] = __init__
-        sbol_property_names = Query.query_object_properties(rdf_type)
-        for sbol_property_name in sbol_property_names:
-            attribute_dict[sbol_property_name] = 'foo'
-            print('\t{}'.format(sbol_property_name))
-        sbol_property_names = Query.query_datatype_properties(rdf_type)
-        for sbol_property_name in sbol_property_names:
-            attribute_dict[sbol_property_name] = 'foo'
-            print('\t{}'.format(sbol_property_name))
+        property_uris = Query.query_object_properties(rdf_type)
+        for property_uri in property_uris:
+            property_name = Query.query_label(property_uri).replace(' ', '_')
+            attribute_dict[property_name] = 'foo'
+            print('\t{}'.format(property_name))
+        property_uris = Query.query_datatype_properties(rdf_type)
+        for property_uri in property_uris:
+            property_name = Query.query_label(property_uri).replace(' ', '_')
+            attribute_dict[property_name] = 'foo'
+            print('\t{}'.format(property_name))
 
         sbol_toplevel = type(class_name, (), attribute_dict)
         globals()[class_name] = sbol_toplevel
@@ -55,14 +57,16 @@ class OPILFactory():
         # Query and instantiate properties
         attribute_dict = {}
         attribute_dict['__init__'] = __init__
-        sbol_property_names = Query.query_object_properties(rdf_type)
-        for sbol_property_name in sbol_property_names:
-            attribute_dict[sbol_property_name] = 'foo'
-            print('\t{}'.format(sbol_property_name))
-        sbol_property_names = Query.query_datatype_properties(rdf_type)
-        for sbol_property_name in sbol_property_names:
-            attribute_dict[sbol_property_name] = 'foo'
-            print('\t{}'.format(sbol_property_name))
+        property_uris = Query.query_object_properties(rdf_type)
+        for property_uri in property_uris:
+            property_name = Query.query_label(property_uri).replace(' ', '_')
+            attribute_dict[property_name] = 'foo'
+            print('\t{}'.format(property_name))
+        property_uris = Query.query_datatype_properties(rdf_type)
+        for property_uri in property_uris:
+            property_name = Query.query_label(property_uri).replace(' ', '_')
+            attribute_dict[property_name] = 'foo'
+            print('\t{}'.format(property_name))
 
         print('Defining %s class' %CLASS_NAME)
         Class = type(CLASS_NAME, (globals()[SUPERCLASS_NAME],), attribute_dict)
@@ -252,6 +256,23 @@ class Query():
         response = Query.graph.query(query)
         property_names = [str(row[0]) for row in response]
         return property_names
+
+    def query_label(property_uri):
+        query =     '''
+            SELECT distinct ?property_name
+            WHERE 
+            {{
+                <{}> rdfs:label ?property_name
+            }}
+            '''.format(property_uri)    
+        response = Query.graph.query(query)
+        response = [str(row[0]) for row in response]
+        if len(response) == 0:
+            raise Exception(f'{property_uri} has no label')
+        if len(response) > 1:
+            raise Exception(f'{property_uri} has more than one label')
+        property_name = response[0]
+        return property_name
 
     def query_cardinality(sbol_property_name):
         query = '''
