@@ -1,0 +1,3 @@
+[submodule "pySBOL3"]
+	path = pySBOL3
+	url = http://github.com/SynBioDex/pySBOL3
