@@ -1,0 +1,53 @@
+# baseURI: http://bbn.com/synbio/opil/shacl
+# imports: http://bbn.com/synbio/opil
+# imports: http://datashapes.org/dash
+# prefix: shacl
+
+@prefix dash: <http://datashapes.org/dash#> .
+@prefix opil: <http://bbn.com/synbio/opil#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix shacl: <http://bbn.com/synbio/opil/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://bbn.com/synbio/opil/shacl>
+  a owl:Ontology ;
+  owl:imports <http://bbn.com/synbio/opil> ;
+  owl:imports <http://datashapes.org/dash> ;
+  owl:versionInfo "Created with TopBraid Composer" ;
+  sh:declare opil:PrefixDeclaration ;
+.
+
+
+opil:Measurement
+  a owl:Class ;
+  a sh:NodeShape ;
+  sh:severity sh:Violation ;
+  sh:sparql [
+      sh:message "Measurement has too many time points" ;
+      sh:prefixes <http://bbn.com/synbio/opil#> ;
+      sh:select """
+      select $this ?tCount ?max where
+	  {
+	  	$this opil:measurementType ?type.
+    	?type opil:maxMeasurements ?max.
+		{
+		SELECT $this (COUNT(?t) as ?tCount) WHERE
+			{
+  			$this opil:time ?t 
+			}
+		GROUP BY $this
+		}
+	FILTER (?tCount > ?max)
+    }
+    """ ;
+] ;
+.
+
+opil:PrefixDeclaration
+  a sh:PrefixDeclaration ;
+  sh:namespace "http://bbn.com/synbio/opil#"^^xsd:anyURI ;
+  sh:prefix "opil" ;
+.

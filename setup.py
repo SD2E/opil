@@ -7,6 +7,7 @@ setup(name='opil_demo',
             'rdflib>=4.2.2'
             'rdflib-jsonld>=0.5.0'
             'sparqlwrapper>=1.8.5'
+            'pyshacl>=0.13.3'
       ],
       entry_points = {
             'rdf.plugins.sparqleval': [
