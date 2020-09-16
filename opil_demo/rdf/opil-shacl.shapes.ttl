@@ -20,7 +20,6 @@
   sh:declare opil:PrefixDeclaration ;
 .
 
-
 opil:Measurement
   a owl:Class ;
   a sh:NodeShape ;

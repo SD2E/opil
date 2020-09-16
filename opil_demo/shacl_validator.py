@@ -18,10 +18,10 @@ class ShaclValidator:
 
         # Do the validation
         print('Validating experimental requests...')
-        r = validate(g, shacl_graph=None, ont_graph=None, inference='rdfs',
+        conforms, results_graph, results_text = \
+            validate(g, shacl_graph=None, ont_graph=None, inference='rdfs',
                      abort_on_error=False, meta_shacl=False,
                      advanced=True, debug=False)
-        conforms, results_graph, results_text = r
         print(results_text)
 
 if __name__ == "__main__":
