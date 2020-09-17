@@ -1,5 +1,6 @@
 import pySBOL3.sbol3 as sbol
 import rdflib
+import warnings
 
 def parse_class_name(uri):
     if '#' in uri:
@@ -50,11 +51,14 @@ class OPILFactory():
         property_uris = Query.query_object_properties(rdf_type)
         for property_uri in property_uris:
             property_name = Query.query_label(property_uri).replace(' ', '_')
-            print('\t{}'.format(property_name))
+            datatype = Query.query_property_datatype(property_uri, rdf_type)
+            print(f'\t{property_name}\t{datatype}')
+
         property_uris = Query.query_datatype_properties(rdf_type)
         for property_uri in property_uris:
             property_name = Query.query_label(property_uri).replace(' ', '_')
-            print('\t{}'.format(property_name))
+            datatype = Query.query_property_datatype(property_uri, rdf_type)
+            print(f'\t{property_name}\t{datatype}')
         return sbol_toplevel
 
     def create_derived_class(rdf_type):
@@ -69,13 +73,27 @@ class OPILFactory():
             property_uris = Query.query_object_properties(rdf_type)
             for property_uri in property_uris:
                 property_name = Query.query_label(property_uri).replace(' ', '_')
+                datatypes = Query.query_property_datatype(property_uri, rdf_type)
+                if len(datatypes) == 0:
+                    continue
+                if len(datatypes) > 1:
+                    continue
                 self.__dict__[property_name] = sbol.ReferencedObject(self, property_uri, 0, 1)
 
             # Initialize datatype properties
             property_uris = Query.query_datatype_properties(rdf_type)
             for property_uri in property_uris:
                 property_name = Query.query_label(property_uri).replace(' ', '_')
-                self.__dict__[property_name] = sbol.TextProperty(self, property_uri, 0, 1)
+                datatypes = Query.query_property_datatype(property_uri, rdf_type)
+                if len(datatypes) == 0:
+                    continue
+                if len(datatypes) > 1:
+                    continue
+                if datatypes[0] == 'http://www.w3.org/2001/XMLSchema#string':
+                    self.__dict__[property_name] = sbol.TextProperty(self, property_uri, 0, 1)
+                elif datatypes[0] == 'http://www.w3.org/2001/XMLSchema#integer':
+                elif datatypes[0] == 'http://www.w3.org/2001/XMLSchema#boolean':
+                    pass
 
         # Query and instantiate properties
         attribute_dict = {}
@@ -89,11 +107,13 @@ class OPILFactory():
         property_uris = Query.query_object_properties(rdf_type)
         for property_uri in property_uris:
             property_name = Query.query_label(property_uri).replace(' ', '_')
-            print('\t{}'.format(property_name))
+            datatype = Query.query_property_datatype(property_uri, rdf_type)
+            print(f'\t{property_name}\t{datatype}')
         property_uris = Query.query_datatype_properties(rdf_type)
         for property_uri in property_uris:
             property_name = Query.query_label(property_uri).replace(' ', '_')
-            print('\t{}'.format(property_name))
+            datatype = Query.query_property_datatype(property_uri, rdf_type)
+            print(f'\t{property_name}\t{datatype}')
 
     def create_derived_classes(base_class):
         # try:
@@ -221,51 +241,81 @@ class Query():
             superclass = str(row[0])
         return superclass
 
-    def query_object_properties(sbol_class):
+    def query_object_properties(class_uri):
         query =     '''
-            SELECT distinct ?sbol_property
+            SELECT distinct ?property_uri
             WHERE 
             {{
-                ?sbol_property rdf:type owl:ObjectProperty .
-                ?sbol_property rdfs:domain/(owl:unionOf/rdf:rest*/rdf:first)* <{}>.
+                ?property_uri rdf:type owl:ObjectProperty .
+                ?property_uri rdfs:domain/(owl:unionOf/rdf:rest*/rdf:first)* <{}>.
             }}
-            '''.format(sbol_class)
+            '''.format(class_uri)
         response = Query.graph.query(query)
-        property_types = [str(row[0]) for row in response]
-        return property_types
+        response = [str(row[0]) for row in response]
+        property_types = response
 
-    def query_datatype_properties(sbol_class):
-        query =     '''
-            SELECT distinct ?sbol_property
+        # The type of inherited properties are sometimes overridden 
+        query = '''
+            SELECT distinct ?property_uri
             WHERE 
             {{
-                ?sbol_property rdf:type owl:DatatypeProperty .
-                ?sbol_property rdfs:domain/(owl:unionOf/rdf:rest*/rdf:first)* <{}>.
+                ?property_uri rdf:type owl:ObjectProperty .
+                <{}> rdfs:subClassOf ?restriction .
+                ?restriction owl:onProperty ?property_uri .
             }}
-            '''.format(sbol_class)
+            '''.format(class_uri) 
         response = Query.graph.query(query)
-        property_types = [str(row[0]) for row in response]
-        return property_types
+        response = [str(row[0]) for row in response]
+        property_types.extend(response)
+        return list(set(property_types))
 
-    def query_property_datatype(sbol_property):
-        # query =     '''
-        #     SELECT distinct ?datatype
-        #     WHERE 
-        #     {{
-        #         <{}> rdf:type owl:DatatypeProperty .
-        #         <{}> rdfs:range ?datatype .
-        #     }}
-        #     '''.format(sbol_property)
+    def query_datatype_properties(class_uri):
         query =     '''
-            SELECT distinct ?datatype
+            SELECT distinct ?property_uri
             WHERE 
             {{
-                <{}> rdfs:range ?datatype .
+                ?property_uri rdf:type owl:DatatypeProperty .
+                ?property_uri rdfs:domain/(owl:unionOf/rdf:rest*/rdf:first)* <{}>.
             }}
-            '''.format(sbol_property)
+            '''.format(class_uri)
         response = Query.graph.query(query)
-        datatypes = [str(row[0]) for row in response]
-        return datatypes
+        response = [str(row[0]) for row in response]
+        property_types = response
+
+        # The type of inherited properties are sometimes overridden 
+        query = '''
+            SELECT distinct ?property_uri
+            WHERE 
+            {{
+                ?property_uri rdf:type owl:DatatypeProperty .
+                <{}> rdfs:subClassOf ?restriction .
+                ?restriction owl:onProperty ?property_uri .
+            }}
+            '''.format(class_uri) 
+        response = Query.graph.query(query)
+        response = [str(row[0]) for row in response]
+        property_types.extend(response)
+        return list(set(property_types))
+
+    # def query_property_datatype(sbol_property):
+    #     # query =     '''
+    #     #     SELECT distinct ?datatype
+    #     #     WHERE 
+    #     #     {{
+    #     #         <{}> rdf:type owl:DatatypeProperty .
+    #     #         <{}> rdfs:range ?datatype .
+    #     #     }}
+    #     #     '''.format(sbol_property)
+    #     query =     '''
+    #         SELECT distinct ?datatype
+    #         WHERE 
+    #         {{
+    #             <{}> rdfs:range ?datatype .
+    #         }}
+    #         '''.format(sbol_property)
+    #     response = Query.graph.query(query)
+    #     datatypes = [str(row[0]) for row in response]
+    #     return datatypes
 
 
     def query_property_name(sbol_property):
@@ -279,6 +329,41 @@ class Query():
         response = Query.graph.query(query)
         property_names = [str(row[0]) for row in response]
         return property_names
+
+    def query_property_datatype(property_uri, class_uri):
+        query = '''
+            SELECT distinct ?datatype
+            WHERE 
+            {{
+                <{}> rdfs:subClassOf ?restriction .
+                ?restriction rdf:type owl:Restriction .
+                ?restriction owl:allValuesFrom ?datatype .
+                ?restriction owl:onProperty <{}> .
+            }}
+            '''.format(class_uri, property_uri)    
+        response = Query.graph.query(query)
+        response = [str(row[0]) for row in response]
+        datatypes = response
+
+        query = '''
+            SELECT distinct ?datatype
+            WHERE 
+            {{
+                <{}> rdfs:domain <{}> .
+                <{}> rdfs:range ?datatype 
+            }}
+            '''.format(property_uri, class_uri, property_uri)    
+        response = Query.graph.query(query)
+        response = [str(row[0]) for row in response]
+        datatypes.extend(response)
+        datatypes = list(set(datatypes))
+        if len(datatypes) == 0:
+            warnings.warn(f'{property_uri} has more than one datatype')
+        if len(datatypes) > 1:
+            warnings.warn(f'{property_uri} has more than one datatype')
+        return list(set(datatypes))
+
+
 
     def query_label(property_uri):
         query =     '''

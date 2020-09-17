@@ -26,6 +26,7 @@ er1 = ExperimentalRequest('bar')
 er1.sample_set = 'foo'
 
 doc = Document()
+iv = IntegerValue('foo')
 doc.add(p)
 doc.add(er1)
 doc.write('foo.xml', file_format='xml')
