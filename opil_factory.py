@@ -23,7 +23,19 @@ class OPILFactory():
     def create_base_class(rdf_type):
         "Create subclass using the 'type' metaclass"
         def __init__(self, uri):
-            sbol.SBOLObject.__init__(self, uri, rdf_type)
+            sbol.TopLevel.__init__(self, name=uri, type_uri=rdf_type)
+
+            # Initialize object properties
+            property_uris = Query.query_object_properties(rdf_type)
+            for property_uri in property_uris:
+                property_name = Query.query_label(property_uri).replace(' ', '_')
+                self.__dict__[property_name] = sbol.ReferencedObject(self, property_uri, 0, 1)
+
+            # Initialize datatype properties
+            property_uris = Query.query_datatype_properties(rdf_type)
+            for property_uri in property_uris:
+                property_name = Query.query_label(property_uri).replace(' ', '_')
+                self.__dict__[property_name] = sbol.TextProperty(self, property_uri, 0, 1)
 
         class_name = parse_class_name(rdf_type)
         print('Defining %s class' %class_name)
@@ -31,19 +43,18 @@ class OPILFactory():
         # Query and instantiate properties
         attribute_dict = {}
         attribute_dict['__init__'] = __init__
+        sbol_toplevel = type(class_name, (sbol.TopLevel, ), attribute_dict)
+        globals()[class_name] = sbol_toplevel
+
+        # Print out properties
         property_uris = Query.query_object_properties(rdf_type)
         for property_uri in property_uris:
             property_name = Query.query_label(property_uri).replace(' ', '_')
-            attribute_dict[property_name] = 'foo'
             print('\t{}'.format(property_name))
         property_uris = Query.query_datatype_properties(rdf_type)
         for property_uri in property_uris:
             property_name = Query.query_label(property_uri).replace(' ', '_')
-            attribute_dict[property_name] = 'foo'
             print('\t{}'.format(property_name))
-
-        sbol_toplevel = type(class_name, (), attribute_dict)
-        globals()[class_name] = sbol_toplevel
         return sbol_toplevel
 
     def create_derived_class(rdf_type):
@@ -54,23 +65,35 @@ class OPILFactory():
             Base = globals()[SUPERCLASS_NAME]
             Base.__init__(self, uri)
 
+            # Initialize object properties
+            property_uris = Query.query_object_properties(rdf_type)
+            for property_uri in property_uris:
+                property_name = Query.query_label(property_uri).replace(' ', '_')
+                self.__dict__[property_name] = sbol.ReferencedObject(self, property_uri, 0, 1)
+
+            # Initialize datatype properties
+            property_uris = Query.query_datatype_properties(rdf_type)
+            for property_uri in property_uris:
+                property_name = Query.query_label(property_uri).replace(' ', '_')
+                self.__dict__[property_name] = sbol.TextProperty(self, property_uri, 0, 1)
+
         # Query and instantiate properties
         attribute_dict = {}
         attribute_dict['__init__'] = __init__
-        property_uris = Query.query_object_properties(rdf_type)
-        for property_uri in property_uris:
-            property_name = Query.query_label(property_uri).replace(' ', '_')
-            attribute_dict[property_name] = 'foo'
-            print('\t{}'.format(property_name))
-        property_uris = Query.query_datatype_properties(rdf_type)
-        for property_uri in property_uris:
-            property_name = Query.query_label(property_uri).replace(' ', '_')
-            attribute_dict[property_name] = 'foo'
-            print('\t{}'.format(property_name))
 
         print('Defining %s class' %CLASS_NAME)
         Class = type(CLASS_NAME, (globals()[SUPERCLASS_NAME],), attribute_dict)
         globals()[CLASS_NAME] = Class
+
+        # Print out properties
+        property_uris = Query.query_object_properties(rdf_type)
+        for property_uri in property_uris:
+            property_name = Query.query_label(property_uri).replace(' ', '_')
+            print('\t{}'.format(property_name))
+        property_uris = Query.query_datatype_properties(rdf_type)
+        for property_uri in property_uris:
+            property_name = Query.query_label(property_uri).replace(' ', '_')
+            print('\t{}'.format(property_name))
 
     def create_derived_classes(base_class):
         # try:

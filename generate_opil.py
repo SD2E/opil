@@ -1,4 +1,5 @@
 from opil_factory import *
+from pySBOL3.sbol3 import Document
 
 opil_types = Query.query_base_classes()
 for opil_type in opil_types:
@@ -20,13 +21,14 @@ for opil_type in opil_types:
 from opil_factory import *
 
 p = Protocol('foo')
-er1 = ExperimentalRequest('foo')
-er2 = ExperimentalRequest('foo')
-print(er1.sample_set)
-print(er2.sample_set)
-er1.sample_set = 'bar'
-print(er1.sample_set)
-print(er2.sample_set)
+p.protocol_measurement_type = 'foo'
+er1 = ExperimentalRequest('bar')
+er1.sample_set = 'foo'
+
+doc = Document()
+doc.add(p)
+doc.add(er1)
+doc.write('foo.xml', file_format='xml')
     # property_types = Query.query_properties(sbol_type)
     # for property_type in property_types:
     #     property_name = Query.query_property_name(property_type)
