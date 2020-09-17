@@ -17,12 +17,28 @@ class ShaclValidator:
         g.parse('rdf/opil-shacl.shapes.ttl', format='ttl')
 
         # Do the validation
-        print('Validating experimental requests...')
+        print('Validating experimental request...')
         conforms, results_graph, results_text = \
             validate(g, shacl_graph=None, ont_graph=None, inference='rdfs',
                      abort_on_error=False, meta_shacl=False,
                      advanced=True, debug=False)
-        print(results_text)
+
+        # Query the results graph to find the problem instances
+        bad_things_query = self.load_sparql('sparql/badInstances.sparql')
+        query_results = results_graph.query(bad_things_query)
+
+        if not query_results:
+            print('Experimental request is valid')
+        else:
+            print('Invalid experimental request\n')
+            for row in query_results:
+                print('{}: {}'.format(row.msg.value, row.bad))
+
+    def load_sparql(self, file_path):
+        with open(file_path, 'r') as query_file:
+            # Strip newline characters and concatenate lines
+            query = ' '.join([line.strip() for line in query_file])
+        return query
 
 if __name__ == "__main__":
     validator = ShaclValidator()
