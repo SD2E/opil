@@ -455,10 +455,10 @@ abox:high_osm_media
 abox:high_speed
   a opil:StringValue ;
   opil:value "high_speed" ;
-  opil:valueOf <http://bbn.com/synbio/sd2/abox#incubation_info.shaking> ;
+  opil:valueOf abox:incubation_info.shaking ;
   rdfs:label "high_speed" ;
 .
-<http://bbn.com/synbio/sd2/abox#incubation_info.shaking>
+abox:incubation_info.shaking
   a opil:StringParameter ;
   opil:name "incubation info.shaking" ;
 .
