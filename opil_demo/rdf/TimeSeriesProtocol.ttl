@@ -28,7 +28,7 @@
 .
 :TimeSeries
   a opil:Protocol ;
-  opil:name "Strateos TIme Series" ;
+  opil:name "Strateos Time Series" ;
   opil:protocolMeasurementType :TimeSeriesFlowCytometer ;
   opil:protocolMeasurementType :TimeSeriesPlateReader ;
   rdfs:label "Time series" ;
