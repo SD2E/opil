@@ -39,12 +39,12 @@ shacl:MeasureParameterShape
 	sh:property [
 		sh:path opil:maxMeasure ;
 		sh:maxCount 1 ;
-		sh:nodeKind om:Measure ;
+		sh:class om:Measure ;
 	] ;
 	sh:property [
 		sh:path opil:minMeasure ;
 		sh:maxCount 1 ;
-		sh:nodeKind om:Measure ;
+		sh:class om:Measure ;
 	] ;
 .
 
@@ -78,7 +78,7 @@ shacl:BooleanValueShape
 	sh:property [
 		sh:path opil:valueOf ;
 		sh:maxCount 1 ;
-		sh:nodeKind opil:BooleanParameter ;
+		sh:class opil:BooleanParameter ;
 	] ;
 .
 
@@ -95,7 +95,7 @@ shacl:IntegerValueShape
 	sh:property [
 		sh:path opil:valueOf ;
 		sh:maxCount 1 ;
-		sh:nodeKind opil:IntegerParameter ;
+		sh:class opil:IntegerParameter ;
 	] ;
 .
 
@@ -112,7 +112,7 @@ shacl:StringValueShape
 	sh:property [
 		sh:path opil:valueOf ;
 		sh:maxCount 1 ;
-		sh:nodeKind opil:StringParameter ;
+		sh:class opil:StringParameter ;
 	] ;
 .
 
@@ -129,7 +129,7 @@ shacl:BooleanValueShape
 	sh:property [
 		sh:path opil:valueOf ;
 		sh:maxCount 1 ;
-		sh:nodeKind opil:URIParameter ;
+		sh:class opil:URIParameter ;
 	] ;
 .
 
