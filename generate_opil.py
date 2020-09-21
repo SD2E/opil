@@ -20,29 +20,15 @@ for opil_type in opil_types:
 
 from opil_factory import *
 
-p = Protocol('foo')
-p.protocol_measurement_type = 'foo'
-er1 = ExperimentalRequest('bar')
-er1.sample_set = 'foo'
+# p = Protocol('foo')
+# p.protocol_measurement_type = 'foo'
+# er1 = ExperimentalRequest('bar')
+# er1.sample_set = 'foo'
 
-doc = Document()
-iv = IntegerValue('foo')
-doc.add(p)
-doc.add(er1)
-doc.write('foo.xml', file_format='xml')
-    # property_types = Query.query_properties(sbol_type)
-    # for property_type in property_types:
-    #     property_name = Query.query_property_name(property_type)
-    #     print(f'\t{property_name}')
-    #     # cardinality = Query.query_cardinality(property_type)
-    #     # print(f'\t{property_name}\t{cardinality}')
-
-# from sbol_owl import ComponentDefinition
-
-# i = Identified('i')
-# cd = ComponentDefinition('cd')
-# print(cd.sequenceAnnotation)
+# doc = Document()
+# iv = IntegerValue('foo')
+# doc.add(p)
+# doc.add(er1)
+# doc.write('foo.xml', file_format='xml')
 
 
-# q=Query(file)
-# print(Query.query_union())

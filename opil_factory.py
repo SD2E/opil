@@ -92,6 +92,7 @@ class OPILFactory():
                 if datatypes[0] == 'http://www.w3.org/2001/XMLSchema#string':
                     self.__dict__[property_name] = sbol.TextProperty(self, property_uri, 0, 1)
                 elif datatypes[0] == 'http://www.w3.org/2001/XMLSchema#integer':
+                    self.__dict__[property_name] = sbol.IntProperty(self, property_uri, 0, 1)                    
                 elif datatypes[0] == 'http://www.w3.org/2001/XMLSchema#boolean':
                     pass
 
