@@ -1,0 +1,166 @@
+# baseURI: http://bbn.com/synbio/opil/shacl
+# imports: http://bbn.com/synbio/opil
+# imports: http://www.ontology-of-units-of-measure.org/resource/om-2/
+# prefix: shacl
+
+@prefix om: <http://www.ontology-of-units-of-measure.org/resource/om-2/> .
+@prefix opil: <http://bbn.com/synbio/opil#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix shacl: <http://bbn.com/synbio/opil/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://bbn.com/synbio/opil/shacl>
+  a owl:Ontology ;
+  owl:imports <http://bbn.com/synbio/opil> ;
+  owl:imports <http://datashapes.org/dash> ;
+  owl:versionInfo "Created with TopBraid Composer" ;
+  sh:declare opil:PrefixDeclaration ;
+.
+
+# Parameters have only one name and it must be a string
+shacl:ParameterShape
+	a sh:NodeShape ;
+	sh:targetClass opil:Parameter ;
+	sh:property [
+		sh:path opil:name ;
+		sh:maxCount 1 ;
+		sh:datatype xsd:string ;
+	] ;
+.
+
+# Measure parameters have only one max value and it must be an om:Measure
+# Similarly for min value
+shacl:MeasureParameterShape
+	a sh:NodeShape ;
+	sh:targetClass opil:MeasureParameter ;
+	sh:property [
+		sh:path opil:maxMeasure ;
+		sh:maxCount 1 ;
+		sh:class om:Measure ;
+	] ;
+	sh:property [
+		sh:path opil:minMeasure ;
+		sh:maxCount 1 ;
+		sh:class om:Measure ;
+	] ;
+.
+
+# Integer parameters have only one max value and it must be an int
+# Similarly for min value
+shacl:IntegerParameterShape
+	a sh:NodeShape ;
+	sh:targetClass opil:IntegerParameter ;
+	sh:property [
+		sh:path opil:maxValue ;
+		sh:maxCount 1 ;
+		sh:datatype xsd:int ;
+	] ;
+	sh:property [
+		sh:path opil:minValue ;
+		sh:maxCount 1 ;
+		sh:datatype xsd:int ;
+	] ;
+.
+
+# Boolean parameter values have only value and it must be a boolen
+# and can only be the value of a single boolean parameter
+shacl:BooleanValueShape
+	a sh:NodeShape ;
+	sh:targetClass opil:BooleanValue ;
+	sh:property [
+		sh:path opil:value ;
+		sh:maxCount 1 ;
+		sh:datatype xsd:boolean ;
+	] ;
+	sh:property [
+		sh:path opil:valueOf ;
+		sh:maxCount 1 ;
+		sh:class opil:BooleanParameter ;
+	] ;
+.
+
+# Integer parameter values have only value and it must be an int
+# and can only be the value of a single integer parameter
+shacl:IntegerValueShape
+	a sh:NodeShape ;
+	sh:targetClass opil:IntegerValue ;
+	sh:property [
+		sh:path opil:value ;
+		sh:maxCount 1 ;
+		sh:datatype xsd:int ;
+	] ;
+	sh:property [
+		sh:path opil:valueOf ;
+		sh:maxCount 1 ;
+		sh:class opil:IntegerParameter ;
+	] ;
+.
+
+# String parameter values have only value and it must be a string
+# and can only be the value of a single string parameter
+shacl:StringValueShape
+	a sh:NodeShape ;
+	sh:targetClass opil:StringValue ;
+	sh:property [
+		sh:path opil:value ;
+		sh:maxCount 1 ;
+		sh:datatype xsd:string ;
+	] ;
+	sh:property [
+		sh:path opil:valueOf ;
+		sh:maxCount 1 ;
+		sh:class opil:StringParameter ;
+	] ;
+.
+
+# URI parameter values have only value and it must be a URI
+# and can only be the value of a single URI parameter
+shacl:BooleanValueShape
+	a sh:NodeShape ;
+	sh:targetClass opil:URIValue ;
+	sh:property [
+		sh:path opil:value ;
+		sh:maxCount 1 ;
+		sh:datatype xsd:anyURI ;
+	] ;
+	sh:property [
+		sh:path opil:valueOf ;
+		sh:maxCount 1 ;
+		sh:class opil:URIParameter ;
+	] ;
+.
+
+# Measurements cannot have more timepoints than the allowed maximum
+opil:MeasurementShape
+  a sh:NodeShape ;
+  sh:targetClass opil:Measurement ;
+  sh:severity sh:Violation ;
+  sh:sparql [
+      sh:message "Measurement has too many time points" ;
+      sh:prefixes <http://bbn.com/synbio/opil#> ;
+      sh:select """
+      select $this ?tCount ?max where
+	  {
+	  	$this opil:measurementType ?type.
+    	?type opil:maxMeasurements ?max.
+		{
+		SELECT $this (COUNT(?t) as ?tCount) WHERE
+			{
+  			$this opil:time ?t 
+			}
+		GROUP BY $this
+		}
+	FILTER (?tCount > ?max)
+    }
+    """ ;
+] ;
+.
+
+opil:PrefixDeclaration
+  a sh:PrefixDeclaration ;
+  sh:namespace "http://bbn.com/synbio/opil#"^^xsd:anyURI ;
+  sh:prefix "opil" ;
+.

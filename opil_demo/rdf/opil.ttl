@@ -33,6 +33,11 @@ opil:BooleanValue
       owl:allValuesFrom opil:BooleanParameter ;
       owl:onProperty opil:valueOf ;
     ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom xsd:boolean ;
+      owl:onProperty opil:value ;
+    ] ;
 .
 opil:EnumeratedParameter
   a owl:Class ;
@@ -88,6 +93,11 @@ opil:IntegerValue
       a owl:Restriction ;
       owl:allValuesFrom opil:IntegerParameter ;
       owl:onProperty opil:valueOf ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom xsd:int ;
+      owl:onProperty opil:value ;
     ] ;
 .
 opil:MeasureParameter

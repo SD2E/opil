@@ -1,4 +1,5 @@
 # baseURI: http://bbn.com/synbio/sd2/timeseries
+# imports: http://bbn.com/synbio/opil
 # imports: http://bbn.com/synbio/sd2
 
 @prefix : <http://bbn.com/synbio/sd2/timeseries#> .
@@ -15,6 +16,7 @@
 <http://bbn.com/synbio/sd2/timeseries>
   a owl:Ontology ;
   rdfs:comment "This is a representation of the Time Series protocol as described in the 2019 Q4 - 2020 Q1 Strateos Capabilities Overview document using the OPIL ontology. It is currently incomplete." ;
+  owl:imports <http://bbn.com/synbio/opil> ;
   owl:imports <http://bbn.com/synbio/sd2> ;
   owl:versionInfo "0.1" ;
 .
@@ -26,7 +28,7 @@
 .
 :TimeSeries
   a opil:Protocol ;
-  opil:name "Strateos TIme Series" ;
+  opil:name "Strateos Time Series" ;
   opil:protocolMeasurementType :TimeSeriesFlowCytometer ;
   opil:protocolMeasurementType :TimeSeriesPlateReader ;
   rdfs:label "Time series" ;
