@@ -20,15 +20,19 @@ for opil_type in opil_types:
 
 from opil_factory import *
 
-# p = Protocol('foo')
-# p.protocol_measurement_type = 'foo'
-# er1 = ExperimentalRequest('bar')
-# er1.sample_set = 'foo'
+p = Protocol('foo')
+p.protocol_measurement_type = 'foo'
+er1 = ExperimentalRequest('bar')
+er1.sample_set = 'foo'
 
-# doc = Document()
-# iv = IntegerValue('foo')
-# doc.add(p)
-# doc.add(er1)
-# doc.write('foo.xml', file_format='xml')
+doc = Document()
+iv = IntegerParameter('foo2')
+iv.max_value = 10
+iv.min_value = 0
+doc.add(p)
+doc.add(er1)
+doc.add(iv)
+doc.write('foo.xml', file_format='xml')
+iv.min_value = 'this assignment should cause a type error'
 
 
