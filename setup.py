@@ -10,6 +10,9 @@ setup(name='opil_demo',
             'pyshacl>=0.13.3'
             'python-dateutil>=2.8.1'
       ],
+      packages=['opil', 'opil_demo'],
+      package_data={'opil_demo': ['rdf/*', 'sparql/*']},
+      include_package_data=True,
       entry_points = {
             'rdf.plugins.sparqleval': [
             'custom_eval =  custom_eval:customEval',

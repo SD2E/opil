@@ -504,3 +504,9 @@ class Query():
 # print(cd.sequenceAnnotation)
 
 
+from pySBOL3.sbol3 import Document
+
+opil_types = Query.query_base_classes()
+for opil_type in opil_types:
+    OPILFactory.create_base_class(opil_type)
+    OPILFactory.create_derived_classes(opil_type)
