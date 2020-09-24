@@ -1,6 +1,6 @@
 from setuptools import setup
 
-setup(name='opil_demo',
+setup(name='opil',
       description='Python package for demonstrating OPIL',
       version='0.0.1',
       install_requires=[
@@ -10,8 +10,8 @@ setup(name='opil_demo',
             'pyshacl>=0.13.3'
             'python-dateutil>=2.8.1'
       ],
-      packages=['opil', 'opil_demo'],
-      package_data={'opil_demo': ['rdf/*', 'sparql/*']},
+      packages=['opil'],
+      package_data={'opil': ['rdf/*', 'sparql/*']},
       include_package_data=True,
       entry_points = {
             'rdf.plugins.sparqleval': [

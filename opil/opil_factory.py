@@ -1,6 +1,8 @@
 import pySBOL3.sbol3 as sbol
 import rdflib
 import warnings
+import os
+import posixpath
 
 def parse_class_name(uri):
     if '#' in uri:
@@ -164,7 +166,7 @@ class Query():
     SBOL = rdflib.URIRef('http://sbols.org/v2#')
     OPIL = rdflib.URIRef('http://bbn.com/synbio/opil#')
     graph = rdflib.Graph()
-    graph.parse('opil_demo/rdf/opil.ttl', format ='ttl')
+    graph.parse(posixpath.join(os.path.dirname(os.path.realpath(__file__)), 'rdf/opil.ttl'), format ='ttl')
     graph.namespace_manager.bind('sbol', SBOL)
     graph.namespace_manager.bind('opil', OPIL)
     graph.namespace_manager.bind('tawny', rdflib.URIRef('http://www.purl.org/ontolink/tawny#'))
