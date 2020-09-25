@@ -1,4 +1,4 @@
-import pySBOL3.sbol3 as sbol3
+import sbol3
 import opil
 
 sbol3.set_homespace('http://strateos.com/')
