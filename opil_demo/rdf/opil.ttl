@@ -29,8 +29,7 @@ xsd:anySimpleType rdf:type rdfs:Datatype .
 #################################################################
 
 ###  http://bbn.com/synbio/opil#compositionalProperty
-opil:compositionalProperty rdf:type owl:ObjectProperty ;
-                           rdfs:subPropertyOf owl:topObjectProperty .
+opil:compositionalProperty rdf:type owl:ObjectProperty .
 
 
 ###  http://bbn.com/synbio/opil#defaultValue
@@ -94,7 +93,6 @@ opil:minMeasure rdf:type owl:ObjectProperty ;
 
 ###  http://bbn.com/synbio/opil#protocolMeasurementType
 opil:protocolMeasurementType rdf:type owl:ObjectProperty ;
-                             rdfs:subPropertyOf opil:compositionalProperty ;
                              rdfs:domain opil:Protocol ;
                              rdfs:range opil:MeasurementType ;
                              rdfs:label "protocol measurement type" .
