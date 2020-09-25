@@ -164,6 +164,16 @@ opil:Parameter
   rdfs:subClassOf owl:Thing ;
   rdfs:subClassOf [
       a owl:Restriction ;
+      owl:allValuesFrom opil:ParameterValue ;
+      owl:onProperty opil:defaultValue ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty opil:defaultValue ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
       owl:cardinality "1"^^xsd:nonNegativeInteger ;
       owl:onProperty opil:name ;
     ] ;
