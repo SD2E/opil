@@ -1,4 +1,4 @@
-import pySBOL3.sbol3 as sbol
+import sbol3 as sbol
 import rdflib
 import warnings
 import os
@@ -38,7 +38,18 @@ class OPILFactory():
             property_uris = Query.query_datatype_properties(rdf_type)
             for property_uri in property_uris:
                 property_name = Query.query_label(property_uri).replace(' ', '_')
-                self.__dict__[property_name] = sbol.TextProperty(self, property_uri, 0, 1)
+                datatypes = Query.query_property_datatype(property_uri, rdf_type)
+                if len(datatypes) == 0:
+                    continue
+                if len(datatypes) > 1:
+                    continue
+                if datatypes[0] == 'http://www.w3.org/2001/XMLSchema#string':
+                    self.__dict__[property_name] = sbol.TextProperty(self, property_uri, 0, 1)
+                elif datatypes[0] == 'http://www.w3.org/2001/XMLSchema#integer':
+                    self.__dict__[property_name] = sbol.IntProperty(self, property_uri, 0, 1)                    
+                elif datatypes[0] == 'http://www.w3.org/2001/XMLSchema#boolean':
+                    self.__dict__[property_name] = sbol.BooleanProperty(self, property_uri, 0, 1)
+
 
         class_name = parse_class_name(rdf_type)
         print('Defining %s class' %class_name)
@@ -96,7 +107,7 @@ class OPILFactory():
                 elif datatypes[0] == 'http://www.w3.org/2001/XMLSchema#integer':
                     self.__dict__[property_name] = sbol.IntProperty(self, property_uri, 0, 1)                    
                 elif datatypes[0] == 'http://www.w3.org/2001/XMLSchema#boolean':
-                    pass
+                    self.__dict__[property_name] = sbol.BooleanProperty(self, property_uri, 0, 1)
 
         # Query and instantiate properties
         attribute_dict = {}
