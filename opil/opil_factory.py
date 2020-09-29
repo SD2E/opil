@@ -30,9 +30,15 @@ class OPILFactory():
 
             # Initialize object properties
             property_uris = Query.query_object_properties(rdf_type)
-            for property_uri in property_uris:
+            compositional_properties = Query.query_compositional_properties(rdf_type)
+            associational_properties = [uri for uri in property_uris if uri not in
+                                        compositional_properties]
+            for property_uri in associational_properties:
                 property_name = Query.query_label(property_uri).replace(' ', '_')
                 self.__dict__[property_name] = sbol.ReferencedObject(self, property_uri, 0, 1)
+            for property_uri in compositional_properties:
+                property_name = Query.query_label(property_uri).replace(' ', '_')
+                self.__dict__[property_name] = sbol.OwnedObject(self, property_uri, 0, 1)
 
             # Initialize datatype properties
             property_uris = Query.query_datatype_properties(rdf_type)
@@ -84,14 +90,15 @@ class OPILFactory():
 
             # Initialize object properties
             property_uris = Query.query_object_properties(rdf_type)
-            for property_uri in property_uris:
+            compositional_properties = Query.query_compositional_properties(rdf_type)
+            associational_properties = [uri for uri in property_uris if uri not in
+                                        compositional_properties]
+            for property_uri in associational_properties:
                 property_name = Query.query_label(property_uri).replace(' ', '_')
-                datatypes = Query.query_property_datatype(property_uri, rdf_type)
-                if len(datatypes) == 0:
-                    continue
-                if len(datatypes) > 1:
-                    continue
                 self.__dict__[property_name] = sbol.ReferencedObject(self, property_uri, 0, 1)
+            for property_uri in compositional_properties:
+                property_name = Query.query_label(property_uri).replace(' ', '_')
+                self.__dict__[property_name] = sbol.OwnedObject(self, property_uri, 0, 1)
 
             # Initialize datatype properties
             property_uris = Query.query_datatype_properties(rdf_type)
@@ -283,6 +290,21 @@ class Query():
         property_types.extend(response)
         return list(set(property_types))
 
+    def query_compositional_properties(class_uri):
+        query = '''
+            SELECT distinct ?property_uri
+            WHERE 
+            {{
+                ?property_uri rdf:type owl:ObjectProperty .
+                ?property_uri rdfs:subPropertyOf opil:compositionalProperty .
+                ?property_uri rdfs:domain/(owl:unionOf/rdf:rest*/rdf:first)* <{}>.
+            }}
+            '''.format(class_uri)
+        response = Query.graph.query(query)
+        response = [str(row[0]) for row in response]
+        property_types = response
+        return property_types
+
     def query_datatype_properties(class_uri):
         query =     '''
             SELECT distinct ?property_uri
@@ -372,12 +394,10 @@ class Query():
         datatypes.extend(response)
         datatypes = list(set(datatypes))
         if len(datatypes) == 0:
-            warnings.warn(f'{property_uri} has more than one datatype')
+            warnings.warn(f'{property_uri} datatype is undefined')
         if len(datatypes) > 1:
             warnings.warn(f'{property_uri} has more than one datatype')
         return list(set(datatypes))
-
-
 
     def query_label(property_uri):
         query =     '''
