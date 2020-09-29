@@ -11,8 +11,7 @@
 @base <http://bbn.com/synbio/opil> .
 
 <http://bbn.com/synbio/opil> rdf:type owl:Ontology ;
-                              owl:imports <http://sbols.org/v3> ,
-                                          om: ;
+                              owl:imports om: ;
                               rdfs:comment "This is the first draft of the Open Protocol Interface Languge (OPIL) ontology." ;
                               owl:versionInfo "0.1" .
 
@@ -56,6 +55,7 @@ opil:hasValueObject rdf:type owl:ObjectProperty ;
 
 ###  http://bbn.com/synbio/opil#maxMeasure
 opil:maxMeasure rdf:type owl:ObjectProperty ;
+                rdfs:subPropertyOf opil:compositionalProperty ;
                 rdfs:domain opil:MeasureParameter ;
                 rdfs:range om:Measure ;
                 rdfs:label "max measure" .
@@ -63,6 +63,7 @@ opil:maxMeasure rdf:type owl:ObjectProperty ;
 
 ###  http://bbn.com/synbio/opil#maxTime
 opil:maxTime rdf:type owl:ObjectProperty ;
+             rdfs:subPropertyOf opil:compositionalProperty ;
              rdfs:domain opil:MeasurementType ;
              rdfs:range om:Measure ;
              rdfs:label "max time" .
@@ -86,6 +87,7 @@ opil:measurementType rdf:type owl:ObjectProperty ;
 
 ###  http://bbn.com/synbio/opil#minMeasure
 opil:minMeasure rdf:type owl:ObjectProperty ;
+                rdfs:subPropertyOf opil:compositionalProperty ;
                 rdfs:domain opil:MeasureParameter ;
                 rdfs:range om:Measure ;
                 rdfs:label "min measure" .
@@ -93,6 +95,7 @@ opil:minMeasure rdf:type owl:ObjectProperty ;
 
 ###  http://bbn.com/synbio/opil#protocolMeasurementType
 opil:protocolMeasurementType rdf:type owl:ObjectProperty ;
+                             rdfs:subPropertyOf opil:compositionalProperty ;
                              rdfs:domain opil:Protocol ;
                              rdfs:range opil:MeasurementType ;
                              rdfs:label "protocol measurement type" .
@@ -108,6 +111,7 @@ opil:sampleSet rdf:type owl:ObjectProperty ;
 
 ###  http://bbn.com/synbio/opil#time
 opil:time rdf:type owl:ObjectProperty ;
+          rdfs:subPropertyOf opil:compositionalProperty ;
           rdfs:domain opil:Measurement ;
           rdfs:range om:Measure ;
           rdfs:label "time" .
