@@ -138,45 +138,11 @@ class OPILFactory():
             print(f'\t{property_name}\t{datatype}')
 
     def create_derived_classes(base_class):
-        # try:
-        #     superclass = Query.query_superclass(rdf_type)
-        # except Exception as e:
-        #     return
         rdf_subtypes = Query.query_subclasses(base_class)
         for rdf_subtype in rdf_subtypes:
             OPILFactory.create_derived_class(rdf_subtype)
             OPILFactory.create_derived_classes(rdf_subtype)
 
-# def create_identified(rdf_type):
-#     "Create subclass using the 'type' metaclass"
-#     def __init__(self, uri):
-#         Identified.__init__(self, uri)
-#     class_name = parseClassName(rdf_type)
-#     sbol_identified = type(class_name, (), dict(__init__ = __init__))
-#     globals()[class_name] = sbol_identified
-#     return sbol_identified
-
-
-
-# def create_derived_classes(rdf_type):
-#     "Create subclass using the 'type' metaclass"
-#     SUPERCLASS_NAME = parseClassName(rdf_type)
-
-#     sub_rdf_types = Query.query_subclasses(rdf_type)
-#     for sub_rdf_type in sub_rdf_types:
-#         SUBCLASS_NAME = parseClassName(sub_rdf_type)
-
-#         def __init__(self, uri):
-#             Base = globals()[SUPERCLASS_NAME]
-#             Base.__init__(self, uri)
-#             print('Instantiating %s' %SUBCLASS_NAME)
-
-#         print('Creating %s' %SUBCLASS_NAME)
-
-#         Subclass = type(SUBCLASS_NAME, (globals()[SUPERCLASS_NAME],), dict(__init__ = __init__))
-#         globals()[SUBCLASS_NAME] = Subclass
-#         Subclass('foo')
-#         create_derived_classes(sub_rdf_type)
 
 class Query():
     filename='sbol.rdf'
