@@ -11,8 +11,7 @@
 @base <http://bbn.com/synbio/opil> .
 
 <http://bbn.com/synbio/opil> rdf:type owl:Ontology ;
-                              owl:imports <http://sbols.org/v3> ,
-                                          om: ;
+                              owl:imports om: ;
                               rdfs:comment "This is the first draft of the Open Protocol Interface Languge (OPIL) ontology." ;
                               owl:versionInfo "0.1" .
 
@@ -93,6 +92,7 @@ opil:minMeasure rdf:type owl:ObjectProperty ;
 
 ###  http://bbn.com/synbio/opil#protocolMeasurementType
 opil:protocolMeasurementType rdf:type owl:ObjectProperty ;
+                             rdfs:subPropertyOf opil:compositionalProperty ;
                              rdfs:domain opil:Protocol ;
                              rdfs:range opil:MeasurementType ;
                              rdfs:label "protocol measurement type" .
