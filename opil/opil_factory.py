@@ -87,6 +87,7 @@ class OPILFactory():
         def __init__(self, uri):
             Base = globals()[SUPERCLASS_NAME]
             Base.__init__(self, uri)
+            self.type_uri = rdf_type
 
             # Initialize object properties
             property_uris = Query.query_object_properties(rdf_type)
