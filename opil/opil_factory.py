@@ -3,6 +3,7 @@ import rdflib
 import warnings
 import os
 import posixpath
+from math import inf
 
 def parse_class_name(uri):
     if '#' in uri:
@@ -28,17 +29,31 @@ class OPILFactory():
         def __init__(self, uri):
             sbol.TopLevel.__init__(self, name=uri, type_uri=rdf_type)
 
-            # Initialize object properties
+            # Object properties can be either compositional or associational
             property_uris = Query.query_object_properties(rdf_type)
             compositional_properties = Query.query_compositional_properties(rdf_type)
             associational_properties = [uri for uri in property_uris if uri not in
                                         compositional_properties]
+
+            # Initialize associational properties
             for property_uri in associational_properties:
                 property_name = Query.query_label(property_uri).replace(' ', '_')
-                self.__dict__[property_name] = sbol.ReferencedObject(self, property_uri, 0, 1)
+                cardinality = Query.query_cardinality(property_uri, rdf_type)
+                if len(cardinality):
+                    upper_bound = 1
+                else:
+                    upper_bound = inf
+                self.__dict__[property_name] = sbol.ReferencedObject(self, property_uri, 0, upper_bound)
+
+            # Initialize compositional properties
             for property_uri in compositional_properties:
                 property_name = Query.query_label(property_uri).replace(' ', '_')
-                self.__dict__[property_name] = sbol.OwnedObject(self, property_uri, 0, 1)
+                cardinality = Query.query_cardinality(property_uri, rdf_type)
+                if len(cardinality):
+                    upper_bound = 1
+                else:
+                    upper_bound = inf
+                self.__dict__[property_name] = sbol.OwnedObject(self, property_uri, 0, upper_bound)
 
             # Initialize datatype properties
             property_uris = Query.query_datatype_properties(rdf_type)
@@ -66,7 +81,7 @@ class OPILFactory():
         sbol_toplevel = type(class_name, (sbol.TopLevel, ), attribute_dict)
         globals()[class_name] = sbol_toplevel
 
-        # Print out properties
+        # Print out properties -- this is for logging only
         property_uris = Query.query_object_properties(rdf_type)
         for property_uri in property_uris:
             property_name = Query.query_label(property_uri).replace(' ', '_')
@@ -89,17 +104,29 @@ class OPILFactory():
             Base.__init__(self, uri)
             self.type_uri = rdf_type
 
-            # Initialize object properties
+            # Object properties can be either compositional or associational
             property_uris = Query.query_object_properties(rdf_type)
             compositional_properties = Query.query_compositional_properties(rdf_type)
             associational_properties = [uri for uri in property_uris if uri not in
                                         compositional_properties]
+
+            # Initialize associational properties
             for property_uri in associational_properties:
                 property_name = Query.query_label(property_uri).replace(' ', '_')
-                self.__dict__[property_name] = sbol.ReferencedObject(self, property_uri, 0, 1)
+                if len(cardinality):
+                    upper_bound = 1
+                else:
+                    upper_bound = inf
+                self.__dict__[property_name] = sbol.ReferencedObject(self, property_uri, 0, upper_bound)
+
+            # Initialize compositional properties
             for property_uri in compositional_properties:
                 property_name = Query.query_label(property_uri).replace(' ', '_')
-                self.__dict__[property_name] = sbol.OwnedObject(self, property_uri, 0, 1)
+                if len(cardinality):
+                    upper_bound = 1
+                else:
+                    upper_bound = inf
+                self.__dict__[property_name] = sbol.OwnedObject(self, property_uri, 0, upper_bound)
 
             # Initialize datatype properties
             property_uris = Query.query_datatype_properties(rdf_type)
@@ -125,58 +152,26 @@ class OPILFactory():
         Class = type(CLASS_NAME, (globals()[SUPERCLASS_NAME],), attribute_dict)
         globals()[CLASS_NAME] = Class
 
-        # Print out properties
+        # Print out properties -- this is for logging only
         property_uris = Query.query_object_properties(rdf_type)
         for property_uri in property_uris:
             property_name = Query.query_label(property_uri).replace(' ', '_')
             datatype = Query.query_property_datatype(property_uri, rdf_type)
-            print(f'\t{property_name}\t{datatype}')
+            cardinality = Query.query_cardinality(property_uri, rdf_type)
+            print(f'\t{property_name}\t{datatype}\t{cardinality}')
         property_uris = Query.query_datatype_properties(rdf_type)
         for property_uri in property_uris:
             property_name = Query.query_label(property_uri).replace(' ', '_')
             datatype = Query.query_property_datatype(property_uri, rdf_type)
-            print(f'\t{property_name}\t{datatype}')
+            cardinality = Query.query_cardinality(property_uri, rdf_type)
+            print(f'\t{property_name}\t{datatype}\t{cardinality}')
 
     def create_derived_classes(base_class):
-        # try:
-        #     superclass = Query.query_superclass(rdf_type)
-        # except Exception as e:
-        #     return
         rdf_subtypes = Query.query_subclasses(base_class)
         for rdf_subtype in rdf_subtypes:
             OPILFactory.create_derived_class(rdf_subtype)
             OPILFactory.create_derived_classes(rdf_subtype)
 
-# def create_identified(rdf_type):
-#     "Create subclass using the 'type' metaclass"
-#     def __init__(self, uri):
-#         Identified.__init__(self, uri)
-#     class_name = parseClassName(rdf_type)
-#     sbol_identified = type(class_name, (), dict(__init__ = __init__))
-#     globals()[class_name] = sbol_identified
-#     return sbol_identified
-
-
-
-# def create_derived_classes(rdf_type):
-#     "Create subclass using the 'type' metaclass"
-#     SUPERCLASS_NAME = parseClassName(rdf_type)
-
-#     sub_rdf_types = Query.query_subclasses(rdf_type)
-#     for sub_rdf_type in sub_rdf_types:
-#         SUBCLASS_NAME = parseClassName(sub_rdf_type)
-
-#         def __init__(self, uri):
-#             Base = globals()[SUPERCLASS_NAME]
-#             Base.__init__(self, uri)
-#             print('Instantiating %s' %SUBCLASS_NAME)
-
-#         print('Creating %s' %SUBCLASS_NAME)
-
-#         Subclass = type(SUBCLASS_NAME, (globals()[SUPERCLASS_NAME],), dict(__init__ = __init__))
-#         globals()[SUBCLASS_NAME] = Subclass
-#         Subclass('foo')
-#         create_derived_classes(sub_rdf_type)
 
 class Query():
     filename='sbol.rdf'
@@ -192,6 +187,7 @@ class Query():
     graph.namespace_manager.bind('owl', rdflib.URIRef('http://www.w3.org/2002/07/owl#'))
     graph.namespace_manager.bind('rdfs', rdflib.URIRef('http://www.w3.org/2000/01/rdf-schema#'))
     graph.namespace_manager.bind('rdf', rdflib.URIRef('http://www.w3.org/1999/02/22-rdf-syntax-ns#'))
+    graph.namespace_manager.bind('xsd', rdflib.URIRef('http://www.w3.org/2001/XMLSchema#'))
 
     # for s in graph.subjects(RDF + rdflib.URIRef('type'), OWL + rdflib.URIRef('Class')):
     #     print(s)
@@ -334,38 +330,21 @@ class Query():
         property_types.extend(response)
         return list(set(property_types))
 
-    # def query_property_datatype(sbol_property):
-    #     # query =     '''
-    #     #     SELECT distinct ?datatype
-    #     #     WHERE 
-    #     #     {{
-    #     #         <{}> rdf:type owl:DatatypeProperty .
-    #     #         <{}> rdfs:range ?datatype .
-    #     #     }}
-    #     #     '''.format(sbol_property)
-    #     query =     '''
-    #         SELECT distinct ?datatype
-    #         WHERE 
-    #         {{
-    #             <{}> rdfs:range ?datatype .
-    #         }}
-    #         '''.format(sbol_property)
-    #     response = Query.graph.query(query)
-    #     datatypes = [str(row[0]) for row in response]
-    #     return datatypes
-
-
-    def query_property_name(sbol_property):
-        query =     '''
-            SELECT distinct ?sbol_property_name
+    def query_cardinality(property_uri, class_uri):
+        query = '''
+            SELECT distinct ?cardinality
             WHERE 
             {{
-                ?sbol_property tawny:name ?sbol_property_name
+                <{}> rdfs:subClassOf ?restriction .
+                ?restriction rdf:type owl:Restriction .
+                ?restriction owl:onProperty <{}> .
+                ?restriction owl:maxCardinality ?cardinality .
             }}
-            '''.format(sbol_property)    
+            '''.format(class_uri, property_uri)
         response = Query.graph.query(query)
-        property_names = [str(row[0]) for row in response]
-        return property_names
+        response = [str(row[0]) for row in response]
+        cardinality = response
+        return cardinality
 
     def query_property_datatype(property_uri, class_uri):
         query = '''
@@ -416,126 +395,6 @@ class Query():
             raise Exception(f'{property_uri} has more than one label')
         property_name = response[0]
         return property_name
-
-    def query_cardinality(sbol_property_name):
-        query = '''
-            SELECT distinct ?rdf_type
-            WHERE 
-            {{
-                ?sbol_property rdf:type ?rdf_type .
-                ?sbol_property tawny:name "{}"@en .
-            }}
-        '''.format(sbol_property_name)
-
-        query = '''
-            SELECT distinct ?rdf_type ?range
-            WHERE 
-            {{
-                ?sbol_property rdf:type ?rdf_type .
-                ?sbol_property tawny:name "{}"@en .
-                ?restriction owl:onProperty ?sbol_property .
-                ?restriction owl:someValuesFrom ?range
-            }}
-        '''.format(sbol_property_name)
-        response = Query.graph.query(query)
-        print('http://www.w3.org/2002/07/owl#FunctionalProperty' in response)
-
-        property_type = [str(row[0]) for row in response]
-        print('http://www.w3.org/2002/07/owl#FunctionalProperty' in property_type)
-        return property_type
-
-
-    def query_union():
-        # query =     '''
-        #     SELECT distinct ?union ?first ?rest
-        #     WHERE 
-        #     {
-        #         ?union owl:unionOf ?collection .
-        #         ?collection rdf:first ?first .
-        #         ?collection rdf:rest* ?rest .
-        #     }
-        #     '''
-        query =     '''
-            SELECT ?p ?d
-            WHERE {
-              ?p rdfs:domain/(owl:unionOf/rdf:rest*/rdf:first)* ?d
-              filter isIri(?d)
-            }
-            '''
-        response = Query.graph.query(query)
-        property_types = [str(row[0]) for row in response]
-        property_types = [row for row in response]
-
-        return property_types
-
-    # def query_properties(sbol_class):
-    #     query =     '''
-    #         SELECT distinct ?sbol_property_name
-    #         WHERE 
-    #         {{
-    #             ?sbol_property rdf:type owl:ObjectProperty .
-    #             ?sbol_property rdfs:domain ?o .
-    #             ?o rdf:type owl:Class .
-    #             ?sbol_property tawny:name ?sbol_property_name
-    #         }}
-    #         '''.format(sbol_class)
-    #     response = Query.graph.query(query)
-    #     property_types = [str(row[0]) for row in response]
-    #     return property_types
-
-    # def query_properties(sbol_class):
-    #     query =     '''
-    #         CONSTRUCT
-    #         {
-    #           ?s1 ?p1 ?o1 .           #-- internal edge in the path
-    #           ?o1 ?p2 <sbol:> .           #-- final edge in the path
-    #         }
-    #         WHERE {
-    #           sbol:role (<>|!<>)* ?s1 .     #-- start at :A and go any length into the path
-    #           ?s1 ?p1 ?o1 .           #-- get the triple from within the path, but make
-    #           ?o1 ?p2 <sbol:> .           #-- ?s2 that's related to an ?o2 by property :d .
-    #         }
-    #     '''
-
-    #     # query =     '''
-    #     #     CONSTRUCT { ?s ?p ?o }
-    #     #     WHERE 
-    #     #     {
-    #     #         sbol:role (<>|!<>) ?s . 
-    #     #         ?s ?p ?o .
-    #     #     }
-    #     #     '''
-
-    #     # query =     '''
-    #     #     CONSTRUCT { ?s ?p ?o }
-    #     #     WHERE 
-    #     #     {
-    #     #         <http://sbols.org/v2#role> (<>|!<>)* ?s . 
-    #     #         ?s ?p ?o .
-    #     #     }
-    #     #     '''
-    #     response = Query.graph.query(query)
-    #     for row in response:
-    #         print(row)
-    #     return([row for row in response])
-
-# sbol_types = Query.query_toplevels()
-# for sbol_type in sbol_types:
-#     print(sbol_type)
-#     property_types = Query.query_properties(sbol_type)
-#     for property_type in property_types:
-#         print('\t{}'.format(property_type))
-
-# # Query and instantiate Identified and all subclasses
-# sbol_types = Query.query_identified()
-# for sbol_type in sbol_types:
-#     # create_identified(sbol_type)
-#     create_derived_classes(sbol_type)
-
-
-# i = Identified('i')
-# cd = ComponentDefinition('cd')
-# print(cd.sequenceAnnotation)
 
 
 opil_types = Query.query_base_classes()

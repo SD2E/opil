@@ -22,7 +22,5 @@ time_series.protocol_measurement_type = fluor_ex
 # Serialize
 doc = sbol3.Document()
 doc.add(time_series)
-doc.add(inc_temp)
 doc.add(media_well_strings)
-doc.add(fluor_ex)
 doc.write('time_series.xml', file_format='xml')
