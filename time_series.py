@@ -16,8 +16,8 @@ fluor_ex.default_value = 588
 
 # Add parameters to protocol
 time_series = opil.Protocol('time_series')
-time_series.has_parameter = inc_temp
-time_series.protocol_measurement_type = fluor_ex
+time_series.has_parameter = [inc_temp]
+time_series.protocol_measurement_type = [fluor_ex]
 
 # Serialize
 doc = sbol3.Document()
