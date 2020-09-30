@@ -29,14 +29,14 @@ class OPILFactory():
         def __init__(self, uri):
             sbol.TopLevel.__init__(self, name=uri, type_uri=rdf_type)
 
-            # Object properties can be either compositional or associational
+            # Object properties can be either compositional or associative
             property_uris = Query.query_object_properties(rdf_type)
             compositional_properties = Query.query_compositional_properties(rdf_type)
-            associational_properties = [uri for uri in property_uris if uri not in
+            associative_properties = [uri for uri in property_uris if uri not in
                                         compositional_properties]
 
-            # Initialize associational properties
-            for property_uri in associational_properties:
+            # Initialize associative properties
+            for property_uri in associative_properties:
                 property_name = Query.query_label(property_uri).replace(' ', '_')
                 cardinality = Query.query_cardinality(property_uri, rdf_type)
                 if len(cardinality):
@@ -104,14 +104,14 @@ class OPILFactory():
             Base.__init__(self, uri)
             self.type_uri = rdf_type
 
-            # Object properties can be either compositional or associational
+            # Object properties can be either compositional or associative
             property_uris = Query.query_object_properties(rdf_type)
             compositional_properties = Query.query_compositional_properties(rdf_type)
-            associational_properties = [uri for uri in property_uris if uri not in
+            associative_properties = [uri for uri in property_uris if uri not in
                                         compositional_properties]
 
-            # Initialize associational properties
-            for property_uri in associational_properties:
+            # Initialize associative properties
+            for property_uri in associative_properties:
                 property_name = Query.query_label(property_uri).replace(' ', '_')
                 if len(cardinality):
                     upper_bound = 1
