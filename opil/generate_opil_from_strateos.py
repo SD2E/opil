@@ -86,7 +86,12 @@ class StrateosOpilGenerator():
         self.doc.write(args_dict['out_file'], file_format='ttl')
 
     def handle_choice(self, id_string, param_dict):
-        pass
+        param = opil.EnumeratedParameter(id_string)
+        param.name = param_dict['label']
+        options_list = param_dict['options']
+        for option in options_list:
+            param.allowed_value = option['value']
+        self.param_list.append(param)
 
     def handle_string(self, id_string, param_dict):
         param = opil.StringParameter(id_string)
