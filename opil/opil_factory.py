@@ -59,15 +59,25 @@ class OPILFactory():
             property_uris = Query.query_datatype_properties(rdf_type)
             for property_uri in property_uris:
                 property_name = Query.query_label(property_uri).replace(' ', '_')
+
+                # Get the datatype of this property
                 datatypes = Query.query_property_datatype(property_uri, rdf_type)
                 if len(datatypes) == 0:
                     continue
                 if len(datatypes) > 1:
                     continue
+
+                # Get the cardinality of this datatype property
+                cardinality = Query.query_cardinality(property_uri, rdf_type)
+                if len(cardinality):
+                    upper_bound = 1
+                else:
+                    upper_bound = inf
+
                 if datatypes[0] == 'http://www.w3.org/2001/XMLSchema#string':
-                    self.__dict__[property_name] = sbol.TextProperty(self, property_uri, 0, 1)
+                    self.__dict__[property_name] = sbol.TextProperty(self, property_uri, 0, upper_bound)
                 elif datatypes[0] == 'http://www.w3.org/2001/XMLSchema#integer':
-                    self.__dict__[property_name] = sbol.IntProperty(self, property_uri, 0, 1)                    
+                    self.__dict__[property_name] = sbol.IntProperty(self, property_uri, 0, upper_bound)                    
                 elif datatypes[0] == 'http://www.w3.org/2001/XMLSchema#boolean':
                     self.__dict__[property_name] = sbol.BooleanProperty(self, property_uri, 0, 1)
 
@@ -132,15 +142,25 @@ class OPILFactory():
             property_uris = Query.query_datatype_properties(rdf_type)
             for property_uri in property_uris:
                 property_name = Query.query_label(property_uri).replace(' ', '_')
+
+                # Get the datatype of this property
                 datatypes = Query.query_property_datatype(property_uri, rdf_type)
                 if len(datatypes) == 0:
                     continue
                 if len(datatypes) > 1:
                     continue
+
+                # Get the cardinality of this datatype property
+                cardinality = Query.query_cardinality(property_uri, rdf_type)
+                if len(cardinality):
+                    upper_bound = 1
+                else:
+                    upper_bound = inf
+
                 if datatypes[0] == 'http://www.w3.org/2001/XMLSchema#string':
-                    self.__dict__[property_name] = sbol.TextProperty(self, property_uri, 0, 1)
+                    self.__dict__[property_name] = sbol.TextProperty(self, property_uri, 0, upper_bound)
                 elif datatypes[0] == 'http://www.w3.org/2001/XMLSchema#integer':
-                    self.__dict__[property_name] = sbol.IntProperty(self, property_uri, 0, 1)                    
+                    self.__dict__[property_name] = sbol.IntProperty(self, property_uri, 0, upper_bound)                    
                 elif datatypes[0] == 'http://www.w3.org/2001/XMLSchema#boolean':
                     self.__dict__[property_name] = sbol.BooleanProperty(self, property_uri, 0, 1)
 
