@@ -123,6 +123,7 @@ class OPILFactory():
             # Initialize associative properties
             for property_uri in associative_properties:
                 property_name = Query.query_label(property_uri).replace(' ', '_')
+                cardinality = Query.query_cardinality(property_uri, rdf_type)
                 if len(cardinality):
                     upper_bound = 1
                 else:
@@ -132,6 +133,7 @@ class OPILFactory():
             # Initialize compositional properties
             for property_uri in compositional_properties:
                 property_name = Query.query_label(property_uri).replace(' ', '_')
+                cardinality = Query.query_cardinality(property_uri, rdf_type)
                 if len(cardinality):
                     upper_bound = 1
                 else:
@@ -228,6 +230,7 @@ class Query():
         except Exception as e:
             return cls
 
+    @staticmethod
     def query_base_classes():
         class_list = Query.query_classes()
         base_classes = set()
@@ -236,6 +239,7 @@ class Query():
             base_classes.add(base_class)
         return list(base_classes)
 
+    @staticmethod
     def query_classes():
         query = '''
             SELECT distinct ?cls 
@@ -248,6 +252,7 @@ class Query():
         sbol_types = [str(row[0]) for row in response]
         return sbol_types
 
+    @staticmethod
     def query_subclasses(superclass):
         query = '''
             SELECT distinct ?subclass 
@@ -261,6 +266,7 @@ class Query():
         subclasses = [row[0] for row in response]
         return subclasses
 
+    @staticmethod
     def query_superclass(subclass):
         query = '''
             SELECT distinct ?superclass 
@@ -279,6 +285,7 @@ class Query():
             superclass = str(row[0])
         return superclass
 
+    @staticmethod
     def query_object_properties(class_uri):
         query =     '''
             SELECT distinct ?property_uri
@@ -307,6 +314,7 @@ class Query():
         property_types.extend(response)
         return list(set(property_types))
 
+    @staticmethod
     def query_compositional_properties(class_uri):
         query = '''
             SELECT distinct ?property_uri
@@ -322,6 +330,7 @@ class Query():
         property_types = response
         return property_types
 
+    @staticmethod
     def query_datatype_properties(class_uri):
         query =     '''
             SELECT distinct ?property_uri
@@ -350,6 +359,7 @@ class Query():
         property_types.extend(response)
         return list(set(property_types))
 
+    @staticmethod
     def query_cardinality(property_uri, class_uri):
         query = '''
             SELECT distinct ?cardinality
@@ -366,6 +376,7 @@ class Query():
         cardinality = response
         return cardinality
 
+    @staticmethod
     def query_property_datatype(property_uri, class_uri):
         query = '''
             SELECT distinct ?datatype
@@ -399,6 +410,7 @@ class Query():
             warnings.warn(f'{property_uri} has more than one datatype')
         return list(set(datatypes))
 
+    @staticmethod
     def query_label(property_uri):
         query =     '''
             SELECT distinct ?property_name
