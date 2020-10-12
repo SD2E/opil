@@ -32,11 +32,13 @@ opil:BooleanValue
       a owl:Restriction ;
       owl:allValuesFrom opil:BooleanParameter ;
       owl:onProperty opil:valueOf ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
     ] ;
   rdfs:subClassOf [
       a owl:Restriction ;
       owl:allValuesFrom xsd:boolean ;
       owl:onProperty opil:value ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
     ] ;
 .
 opil:EnumeratedParameter
@@ -57,6 +59,7 @@ opil:EnumeratedValue
       a owl:Restriction ;
       owl:allValuesFrom opil:EnumeratedParameter ;
       owl:onProperty opil:valueOf ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
     ] ;
   rdfs:subClassOf [
       a owl:Restriction ;
@@ -102,11 +105,13 @@ opil:IntegerValue
       a owl:Restriction ;
       owl:allValuesFrom opil:IntegerParameter ;
       owl:onProperty opil:valueOf ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
     ] ;
   rdfs:subClassOf [
       a owl:Restriction ;
       owl:allValuesFrom xsd:int ;
       owl:onProperty opil:value ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
     ] ;
 .
 opil:MeasureParameter
@@ -142,6 +147,7 @@ opil:MeasureValue
       a owl:Restriction ;
       owl:allValuesFrom opil:MeasureParameter ;
       owl:onProperty opil:valueOf ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
     ] ;
   rdfs:subClassOf [
       a owl:Restriction ;
@@ -188,16 +194,6 @@ opil:ParameterValue
       owl:allValuesFrom opil:Parameter ;
       owl:onProperty opil:valueOf ;
     ] ;
-  rdfs:subClassOf [
-      a owl:Restriction ;
-      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
-      owl:onProperty opil:value ;
-    ] ;
-  rdfs:subClassOf [
-      a owl:Restriction ;
-      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
-      owl:onProperty opil:valueOf ;
-    ] ;
 .
 opil:Protocol
   a owl:Class ;
@@ -230,11 +226,13 @@ opil:StringValue
       a owl:Restriction ;
       owl:allValuesFrom opil:StringParameter ;
       owl:onProperty opil:valueOf ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
     ] ;
   rdfs:subClassOf [
       a owl:Restriction ;
       owl:allValuesFrom xsd:string ;
       owl:onProperty opil:value ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
     ] ;
 .
 opil:URIParameter
@@ -250,11 +248,13 @@ opil:URIValue
       a owl:Restriction ;
       owl:allValuesFrom opil:URIParameter ;
       owl:onProperty opil:valueOf ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
     ] ;
   rdfs:subClassOf [
       a owl:Restriction ;
       owl:allValuesFrom xsd:anyURI ;
       owl:onProperty opil:value ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
     ] ;
 .
 opil:allowedValue
