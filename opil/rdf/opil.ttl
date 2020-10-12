@@ -147,6 +147,7 @@ opil:MeasureValue
       a owl:Restriction ;
       owl:allValuesFrom om:Measure ;
       owl:onProperty opil:hasValueObject ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
     ] ;
 .
 opil:Measurement
