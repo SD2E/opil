@@ -325,10 +325,27 @@ class Query():
                 ?property_uri rdfs:domain/(owl:unionOf/rdf:rest*/rdf:first)* <{}>.
             }}
             '''.format(class_uri)
+
         response = Query.graph.query(query)
         response = [str(row[0]) for row in response]
         property_types = response
+
+        # The type of inherited properties are sometimes overridden 
+        query = '''
+            SELECT distinct ?property_uri
+            WHERE 
+            {{
+                ?property_uri rdf:type owl:ObjectProperty .
+                ?property_uri rdfs:subPropertyOf opil:compositionalProperty .
+                <{}> rdfs:subClassOf ?restriction .
+                ?restriction owl:onProperty ?property_uri .
+            }}
+            '''.format(class_uri)
+        response = Query.graph.query(query)
+        response = [str(row[0]) for row in response]
+        property_types.extend(response) 
         return property_types
+
 
     @staticmethod
     def query_datatype_properties(class_uri):
