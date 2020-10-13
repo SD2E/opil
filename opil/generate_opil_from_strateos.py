@@ -110,7 +110,7 @@ class StrateosOpilGenerator():
         param.name = param_dict['label']
         if 'default' in param_dict:
             default = opil.StringValue(id_string + '_default')
-            default.value = [param_dict['default']]
+            default.value = param_dict['default']
             param.default_value = [default]
             self.doc.add(default)
         if 'required' in param_dict:
@@ -144,7 +144,7 @@ class StrateosOpilGenerator():
                 unit_iri = 'http://bbn.com/synbio/opil#pureNumber'
             measure_name = id_string + '_default_measure'
             measure = sbol3.Measure(value, unit_iri, name=measure_name)
-            default_instance.has_value_object = [measure]
+            default_instance.has_value_object = measure
             param.default_value = [default_instance]
             self.doc.add(default_instance)
         if 'required' in param_dict:
