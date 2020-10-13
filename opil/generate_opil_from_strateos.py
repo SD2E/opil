@@ -18,10 +18,7 @@ class StrateosOpilGenerator():
     '''
 
     def __init__(self):
-
-        # Recognized type fields when parsing JSON
-        self.type_list = ['choice', 'string', 'volume', 'time', 'length', 'decimal',
-                          'bool', 'group', 'group-choice']
+        pass
 
     def parse_strateos_json(self, namespace, protocol_name, document_dict):
         # Set the namespace for created instances
@@ -44,8 +41,7 @@ class StrateosOpilGenerator():
                 inputs_dict = section_dict['inputs']
                 for param in inputs_dict:
                     type = inputs_dict[param]['type']
-                    if type in self.type_list:
-                        self.handle_type(type, param, inputs_dict[param])
+                    self.handle_type(type, param, inputs_dict[param])
 
         # Add parameters to ProtocolInterface
         self.protocol.has_parameter = self.param_list
@@ -121,6 +117,18 @@ class StrateosOpilGenerator():
             param.required = True
         self.param_list.append(param)
 
+    def handle_integer(self, id_string, param_dict):
+        param = opil.IntegerParameter(id_string)
+        param.name = param_dict['label']
+        if 'default' in param_dict:
+            default = opil.IntegerValue(id_string + '_default')
+            default.value = param_dict['default']
+            param.default_value = [default]
+            self.doc.add(default)
+        if 'required' in param_dict:
+            param.required = True
+        self.param_list.append(param)
+
     def handle_measure(self, id_string, param_dict):
         param = opil.MeasureParameter(id_string)
         param.name = param_dict['label']
@@ -160,8 +168,7 @@ class StrateosOpilGenerator():
             inputs_dict = param_dict['inputs']
             for param in inputs_dict:
                 type = inputs_dict[param]['type']
-                if type in self.type_list:
-                    self.handle_type(type, param, inputs_dict[param])
+                self.handle_type(type, param, inputs_dict[param])
 
     def handle_group_choice(self, id_string, param_dict):
         if 'options' in param_dict:
@@ -172,14 +179,15 @@ class StrateosOpilGenerator():
                     param_dict = inputs_dict[key]
                     type = param_dict['type']
                     param = param_dict['label']
-                    if type in self.type_list:
-                        self.handle_type(type, key, param_dict)
+                    self.handle_type(type, key, param_dict)
 
     type_handlers = {'choice': handle_choice, 'string': handle_string,
                      'volume': handle_measure, 'time': handle_measure,
                      'length': handle_measure, 'decimal': handle_measure,
                      'bool': handle_bool, 'group': handle_group,
-                     'group-choice': handle_group_choice }
+                     'group+': handle_group, 'group-choice': handle_group_choice,
+                     'integer': handle_integer,
+                     'aliquot': handle_string, 'aliquot+': handle_string}
 
     def handle_type(self, type, id_string, param_dict):
         method = StrateosOpilGenerator.type_handlers[type]
