@@ -76,7 +76,7 @@ class OPILFactory():
 
                 if datatypes[0] == 'http://www.w3.org/2001/XMLSchema#string':
                     self.__dict__[property_name] = sbol.TextProperty(self, property_uri, 0, upper_bound)
-                elif datatypes[0] == 'http://www.w3.org/2001/XMLSchema#integer':
+                elif datatypes[0] == 'http://www.w3.org/2001/XMLSchema#int':
                     self.__dict__[property_name] = sbol.IntProperty(self, property_uri, 0, upper_bound)                    
                 elif datatypes[0] == 'http://www.w3.org/2001/XMLSchema#boolean':
                     self.__dict__[property_name] = sbol.BooleanProperty(self, property_uri, 0, upper_bound)
@@ -163,7 +163,7 @@ class OPILFactory():
 
                 if datatypes[0] == 'http://www.w3.org/2001/XMLSchema#string':
                     self.__dict__[property_name] = sbol.TextProperty(self, property_uri, 0, upper_bound)
-                elif datatypes[0] == 'http://www.w3.org/2001/XMLSchema#integer':
+                elif datatypes[0] == 'http://www.w3.org/2001/XMLSchema#int':
                     self.__dict__[property_name] = sbol.IntProperty(self, property_uri, 0, upper_bound)                    
                 elif datatypes[0] == 'http://www.w3.org/2001/XMLSchema#boolean':
                     self.__dict__[property_name] = sbol.BooleanProperty(self, property_uri, 0, upper_bound)
