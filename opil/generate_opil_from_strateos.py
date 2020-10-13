@@ -1,8 +1,14 @@
 import argparse
 import json
 import sbol3
-from sbol3 import Measure, om_unit
 import opil
+
+# Map of unit names to Unit instance IRIs
+UNITS = {
+    'microliter': 'http://www.ontology-of-units-of-measure.org/resource/om-2/microlitre',
+    'nanometer' : 'http://www.ontology-of-units-of-measure.org/resource/om-2/nanometre',
+    'hour' : 'http://www.ontology-of-units-of-measure.org/resource/om-2/hour'
+}
 
 
 class StrateosOpilGenerator():
@@ -10,6 +16,42 @@ class StrateosOpilGenerator():
     This class shows how OPIL can be generated from a
     Strateos protocol JSON schema
     '''
+
+    def __init__(self):
+
+        # Recognized type fields when parsing JSON
+        self.type_list = ['choice', 'string', 'volume', 'time', 'length', 'decimal',
+                          'bool', 'group', 'group-choice']
+
+    def parse_strateos_json(self, namespace, protocol_name, document_dict):
+        # Set the namespace for created instances
+        sbol3.set_namespace(namespace)
+
+        # Create the ProtocolInterface instance
+        self.protocol = opil.ProtocolInterface(protocol_name)
+        self.protocol.name = protocol_name
+
+        # Create a list of Parmeters
+        self.param_list = []
+
+        # Create the document
+        self.doc = sbol3.Document()
+        self.doc.add(self.protocol)
+
+        for section in document_dict:
+            section_dict = document_dict[section]
+            if 'inputs' in section_dict:
+                inputs_dict = section_dict['inputs']
+                for param in inputs_dict:
+                    type = inputs_dict[param]['type']
+                    if type in self.type_list:
+                        self.handle_type(type, param, inputs_dict[param])
+
+        # Add parameters to ProtocolInterface
+        self.protocol.has_parameter = self.param_list
+
+        return self.doc
+
 
     def main(self):
         parser = argparse.ArgumentParser()
@@ -25,7 +67,7 @@ class StrateosOpilGenerator():
             "--output",
             dest="out_file",
             help="Output OPIL Turtle file",
-            default='TimSeriesHTC.ttl'
+            default='TimeSeriesHTC.ttl'
         )
         parser.add_argument(
             "-n",
@@ -49,41 +91,11 @@ class StrateosOpilGenerator():
         with open(args_dict['in_file']) as f:
             document_dict = json.load(f)
 
-        type_list = ['choice', 'string', 'volume', 'time', 'length', 'bool']
-
-        # Skip the experimental_info section - these parameters are in the SD2 ontology
-        section_list = ['exp_info', 'inoc_info', 'recovery_info', 'induction_info',
-                        'plate_reader_info', 'run_info', 'validate_samples']
-
-        # Set the namespace for created instances
-        sbol3.set_homespace(args_dict['namespace'])
-
-        # Create the ProtocolInterface instance
-        self.protocol = opil.Protocol(args_dict['protocol_name'])
-        self.protocol.name = args_dict['protocol_name']
-
-        # Create a list of Parmeters
-        self.param_list = []
-
-        # Create the document
-        self.doc = sbol3.Document()
-        self.doc.add(self.protocol)
-
-        for section in document_dict:
-            if section in section_list:
-                section_dict = document_dict[section]
-                if 'inputs' in section_dict:
-                    inputs_dict = section_dict['inputs']
-                    for param in inputs_dict:
-                        type = inputs_dict[param]['type']
-                        if type in type_list:
-                            self.handle_type(type, param, inputs_dict[param])
-
-        # Add parameters to ProtocolInterface
-        self.protocol.has_parameter = self.param_list
+        document = self.parse_strateos_json(args_dict['namespace'],
+                                            args_dict['protocol_name'], document_dict)
 
         # Write out to a file
-        self.doc.write(args_dict['out_file'], file_format='ttl')
+        document.write(args_dict['out_file'], file_format='ttl')
 
     def handle_choice(self, id_string, param_dict):
         param = opil.EnumeratedParameter(id_string)
@@ -93,6 +105,8 @@ class StrateosOpilGenerator():
         for option in options_list:
             allowed_values.append(option['value'])
         param.allowed_value = allowed_values
+        if 'required' in param_dict:
+            param.required = True
         self.param_list.append(param)
 
     def handle_string(self, id_string, param_dict):
@@ -100,29 +114,34 @@ class StrateosOpilGenerator():
         param.name = param_dict['label']
         if 'default' in param_dict:
             default = opil.StringValue(id_string + '_default')
-            default.value = param_dict['default']
+            default.value = [param_dict['default']]
             param.default_value = [default]
             self.doc.add(default)
+        if 'required' in param_dict:
+            param.required = True
         self.param_list.append(param)
 
-    def handle_volume(self, id_string, param_dict):
+    def handle_measure(self, id_string, param_dict):
         param = opil.MeasureParameter(id_string)
         param.name = param_dict['label']
         if 'default' in param_dict:
-            default = opil.MeasureValue(id_string + '_default')
-            measure = om_unit.build_measure(id_string + '_default_measure')
-            measure.value = 42
-            default.has_value_object = [measure]
-            param.default_value = [default]
-            self.doc.add(default)
+            default_instance = opil.MeasureValue(id_string + '_default')
+            default_value = param_dict['default']
+            if isinstance(default_value, str):
+                string_splits = param_dict['default'].split(':')
+                value = float(string_splits[0])
+                unit_iri = UNITS[string_splits[1]]
+            else:
+                value = default_value
+                unit_iri = 'http://bbn.com/synbio/opil#pureNumber'
+            measure_name = id_string + '_default_measure'
+            measure = sbol3.Measure(value, unit_iri, name=measure_name)
+            default_instance.has_value_object = [measure]
+            param.default_value = [default_instance]
+            self.doc.add(default_instance)
+        if 'required' in param_dict:
+            param.required = True
         self.param_list.append(param)
-
-
-    def handle_time(self, id_string, param_dict):
-        pass
-
-    def handle_length(self, id_string, param_dict):
-        pass
 
     def handle_bool(self, id_string, param_dict):
         param = opil.BooleanParameter(id_string)
@@ -132,16 +151,39 @@ class StrateosOpilGenerator():
             default.value = param_dict['default']
             param.default_value = [default]
             self.doc.add(default)
+        if 'required' in param_dict:
+            param.required = True
         self.param_list.append(param)
 
+    def handle_group(self, id_string, param_dict):
+        if 'inputs' in param_dict:
+            inputs_dict = param_dict['inputs']
+            for param in inputs_dict:
+                type = inputs_dict[param]['type']
+                if type in self.type_list:
+                    self.handle_type(type, param, inputs_dict[param])
+
+    def handle_group_choice(self, id_string, param_dict):
+        if 'options' in param_dict:
+             dict_list = param_dict['options']
+             for dict in dict_list:
+                inputs_dict = dict['inputs']
+                for key in inputs_dict:
+                    param_dict = inputs_dict[key]
+                    type = param_dict['type']
+                    param = param_dict['label']
+                    if type in self.type_list:
+                        self.handle_type(type, key, param_dict)
+
     type_handlers = {'choice': handle_choice, 'string': handle_string,
-                     'volume': handle_volume, 'time': handle_time,
-                     'length': handle_length, 'bool': handle_bool}
+                     'volume': handle_measure, 'time': handle_measure,
+                     'length': handle_measure, 'decimal': handle_measure,
+                     'bool': handle_bool, 'group': handle_group,
+                     'group-choice': handle_group_choice }
 
     def handle_type(self, type, id_string, param_dict):
         method = StrateosOpilGenerator.type_handlers[type]
         method(self, id_string, param_dict)
-
 
 if __name__ == "__main__":
     opil_generator = StrateosOpilGenerator()
