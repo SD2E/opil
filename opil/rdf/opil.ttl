@@ -17,7 +17,7 @@
   a owl:Ontology ;
   rdfs:comment "This is the first draft of the Open Protocol Interface Languge (OPIL) ontology." ;
   owl:imports om: ;
-  owl:versionInfo "0.1" ;
+  owl:versionInfo "0.2" ;
 .
 opil:BooleanParameter
   a owl:Class ;
@@ -198,9 +198,9 @@ opil:ParameterValue
       owl:onProperty opil:valueOf ;
     ] ;
 .
-opil:Protocol
+opil:ProtocolInterface
   a owl:Class ;
-  rdfs:label "Protocol" ;
+  rdfs:label "Protocol Interface" ;
   rdfs:subClassOf owl:Thing ;
 .
 opil:SampleSet
@@ -273,10 +273,16 @@ opil:defaultValue
 .
 opil:hasParameter
   a owl:ObjectProperty ;
-  rdfs:domain opil:Protocol ;
+  rdfs:domain opil:ProtocolInterface ;
   rdfs:label "has parameter" ;
   rdfs:range opil:Parameter ;
   rdfs:subPropertyOf opil:compositionalProperty ;
+.
+opil:hasValue
+  a owl:ObjectProperty ;
+  rdfs:comment "" ;
+  rdfs:label "has value" ;
+  owl:inverseOf opil:valueOf ;
 .
 opil:hasValueObject
   a owl:ObjectProperty ;
@@ -358,7 +364,7 @@ opil:name
 .
 opil:protocolMeasurementType
   a owl:ObjectProperty ;
-  rdfs:domain opil:Protocol ;
+  rdfs:domain opil:ProtocolInterface ;
   rdfs:label "protocol measurement type" ;
   rdfs:range opil:MeasurementType ;
   rdfs:subPropertyOf opil:compositionalProperty ;
