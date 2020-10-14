@@ -27,8 +27,8 @@
   rdfs:label "24 hours" ;
 .
 :TimeSeries
-  a opil:Protocol ;
-  opil:name "Strateos Time Series" ;
+  a opil:ProtocolInterface ;
+  opil:name "Strateos TIme Series" ;
   opil:protocolMeasurementType :TimeSeriesFlowCytometer ;
   opil:protocolMeasurementType :TimeSeriesPlateReader ;
   rdfs:label "Time series" ;
@@ -36,7 +36,7 @@
 :TimeSeriesFlowCytometer
   a opil:MeasurementType ;
   a ncit:C78806 ;
-  opil:maxMeasurements 6 ;
+  opil:maxMeasurements 3 ;
   opil:maxTime :Hour24 ;
   rdfs:label "FLOW" ;
 .
