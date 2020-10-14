@@ -91,6 +91,7 @@ class StrateosOpilGenerator():
                                             args_dict['protocol_name'], document_dict)
 
         # Write out to a file
+        document.bind('opil', opil.Query.OPIL)  # Set namespace prefix
         document.write(args_dict['out_file'], file_format='ttl')
 
     def handle_choice(self, id_string, param_dict):
