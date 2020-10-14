@@ -28,6 +28,8 @@ class OPILFactory():
         "Create subclass using the 'type' metaclass"
         def __init__(self, uri):
             sbol.TopLevel.__init__(self, name=uri, type_uri=rdf_type)
+            self.__dict__['name'] = sbol.TextProperty(self, Query.OPIL + 'name',
+                                                      0, 1, [])
 
             # Object properties can be either compositional or associative
             property_uris = Query.query_object_properties(rdf_type)
