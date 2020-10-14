@@ -15,9 +15,9 @@
 
 <http://bbn.com/synbio/opil>
   a owl:Ontology ;
-  rdfs:comment "This is the first draft of the Open Protocol Interface Languge (OPIL) ontology." ;
+  rdfs:comment "This is the Open Protocol Interface Languge (OPIL) ontology." ;
   owl:imports om: ;
-  owl:versionInfo "0.2" ;
+  owl:versionInfo "0.3" ;
 .
 opil:BooleanParameter
   a owl:Class ;
@@ -31,14 +31,14 @@ opil:BooleanValue
   rdfs:subClassOf [
       a owl:Restriction ;
       owl:allValuesFrom opil:BooleanParameter ;
-      owl:onProperty opil:valueOf ;
       owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty opil:valueOf ;
     ] ;
   rdfs:subClassOf [
       a owl:Restriction ;
       owl:allValuesFrom xsd:boolean ;
-      owl:onProperty opil:value ;
       owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty opil:value ;
     ] ;
 .
 opil:EnumeratedParameter
@@ -58,8 +58,8 @@ opil:EnumeratedValue
   rdfs:subClassOf [
       a owl:Restriction ;
       owl:allValuesFrom opil:EnumeratedParameter ;
-      owl:onProperty opil:valueOf ;
       owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty opil:valueOf ;
     ] ;
   rdfs:subClassOf [
       a owl:Restriction ;
@@ -104,14 +104,14 @@ opil:IntegerValue
   rdfs:subClassOf [
       a owl:Restriction ;
       owl:allValuesFrom opil:IntegerParameter ;
-      owl:onProperty opil:valueOf ;
       owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty opil:valueOf ;
     ] ;
   rdfs:subClassOf [
       a owl:Restriction ;
       owl:allValuesFrom xsd:int ;
-      owl:onProperty opil:value ;
       owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty opil:value ;
     ] ;
 .
 opil:MeasureParameter
@@ -146,14 +146,14 @@ opil:MeasureValue
   rdfs:subClassOf [
       a owl:Restriction ;
       owl:allValuesFrom opil:MeasureParameter ;
-      owl:onProperty opil:valueOf ;
       owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty opil:valueOf ;
     ] ;
   rdfs:subClassOf [
       a owl:Restriction ;
       owl:allValuesFrom om:Measure ;
-      owl:onProperty opil:hasValueObject ;
       owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty opil:hasMeasure ;
     ] ;
 .
 opil:Measurement
@@ -180,14 +180,14 @@ opil:Parameter
   rdfs:subClassOf owl:Thing ;
   rdfs:subClassOf [
       a owl:Restriction ;
-      owl:cardinality "1"^^xsd:nonNegativeInteger ;
-      owl:onProperty opil:name ;
+      owl:allValuesFrom xsd:boolean ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty opil:required ;
     ] ;
   rdfs:subClassOf [
       a owl:Restriction ;
-      owl:allValuesFrom xsd:boolean ;
-      owl:onProperty opil:required ;
-      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty opil:name ;
     ] ;
 .
 opil:ParameterValue
@@ -231,14 +231,14 @@ opil:StringValue
   rdfs:subClassOf [
       a owl:Restriction ;
       owl:allValuesFrom opil:StringParameter ;
-      owl:onProperty opil:valueOf ;
       owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty opil:valueOf ;
     ] ;
   rdfs:subClassOf [
       a owl:Restriction ;
       owl:allValuesFrom xsd:string ;
-      owl:onProperty opil:value ;
       owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty opil:value ;
     ] ;
 .
 opil:URIParameter
@@ -253,14 +253,14 @@ opil:URIValue
   rdfs:subClassOf [
       a owl:Restriction ;
       owl:allValuesFrom opil:URIParameter ;
-      owl:onProperty opil:valueOf ;
       owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty opil:valueOf ;
     ] ;
   rdfs:subClassOf [
       a owl:Restriction ;
       owl:allValuesFrom xsd:anyURI ;
-      owl:onProperty opil:value ;
       owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty opil:value ;
     ] ;
 .
 opil:allowedValue
@@ -278,6 +278,12 @@ opil:defaultValue
   rdfs:label "default value" ;
   rdfs:range opil:ParameterValue ;
 .
+opil:hasMeasure
+  a owl:ObjectProperty ;
+  rdfs:domain opil:ParameterValue ;
+  rdfs:label "has measure" ;
+  rdfs:subPropertyOf opil:compositionalProperty ;
+.
 opil:hasParameter
   a owl:ObjectProperty ;
   rdfs:domain opil:ProtocolInterface ;
@@ -290,12 +296,6 @@ opil:hasValue
   rdfs:comment "" ;
   rdfs:label "has value" ;
   owl:inverseOf opil:valueOf ;
-.
-opil:hasValueObject
-  a owl:ObjectProperty ;
-  rdfs:domain opil:ParameterValue ;
-  rdfs:label "has value object" ;
-  rdfs:subPropertyOf opil:compositionalProperty ;
 .
 opil:index
   a owl:DatatypeProperty ;
