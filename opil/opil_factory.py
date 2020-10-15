@@ -6,6 +6,9 @@ import posixpath
 from math import inf
 
 
+# Expose Document through the OPIL API
+Document = sbol.Document
+
 def parse_class_name(uri):
     if '#' in uri:
         return uri[uri.rindex('#')+1:]
