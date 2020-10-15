@@ -28,6 +28,8 @@ class OPILFactory():
         "Create subclass using the 'type' metaclass"
         def __init__(self, uri):
             sbol.TopLevel.__init__(self, name=uri, type_uri=rdf_type)
+            self.__dict__['name'] = sbol.TextProperty(self, Query.OPIL + 'name',
+                                                      0, 1, [])
 
             # Object properties can be either compositional or associative
             property_uris = Query.query_object_properties(rdf_type)
@@ -59,17 +61,27 @@ class OPILFactory():
             property_uris = Query.query_datatype_properties(rdf_type)
             for property_uri in property_uris:
                 property_name = Query.query_label(property_uri).replace(' ', '_')
+
+                # Get the datatype of this property
                 datatypes = Query.query_property_datatype(property_uri, rdf_type)
                 if len(datatypes) == 0:
                     continue
                 if len(datatypes) > 1:
                     continue
+
+                # Get the cardinality of this datatype property
+                cardinality = Query.query_cardinality(property_uri, rdf_type)
+                if len(cardinality):
+                    upper_bound = 1
+                else:
+                    upper_bound = inf
+
                 if datatypes[0] == 'http://www.w3.org/2001/XMLSchema#string':
-                    self.__dict__[property_name] = sbol.TextProperty(self, property_uri, 0, 1)
-                elif datatypes[0] == 'http://www.w3.org/2001/XMLSchema#integer':
-                    self.__dict__[property_name] = sbol.IntProperty(self, property_uri, 0, 1)                    
+                    self.__dict__[property_name] = sbol.TextProperty(self, property_uri, 0, upper_bound)
+                elif datatypes[0] == 'http://www.w3.org/2001/XMLSchema#int':
+                    self.__dict__[property_name] = sbol.IntProperty(self, property_uri, 0, upper_bound)                    
                 elif datatypes[0] == 'http://www.w3.org/2001/XMLSchema#boolean':
-                    self.__dict__[property_name] = sbol.BooleanProperty(self, property_uri, 0, 1)
+                    self.__dict__[property_name] = sbol.BooleanProperty(self, property_uri, 0, upper_bound)
 
 
         class_name = parse_class_name(rdf_type)
@@ -86,13 +98,15 @@ class OPILFactory():
         for property_uri in property_uris:
             property_name = Query.query_label(property_uri).replace(' ', '_')
             datatype = Query.query_property_datatype(property_uri, rdf_type)
-            print(f'\t{property_name}\t{datatype}')
+            cardinality = Query.query_cardinality(property_uri, rdf_type)
+            print(f'\t{property_name}\t{datatype}\t{cardinality}')
 
         property_uris = Query.query_datatype_properties(rdf_type)
         for property_uri in property_uris:
             property_name = Query.query_label(property_uri).replace(' ', '_')
             datatype = Query.query_property_datatype(property_uri, rdf_type)
-            print(f'\t{property_name}\t{datatype}')
+            cardinality = Query.query_cardinality(property_uri, rdf_type)
+            print(f'\t{property_name}\t{datatype}\t{cardinality}')
         return sbol_toplevel
 
     def create_derived_class(rdf_type):
@@ -113,6 +127,7 @@ class OPILFactory():
             # Initialize associative properties
             for property_uri in associative_properties:
                 property_name = Query.query_label(property_uri).replace(' ', '_')
+                cardinality = Query.query_cardinality(property_uri, rdf_type)
                 if len(cardinality):
                     upper_bound = 1
                 else:
@@ -122,6 +137,7 @@ class OPILFactory():
             # Initialize compositional properties
             for property_uri in compositional_properties:
                 property_name = Query.query_label(property_uri).replace(' ', '_')
+                cardinality = Query.query_cardinality(property_uri, rdf_type)
                 if len(cardinality):
                     upper_bound = 1
                 else:
@@ -132,17 +148,27 @@ class OPILFactory():
             property_uris = Query.query_datatype_properties(rdf_type)
             for property_uri in property_uris:
                 property_name = Query.query_label(property_uri).replace(' ', '_')
+
+                # Get the datatype of this property
                 datatypes = Query.query_property_datatype(property_uri, rdf_type)
                 if len(datatypes) == 0:
                     continue
                 if len(datatypes) > 1:
                     continue
+
+                # Get the cardinality of this datatype property
+                cardinality = Query.query_cardinality(property_uri, rdf_type)
+                if len(cardinality):
+                    upper_bound = 1
+                else:
+                    upper_bound = inf
+
                 if datatypes[0] == 'http://www.w3.org/2001/XMLSchema#string':
-                    self.__dict__[property_name] = sbol.TextProperty(self, property_uri, 0, 1)
-                elif datatypes[0] == 'http://www.w3.org/2001/XMLSchema#integer':
-                    self.__dict__[property_name] = sbol.IntProperty(self, property_uri, 0, 1)                    
+                    self.__dict__[property_name] = sbol.TextProperty(self, property_uri, 0, upper_bound)
+                elif datatypes[0] == 'http://www.w3.org/2001/XMLSchema#int':
+                    self.__dict__[property_name] = sbol.IntProperty(self, property_uri, 0, upper_bound)                    
                 elif datatypes[0] == 'http://www.w3.org/2001/XMLSchema#boolean':
-                    self.__dict__[property_name] = sbol.BooleanProperty(self, property_uri, 0, 1)
+                    self.__dict__[property_name] = sbol.BooleanProperty(self, property_uri, 0, upper_bound)
 
         # Query and instantiate properties
         attribute_dict = {}
@@ -208,6 +234,7 @@ class Query():
         except Exception as e:
             return cls
 
+    @staticmethod
     def query_base_classes():
         class_list = Query.query_classes()
         base_classes = set()
@@ -216,6 +243,7 @@ class Query():
             base_classes.add(base_class)
         return list(base_classes)
 
+    @staticmethod
     def query_classes():
         query = '''
             SELECT distinct ?cls 
@@ -228,6 +256,7 @@ class Query():
         sbol_types = [str(row[0]) for row in response]
         return sbol_types
 
+    @staticmethod
     def query_subclasses(superclass):
         query = '''
             SELECT distinct ?subclass 
@@ -241,6 +270,7 @@ class Query():
         subclasses = [row[0] for row in response]
         return subclasses
 
+    @staticmethod
     def query_superclass(subclass):
         query = '''
             SELECT distinct ?superclass 
@@ -259,6 +289,7 @@ class Query():
             superclass = str(row[0])
         return superclass
 
+    @staticmethod
     def query_object_properties(class_uri):
         query =     '''
             SELECT distinct ?property_uri
@@ -287,6 +318,7 @@ class Query():
         property_types.extend(response)
         return list(set(property_types))
 
+    @staticmethod
     def query_compositional_properties(class_uri):
         query = '''
             SELECT distinct ?property_uri
@@ -297,11 +329,29 @@ class Query():
                 ?property_uri rdfs:domain/(owl:unionOf/rdf:rest*/rdf:first)* <{}>.
             }}
             '''.format(class_uri)
+
         response = Query.graph.query(query)
         response = [str(row[0]) for row in response]
         property_types = response
+
+        # The type of inherited properties are sometimes overridden 
+        query = '''
+            SELECT distinct ?property_uri
+            WHERE 
+            {{
+                ?property_uri rdf:type owl:ObjectProperty .
+                ?property_uri rdfs:subPropertyOf opil:compositionalProperty .
+                <{}> rdfs:subClassOf ?restriction .
+                ?restriction owl:onProperty ?property_uri .
+            }}
+            '''.format(class_uri)
+        response = Query.graph.query(query)
+        response = [str(row[0]) for row in response]
+        property_types.extend(response) 
         return property_types
 
+
+    @staticmethod
     def query_datatype_properties(class_uri):
         query =     '''
             SELECT distinct ?property_uri
@@ -330,6 +380,7 @@ class Query():
         property_types.extend(response)
         return list(set(property_types))
 
+    @staticmethod
     def query_cardinality(property_uri, class_uri):
         query = '''
             SELECT distinct ?cardinality
@@ -346,6 +397,7 @@ class Query():
         cardinality = response
         return cardinality
 
+    @staticmethod
     def query_property_datatype(property_uri, class_uri):
         query = '''
             SELECT distinct ?datatype
@@ -379,6 +431,7 @@ class Query():
             warnings.warn(f'{property_uri} has more than one datatype')
         return list(set(datatypes))
 
+    @staticmethod
     def query_label(property_uri):
         query =     '''
             SELECT distinct ?property_name
