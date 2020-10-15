@@ -5,6 +5,7 @@ import os
 import posixpath
 from math import inf
 
+
 def parse_class_name(uri):
     if '#' in uri:
         return uri[uri.rindex('#')+1:]
@@ -13,21 +14,15 @@ def parse_class_name(uri):
     else:
         return ''
 
-# class SBOLObject():
-#     def __init__(self, *args):
-#         print('Instantiating SBOLObject')
-
-# class Identified(SBOLObject):
-#     def __init__(self, *args):
-#         SBOLObject.__init__(*args)
-#         print('Instantiating Identified')
 
 class OPILFactory():
 
     def create_base_class(rdf_type):
         "Create subclass using the 'type' metaclass"
-        def __init__(self, uri):
-            sbol.TopLevel.__init__(self, name=uri, type_uri=rdf_type)
+        def __init__(self, name=None, type_uri=rdf_type):
+            if name is None:
+                raise ValueError('Cannot instantiate {rdf_type} object. Please specify a URI')
+            sbol.TopLevel.__init__(self, name=name, type_uri=rdf_type)
             self.__dict__['name'] = sbol.TextProperty(self, Query.OPIL + 'name',
                                                       0, 1, [])
 
@@ -92,6 +87,7 @@ class OPILFactory():
         attribute_dict['__init__'] = __init__
         sbol_toplevel = type(class_name, (sbol.TopLevel, ), attribute_dict)
         globals()[class_name] = sbol_toplevel
+        sbol.Document.register_builder(str(rdf_type), sbol_toplevel)
 
         # Print out properties -- this is for logging only
         property_uris = Query.query_object_properties(rdf_type)
@@ -113,9 +109,11 @@ class OPILFactory():
         CLASS_NAME = parse_class_name(rdf_type)
         SUPERCLASS_NAME = parse_class_name(Query.query_superclass(rdf_type))
 
-        def __init__(self, uri):
+        def __init__(self, name=None, type_uri=rdf_type):
+            if name is None:
+                raise ValueError('Cannot instantiate {rdf_type} object. Please specify a URI')
             Base = globals()[SUPERCLASS_NAME]
-            Base.__init__(self, uri)
+            Base.__init__(self, name)
             self.type_uri = rdf_type
 
             # Object properties can be either compositional or associative
@@ -177,6 +175,7 @@ class OPILFactory():
         print('Defining %s class' %CLASS_NAME)
         Class = type(CLASS_NAME, (globals()[SUPERCLASS_NAME],), attribute_dict)
         globals()[CLASS_NAME] = Class
+        sbol.Document.register_builder(str(rdf_type), Class)
 
         # Print out properties -- this is for logging only
         property_uris = Query.query_object_properties(rdf_type)
