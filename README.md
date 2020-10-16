@@ -1,16 +1,52 @@
 # opil
-The Open Protocol Interface Language (OPIL) is intended as a standard language for protocol interfaces. This repository represents an initial OPIL implementation. 
+The Open Protocol Interface Language (OPIL) is intended as a standard data model for protocol interfaces. This repository represents an initial OPIL implementation. 
 
-## OPIL is implemented in OWL
-A Turtle serialzation of he OPIL ontology can  be found in the 'rdf' directory. OPIL is built on SBOL version 3, but the version 3 of the SBOL ontology is not yet available.  The 'rdf' directory contains a fragment of the anticipated SBOL v3 ontology, based on the SBOL v3 specification.
+## Installation
+The  `opil` package and its dependencies can be installed with
+```
+pip install opil
+```
+Python 3 only is supported.
 
-Our initial example uses OPIL to model the Time Series protocol as described in the 2019 Q4 - 2020 Q1 Strateos Capabilities Overview document and the  YeastSTATES 1.0 Time Series Round 1 experimental request. The models include classes from the SBO and NCI Thesaurus ontologies, but the NCI ontology is not imported because its large file size causes problems for ontology editors. 
+## OPIL API
 
-## Generating JSON from OPIL
-The sample program in this repo shows how the  JSON for the YeastSTATES 1.0 Time Series Round 1 request can be generated from its OPIL representation. The program requires that instances of a class are also inferred to be instances of their superclass. This inferencing is provided by the `custom_eval` module, which is copied without modification from the `rdflib` [examples](https://rdflib.readthedocs.io/en/stable/apidocs/examples.html#module-examples.custom_eval) package. 
+The OPIL module is an extension of the underlying [pySBOL](https://github.com/SynBioDex/pySBOL3) module. Users who are familiar with pySBOL will find that the OPIL API follows all the same patterns.
 
-The  `opil_demo` package and its dependencies can be installed with
- ```
- python setup.py install
+Import as follows:
+
+```
+import opil
 ```
 
+The OPIL data model is encoded as an ontology using the Web Ontology Language (OWL). (A Turtle serialization of the OPIL ontology can be found in the 'rdf' directory.) The module's API is dynamically generated directly from this OWL specification immediately upon import of the module into the user's Python environment. The ontology specifies the Python classes, their attributes, their types, and their cardinality. The user can print details of the data model as follows:
+
+```
+opil.help()
+```
+
+This will list the classes, their attributes, and their types. 
+
+## Working with OPIL Documents
+
+All file I/O is handled through a `Document` object. In the following example, we read a file that describes a protocol interface for a time series experiment. The `file_format` can be `ttl` (Turtle), `xml` (RDF-XML), and `nt` (N-Triples) 
+
+```
+doc = opil.Document()
+doc.read('TimeSeriesHTC.ttl', file_format='ttl')
+```
+
+Once a `Document` is loaded, you can inspect its contents as follows:
+
+```
+for obj in doc.objects:
+    print(obj.name)
+    print(type(obj))
+    print(obj.identity)
+    print()
+```
+
+The `name` attribute is used for human-readable and/or lab-specific identifiers. The `identity` attribute specifies the unique Uniform Resource Identifier (URI) for each object. The URI is used to retrieve specific objects from the Document.
+
+```
+protocol = doc.find('http://strateos.com/TimeSeriesHTC')
+```
