@@ -1,13 +1,15 @@
 import sbol3 as sbol
 import rdflib
-import warnings
 import os
 import posixpath
+import logging
 from math import inf
 
 
 # Expose Document through the OPIL API
 Document = sbol.Document
+
+logging.basicConfig(level=logging.INFO)
 
 def parse_class_name(uri):
     if '#' in uri:
@@ -81,9 +83,8 @@ class OPILFactory():
                 elif datatypes[0] == 'http://www.w3.org/2001/XMLSchema#boolean':
                     self.__dict__[property_name] = sbol.BooleanProperty(self, property_uri, 0, upper_bound)
 
-
         class_name = parse_class_name(rdf_type)
-        print('Defining %s class' %class_name)
+        log = f'\nDefining {class_name} class\n'
 
         # Query and instantiate properties
         attribute_dict = {}
@@ -98,14 +99,16 @@ class OPILFactory():
             property_name = Query.query_label(property_uri).replace(' ', '_')
             datatype = Query.query_property_datatype(property_uri, rdf_type)
             cardinality = Query.query_cardinality(property_uri, rdf_type)
-            print(f'\t{property_name}\t{datatype}\t{cardinality}')
+            log += f'\t{property_name}\t{datatype}\t{cardinality}\n'
 
         property_uris = Query.query_datatype_properties(rdf_type)
         for property_uri in property_uris:
             property_name = Query.query_label(property_uri).replace(' ', '_')
             datatype = Query.query_property_datatype(property_uri, rdf_type)
             cardinality = Query.query_cardinality(property_uri, rdf_type)
-            print(f'\t{property_name}\t{datatype}\t{cardinality}')
+            log += f'\t{property_name}\t{datatype}\t{cardinality}\n'
+
+        logging.info(log)
         return sbol_toplevel
 
     def create_derived_class(rdf_type):
@@ -175,7 +178,7 @@ class OPILFactory():
         attribute_dict = {}
         attribute_dict['__init__'] = __init__
 
-        print('Defining %s class' %CLASS_NAME)
+        log = f'\nDefining {CLASS_NAME} class\n'
         Class = type(CLASS_NAME, (globals()[SUPERCLASS_NAME],), attribute_dict)
         globals()[CLASS_NAME] = Class
         sbol.Document.register_builder(str(rdf_type), Class)
@@ -186,13 +189,15 @@ class OPILFactory():
             property_name = Query.query_label(property_uri).replace(' ', '_')
             datatype = Query.query_property_datatype(property_uri, rdf_type)
             cardinality = Query.query_cardinality(property_uri, rdf_type)
-            print(f'\t{property_name}\t{datatype}\t{cardinality}')
+            log += f'\t{property_name}\t{datatype}\t{cardinality}\n'
         property_uris = Query.query_datatype_properties(rdf_type)
         for property_uri in property_uris:
             property_name = Query.query_label(property_uri).replace(' ', '_')
             datatype = Query.query_property_datatype(property_uri, rdf_type)
             cardinality = Query.query_cardinality(property_uri, rdf_type)
-            print(f'\t{property_name}\t{datatype}\t{cardinality}')
+            log += f'\t{property_name}\t{datatype}\t{cardinality}\n'
+
+        logging.info(log)
 
     def create_derived_classes(base_class):
         rdf_subtypes = Query.query_subclasses(base_class)
@@ -218,7 +223,7 @@ class Query():
     graph.namespace_manager.bind('xsd', rdflib.URIRef('http://www.w3.org/2001/XMLSchema#'))
 
     # for s in graph.subjects(RDF + rdflib.URIRef('type'), OWL + rdflib.URIRef('Class')):
-    #     print(s)
+    #     logging.info(s)
 
     prefixes = '''PREFIX sbol: <http://sbols.org/v2#>
     PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -428,9 +433,9 @@ class Query():
         datatypes.extend(response)
         datatypes = list(set(datatypes))
         if len(datatypes) == 0:
-            warnings.warn(f'{property_uri} datatype is undefined')
+            logging.warn(f'{property_uri} datatype is undefined')
         if len(datatypes) > 1:
-            warnings.warn(f'{property_uri} has more than one datatype')
+            logging.warn(f'{property_uri} has more than one datatype')
         return list(set(datatypes))
 
     @staticmethod
