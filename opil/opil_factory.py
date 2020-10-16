@@ -32,7 +32,7 @@ class OPILFactory():
             if name is None:
                 raise ValueError('Cannot instantiate {rdf_type} object. Please specify a URI')
             sbol.TopLevel.__init__(self, name=name, type_uri=rdf_type)
-            self.__dict__['name'] = sbol.TextProperty(self, Query.OPIL + 'name',
+            self.__dict__['name'] = sbol.TextProperty(self, str(Query.OPIL + 'name'),
                                                       0, 1, [])
 
             # Object properties can be either compositional or associative
