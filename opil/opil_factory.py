@@ -17,15 +17,6 @@ def help():
     OPILFactory.generate()
 
 
-def parse_class_name(uri):
-    if '#' in uri:
-        return uri[uri.rindex('#')+1:]
-    elif '/' in uri:
-        return uri[uri.rindex('/')+1:]
-    else:
-        return ''
-
-
 class OPILFactory():
 
     @staticmethod
@@ -96,8 +87,9 @@ class OPILFactory():
                 elif datatypes[0] == 'http://www.w3.org/2001/XMLSchema#boolean':
                     self.__dict__[property_name] = sbol.BooleanProperty(self, property_uri, 0, upper_bound)
 
-        class_name = parse_class_name(rdf_type)
-        log = f'\nDefining {class_name} class\n'
+        class_name = sbol.utils.parse_class_name(rdf_type)
+        log = f'\n{class_name}\n'
+        log += '-' * (len(log) - 2) + '\n'
 
         # Query and instantiate properties
         attribute_dict = {}
@@ -111,24 +103,36 @@ class OPILFactory():
         for property_uri in property_uris:
             property_name = Query.query_label(property_uri).replace(' ', '_')
             datatype = Query.query_property_datatype(property_uri, rdf_type)
-            cardinality = Query.query_cardinality(property_uri, rdf_type)
-            log += f'\t{property_name}\t{datatype}\t{cardinality}\n'
+            if len(datatype):
+                datatype = sbol.utils.parse_class_name(datatype[0])
+            else:
+                datatype = None
+            # cardinality = Query.query_cardinality(property_uri, rdf_type)
+            # if len(cardinality):
+            #     datatype = f'list of {datatype}'
+            log += f'\t{property_name}\t{datatype}\n'
 
         property_uris = Query.query_datatype_properties(rdf_type)
         for property_uri in property_uris:
             property_name = Query.query_label(property_uri).replace(' ', '_')
             datatype = Query.query_property_datatype(property_uri, rdf_type)
+            if len(datatype):
+                datatype = sbol.utils.parse_class_name(datatype[0])
+            else:
+                datatype = None
             cardinality = Query.query_cardinality(property_uri, rdf_type)
-            log += f'\t{property_name}\t{datatype}\t{cardinality}\n'
+            # if len(cardinality):
+            #     datatype = f'list of {datatype}'
+            # log += f'\t{property_name}\t{datatype}\n'
 
         if logging.getLogger().level == logging.INFO:
-            print(log)
+            print(log.rstrip())
 
         return sbol_toplevel
 
     def create_derived_class(rdf_type):
-        CLASS_NAME = parse_class_name(rdf_type)
-        SUPERCLASS_NAME = parse_class_name(Query.query_superclass(rdf_type))
+        CLASS_NAME = sbol.utils.parse_class_name(rdf_type)
+        SUPERCLASS_NAME = sbol.utils.parse_class_name(Query.query_superclass(rdf_type))
 
         def __init__(self, name=None, type_uri=rdf_type):
             if name is None:
@@ -193,7 +197,8 @@ class OPILFactory():
         attribute_dict = {}
         attribute_dict['__init__'] = __init__
 
-        log = f'\nDefining {CLASS_NAME} class\n'
+        log = f'\n{CLASS_NAME}\n'
+        log += '-' * (len(log) - 2) + '\n'
         Class = type(CLASS_NAME, (globals()[SUPERCLASS_NAME],), attribute_dict)
         globals()[CLASS_NAME] = Class
         sbol.Document.register_builder(str(rdf_type), Class)
@@ -203,17 +208,29 @@ class OPILFactory():
         for property_uri in property_uris:
             property_name = Query.query_label(property_uri).replace(' ', '_')
             datatype = Query.query_property_datatype(property_uri, rdf_type)
-            cardinality = Query.query_cardinality(property_uri, rdf_type)
-            log += f'\t{property_name}\t{datatype}\t{cardinality}\n'
+            if len(datatype):
+                datatype = sbol.utils.parse_class_name(datatype[0])
+            else:
+                datatype = None
+            # cardinality = Query.query_cardinality(property_uri, rdf_type)
+            # if len(cardinality):
+            #     datatype = f'list of {datatype}'
+            log += f'\t{property_name}\t{datatype}\n'
         property_uris = Query.query_datatype_properties(rdf_type)
         for property_uri in property_uris:
             property_name = Query.query_label(property_uri).replace(' ', '_')
             datatype = Query.query_property_datatype(property_uri, rdf_type)
+            if len(datatype):
+                datatype = sbol.utils.parse_class_name(datatype[0])
+            else:
+                datatype = None
             cardinality = Query.query_cardinality(property_uri, rdf_type)
-            log += f'\t{property_name}\t{datatype}\t{cardinality}\n'
+            # if len(cardinality):
+            #     datatype = f'list of {datatype}'
+            # log += f'\t{property_name}\t{datatype}\n'
 
         if logging.getLogger().level == logging.INFO:
-            print(log)
+            print(log.rstrip())
 
     def create_derived_classes(base_class):
         rdf_subtypes = Query.query_subclasses(base_class)
