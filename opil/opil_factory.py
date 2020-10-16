@@ -9,7 +9,13 @@ from math import inf
 # Expose Document through the OPIL API
 Document = sbol.Document
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.CRITICAL)
+
+
+def help():
+    logging.getLogger().setLevel(logging.INFO)
+    OPILFactory.generate()
+
 
 def parse_class_name(uri):
     if '#' in uri:
@@ -21,6 +27,13 @@ def parse_class_name(uri):
 
 
 class OPILFactory():
+
+    @staticmethod
+    def generate():
+        opil_types = Query.query_base_classes()
+        for opil_type in opil_types:
+            OPILFactory.create_base_class(opil_type)
+            OPILFactory.create_derived_classes(opil_type)
 
     def create_base_class(rdf_type):
         "Create subclass using the 'type' metaclass"
@@ -108,7 +121,9 @@ class OPILFactory():
             cardinality = Query.query_cardinality(property_uri, rdf_type)
             log += f'\t{property_name}\t{datatype}\t{cardinality}\n'
 
-        logging.info(log)
+        if logging.getLogger().level == logging.INFO:
+            print(log)
+
         return sbol_toplevel
 
     def create_derived_class(rdf_type):
@@ -197,7 +212,8 @@ class OPILFactory():
             cardinality = Query.query_cardinality(property_uri, rdf_type)
             log += f'\t{property_name}\t{datatype}\t{cardinality}\n'
 
-        logging.info(log)
+        if logging.getLogger().level == logging.INFO:
+            print(log)
 
     def create_derived_classes(base_class):
         rdf_subtypes = Query.query_subclasses(base_class)
@@ -456,8 +472,4 @@ class Query():
         property_name = response[0]
         return property_name
 
-
-opil_types = Query.query_base_classes()
-for opil_type in opil_types:
-    OPILFactory.create_base_class(opil_type)
-    OPILFactory.create_derived_classes(opil_type)
+OPILFactory.generate()
