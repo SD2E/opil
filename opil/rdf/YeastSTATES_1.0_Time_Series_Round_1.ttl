@@ -414,7 +414,7 @@ abox:doubling_time_meas
 .
 abox:doubling_time_value
   a opil:MeasureValue ;
-  opil:hasValueObject abox:doubling_time_meas ;
+  opil:hasMeasure abox:doubling_time_meas ;
   opil:valueOf <http://bbn.com/synbio/sd2/abox#induction_info.induction_time.doubling_time> ;
 .
 abox:fluor_em_meas
@@ -425,7 +425,7 @@ abox:fluor_em_meas
 .
 abox:fluor_em_value
   a opil:MeasureValue ;
-  opil:hasValueObject abox:fluor_em_meas ;
+  opil:hasMeasure abox:fluor_em_meas ;
   opil:valueOf <http://bbn.com/synbio/sd2/abox#plate_reader_info.fluor_em> ;
   rdfs:label "530:nanometer" ;
 .
@@ -437,7 +437,7 @@ abox:fluor_ex_meas
 .
 abox:fluor_ex_value
   a opil:MeasureValue ;
-  opil:hasValueObject abox:fluor_ex_meas ;
+  opil:hasMeasure abox:fluor_ex_meas ;
   opil:valueOf <http://bbn.com/synbio/sd2/abox#plate_reader_info.fluor_ex> ;
   rdfs:label "488:nanometer" ;
 .
@@ -455,10 +455,10 @@ abox:high_osm_media
 abox:high_speed
   a opil:StringValue ;
   opil:value "high_speed" ;
-  opil:valueOf abox:incubation_info.shaking ;
+  opil:valueOf <http://bbn.com/synbio/sd2/abox#incubation_info.shaking> ;
   rdfs:label "high_speed" ;
 .
-abox:incubation_info.shaking
+<http://bbn.com/synbio/sd2/abox#incubation_info.shaking>
   a opil:StringParameter ;
   opil:name "incubation info.shaking" ;
 .
@@ -516,7 +516,7 @@ abox:inoc_media_vol_meas
 .
 abox:inoc_media_vol_value
   a opil:MeasureValue ;
-  opil:hasValueObject abox:inoc_media_vol_meas ;
+  opil:hasMeasure abox:inoc_media_vol_meas ;
   opil:valueOf <http://bbn.com/synbio/sd2/abox#inoc_info.inoc_media_vol> ;
   rdfs:label "700:microliter" ;
 .
@@ -528,13 +528,13 @@ abox:inoc_vol_meas
 .
 abox:inoc_vol_value
   a opil:MeasureValue ;
-  opil:hasValueObject abox:inoc_vol_meas ;
+  opil:hasMeasure abox:inoc_vol_meas ;
   opil:valueOf <http://bbn.com/synbio/sd2/abox#inoc_info.inoc_vol> ;
   rdfs:label "10:microliter" ;
 .
 <http://bbn.com/synbio/sd2/abox#inof.dil_vol_value>
   a opil:MeasureValue ;
-  opil:hasValueObject <http://bbn.com/synbio/sd2/abox#info.dil.vol_meas> ;
+  opil:hasMeasure <http://bbn.com/synbio/sd2/abox#info.dil.vol_meas> ;
   opil:valueOf <http://bbn.com/synbio/sd2/abox#induction_info.dil_volume> ;
 .
 abox:new-induction-plate
@@ -545,7 +545,7 @@ abox:new-induction-plate
 .
 abox:plate_reader_gain
   a opil:MeasureValue ;
-  opil:hasValueObject abox:gain16 ;
+  opil:hasMeasure abox:gain16 ;
   opil:valueOf <http://bbn.com/synbio/sd2/abox#plate_reader_info.gain> ;
   rdfs:label "plate reader gain" ;
 .
@@ -569,7 +569,7 @@ abox:read_cult_vol_meas
 .
 abox:read_cult_vol_value
   a opil:MeasureValue ;
-  opil:hasValueObject abox:read_cult_vol_meas ;
+  opil:hasMeasure abox:read_cult_vol_meas ;
   opil:valueOf <http://bbn.com/synbio/sd2/abox#read_info.sampling_info.read_cult_vol> ;
   rdfs:label "300:microliter" ;
 .
@@ -586,7 +586,7 @@ abox:read_cult_vol_value
 .
 <http://bbn.com/synbio/sd2/abox#reagents.media_vol_value>
   a opil:MeasureValue ;
-  opil:hasValueObject <http://bbn.com/synbio/sd2/abox#reagents.media_vol_meas> ;
+  opil:hasMeasure <http://bbn.com/synbio/sd2/abox#reagents.media_vol_meas> ;
   opil:valueOf <http://bbn.com/synbio/sd2/abox#induction_info.induction_reagents.media_vol> ;
 .
 <http://bbn.com/synbio/sd2/abox#recovery_info.recovery_media_vol>
@@ -605,7 +605,7 @@ abox:recovery_media_vol_meas
 .
 abox:recovery_media_vol_value
   a opil:MeasureValue ;
-  opil:hasValueObject abox:recovery_media_vol_meas ;
+  opil:hasMeasure abox:recovery_media_vol_meas ;
   opil:valueOf <http://bbn.com/synbio/sd2/abox#recovery_info.recovery_media_vol> ;
   rdfs:label "1000:microliter" ;
 .
@@ -617,7 +617,7 @@ abox:recovery_sample_vol_meas
 .
 abox:recovery_sample_vol_value
   a opil:MeasureValue ;
-  opil:hasValueObject abox:recovery_sample_vol_meas ;
+  opil:hasMeasure abox:recovery_sample_vol_meas ;
   opil:valueOf <http://bbn.com/synbio/sd2/abox#recovery_info.recovery_sample_vol> ;
   rdfs:label "50:microliter" ;
 .
@@ -645,7 +645,7 @@ abox:time_1_meas
 .
 abox:time_1_value
   a opil:MeasureValue ;
-  opil:hasValueObject abox:time_1_meas ;
+  opil:hasMeasure abox:time_1_meas ;
   opil:valueOf <http://bbn.com/synbio/sd2/abox#inoc_info.inc_time_1> ;
   rdfs:label "16:hour" ;
 .
@@ -657,7 +657,7 @@ abox:total_induction_time_meas
 .
 abox:total_induction_time_value
   a opil:MeasureValue ;
-  opil:hasValueObject abox:total_induction_time_meas ;
+  opil:hasMeasure abox:total_induction_time_meas ;
   opil:valueOf <http://bbn.com/synbio/sd2/abox#induction_info.induction_time.total_induction_time> ;
   rdfs:label "8:hour" ;
 .
