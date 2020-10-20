@@ -71,6 +71,16 @@ opil:ExperimentalRequest
   a owl:Class ;
   rdfs:label "Experimental request" ;
   rdfs:subClassOf owl:Thing ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom opil:ProtocolInterface ;
+      owl:onProperty opil:instanceOf ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty opil:instanceOf ;
+    ] ;
 .
 opil:IntegerParameter
   a owl:Class ;
