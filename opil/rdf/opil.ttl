@@ -304,6 +304,13 @@ opil:index
   rdfs:label "index" ;
   rdfs:range xsd:integer ;
 .
+opil:instanceOf
+  a owl:ObjectProperty ;
+  rdfs:comment "" ;
+  rdfs:domain opil:ExperimentalRequest ;
+  rdfs:label "instance of" ;
+  rdfs:range opil:ProtocolInterface ;
+.
 opil:list
   a owl:DatatypeProperty ;
   rdfs:domain opil:Parameter ;
