@@ -301,6 +301,14 @@ opil:hasParameter
   rdfs:range opil:Parameter ;
   rdfs:subPropertyOf opil:compositionalProperty ;
 .
+opil:hasParameterValue
+  a owl:ObjectProperty ;
+  rdfs:comment "" ;
+  rdfs:domain opil:ExperimentalRequest ;
+  rdfs:label "has parameter value" ;
+  rdfs:range opil:ParameterValue ;
+  rdfs:subPropertyOf opil:compositionalProperty ;
+.
 opil:hasValue
   a owl:ObjectProperty ;
   rdfs:comment "" ;
