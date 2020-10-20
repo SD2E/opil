@@ -357,7 +357,7 @@
 .
 <http://strateos.com/col_num_default>
   a opil:IntegerValue ;
-  opil:value 4 ;
+  opil:value "4"^^xsd:int ;
   sbol:displayId "col_num_default" ;
 .
 <http://strateos.com/conc_default>
