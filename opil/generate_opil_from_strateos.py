@@ -36,7 +36,7 @@ class StrateosOpilGenerator():
             "--output",
             dest="out_file",
             help="Output OPIL Turtle file",
-            default='TimeSeriesHTC.ttl'
+            default='TimeSeriesHTC.nt'
         )
         parser.add_argument(
             "-n",
@@ -61,12 +61,16 @@ class StrateosOpilGenerator():
             document_dict = json.load(f)
 
         # Parse the JSON and return a SBOL document
+        print('Generating OPIL from JSON file ', args_dict['in_file'])
         document = self.parse_strateos_json(args_dict['namespace'],
                                             args_dict['protocol_name'], document_dict)
 
         # Write out the document to a file
         document.bind('opil', opil.Query.OPIL)  # Set namespace prefix
-        document.write(args_dict['out_file'], file_format='ttl')
+
+        # Use Ntriples serialization to avoid rdflib issue with literal
+        # data types that occurs with Turtle serialization
+        document.write(args_dict['out_file'], file_format='nt')
 
     def parse_strateos_json(self, namespace, protocol_name, document_dict):
         # Set the namespace for created instances
