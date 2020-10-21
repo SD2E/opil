@@ -16,6 +16,7 @@ class ShaclValidator:
         #g.parse('rdf/YeastSTATES_1.0_Time_Series_Round_1.ttl', format='ttl')
         g.parse('rdf/om-2.0.rdf')
         g.parse('rdf/opil-shacl.shapes.ttl', format='ttl')
+        g.parse('rdf/TestER.ttl', format='ttl')
 
         # Do the validation
         print('Validating graph...')
