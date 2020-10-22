@@ -1,0 +1,49 @@
+# baseURI: http://bbn.com/synbio/sd2/test-er
+# imports: file:///Users/rmarkelo/TBCMEWorkspace/SynBio/TimeSeriesHTC.ttl
+# imports: http://bbn.com/synbio/opil
+# imports: http://bbn.com/synbio/opil/shacl
+# prefix: test-er
+
+@prefix abox: <http://bbn.com/synbio/sd2/abox#> .
+@prefix om: <http://www.ontology-of-units-of-measure.org/resource/om-2/> .
+@prefix opil: <http://bbn.com/synbio/opil#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix strateos: <http://strateos.com/> .
+@prefix test-er: <http://bbn.com/synbio/sd2/test-er#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+abox:BooleanValue_1
+  a opil:BooleanValue ;
+  opil:value false ;
+  opil:valueOf <http://strateos.com/TimeSeriesHTC/BooleanParameter1> ;
+  rdfs:comment "" ;
+  rdfs:label "Boolean value 1" ;
+.
+abox:ExperimentalRequest_1
+  a opil:ExperimentalRequest ;
+  opil:hasParameterValue abox:BooleanValue_1 ;
+  opil:instanceOf strateos:TimeSeriesHTC ;
+  rdfs:comment "" ;
+  rdfs:label "Experimental request 1" ;
+.
+abox:MeasureValue_1
+  a opil:MeasureValue ;
+  opil:hasMeasure abox:Measure_1 ;
+  opil:valueOf <http://strateos.com/TimeSeriesHTC/MeasureParameter11> ;
+  rdfs:comment "" ;
+  rdfs:label "Measure value 1" ;
+.
+abox:Measure_1
+  a om:Measure ;
+  rdfs:comment "" ;
+  rdfs:label "Measure 1" ;
+.
+<http://bbn.com/synbio/sd2/test-er>
+  a owl:Ontology ;
+  owl:imports <file:///Users/rmarkelo/TBCMEWorkspace/SynBio/TimeSeriesHTC.ttl> ;
+  owl:imports <http://bbn.com/synbio/opil> ;
+  owl:imports <http://bbn.com/synbio/opil/shacl> ;
+  owl:versionInfo "Created with TopBraid Composer" ;
+.

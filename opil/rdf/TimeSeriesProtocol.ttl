@@ -36,7 +36,7 @@
 :TimeSeriesFlowCytometer
   a opil:MeasurementType ;
   a ncit:C78806 ;
-  opil:maxMeasurements 3 ;
+  opil:maxMeasurements 6 ;
   opil:maxTime :Hour24 ;
   rdfs:label "FLOW" ;
 .

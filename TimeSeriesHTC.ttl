@@ -1,503 +1,599 @@
+# baseURI: file:///Users/rmarkelo/TBCMEWorkspace/SynBio/TimeSeriesHTC.ttl
+# imports: http://bbn.com/synbio/opil
+
 @prefix om: <http://www.ontology-of-units-of-measure.org/resource/om-2/> .
 @prefix opil: <http://bbn.com/synbio/opil#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix sbol: <http://sbols.org/v3#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://strateos.com/TimeSeriesHTC> a opil:ProtocolInterface ;
-    opil:hasParameter <http://strateos.com/TimeSeriesHTC/BooleanParameter1>,
-        <http://strateos.com/TimeSeriesHTC/BooleanParameter2>,
-        <http://strateos.com/TimeSeriesHTC/BooleanParameter3>,
-        <http://strateos.com/TimeSeriesHTC/BooleanParameter4>,
-        <http://strateos.com/TimeSeriesHTC/BooleanParameter5>,
-        <http://strateos.com/TimeSeriesHTC/EnumeratedParameter1>,
-        <http://strateos.com/TimeSeriesHTC/EnumeratedParameter10>,
-        <http://strateos.com/TimeSeriesHTC/EnumeratedParameter2>,
-        <http://strateos.com/TimeSeriesHTC/EnumeratedParameter3>,
-        <http://strateos.com/TimeSeriesHTC/EnumeratedParameter4>,
-        <http://strateos.com/TimeSeriesHTC/EnumeratedParameter5>,
-        <http://strateos.com/TimeSeriesHTC/EnumeratedParameter6>,
-        <http://strateos.com/TimeSeriesHTC/EnumeratedParameter7>,
-        <http://strateos.com/TimeSeriesHTC/EnumeratedParameter8>,
-        <http://strateos.com/TimeSeriesHTC/EnumeratedParameter9>,
-        <http://strateos.com/TimeSeriesHTC/IntegerParameter1>,
-        <http://strateos.com/TimeSeriesHTC/MeasureParameter1>,
-        <http://strateos.com/TimeSeriesHTC/MeasureParameter10>,
-        <http://strateos.com/TimeSeriesHTC/MeasureParameter11>,
-        <http://strateos.com/TimeSeriesHTC/MeasureParameter12>,
-        <http://strateos.com/TimeSeriesHTC/MeasureParameter13>,
-        <http://strateos.com/TimeSeriesHTC/MeasureParameter14>,
-        <http://strateos.com/TimeSeriesHTC/MeasureParameter15>,
-        <http://strateos.com/TimeSeriesHTC/MeasureParameter16>,
-        <http://strateos.com/TimeSeriesHTC/MeasureParameter17>,
-        <http://strateos.com/TimeSeriesHTC/MeasureParameter2>,
-        <http://strateos.com/TimeSeriesHTC/MeasureParameter3>,
-        <http://strateos.com/TimeSeriesHTC/MeasureParameter4>,
-        <http://strateos.com/TimeSeriesHTC/MeasureParameter5>,
-        <http://strateos.com/TimeSeriesHTC/MeasureParameter6>,
-        <http://strateos.com/TimeSeriesHTC/MeasureParameter7>,
-        <http://strateos.com/TimeSeriesHTC/MeasureParameter8>,
-        <http://strateos.com/TimeSeriesHTC/MeasureParameter9>,
-        <http://strateos.com/TimeSeriesHTC/StringParameter1>,
-        <http://strateos.com/TimeSeriesHTC/StringParameter2>,
-        <http://strateos.com/TimeSeriesHTC/StringParameter3>,
-        <http://strateos.com/TimeSeriesHTC/StringParameter4>,
-        <http://strateos.com/TimeSeriesHTC/StringParameter5>,
-        <http://strateos.com/TimeSeriesHTC/StringParameter6>,
-        <http://strateos.com/TimeSeriesHTC/StringParameter7> ;
-    opil:name "TimeSeriesHTC" ;
-    sbol:displayId "TimeSeriesHTC" .
-
-<http://strateos.com/TimeSeriesHTC/BooleanParameter1> a opil:BooleanParameter ;
-    opil:defaultValue <http://strateos.com/save_for_rnaseq_default> ;
-    opil:name "run_info.save_for_rnaseq" ;
-    sbol:displayId "BooleanParameter1" .
-
-<http://strateos.com/TimeSeriesHTC/BooleanParameter2> a opil:BooleanParameter ;
-    opil:defaultValue <http://strateos.com/skip_first_flow_default> ;
-    opil:name "run_info.skip_first_flow" ;
-    sbol:displayId "BooleanParameter2" .
-
-<http://strateos.com/TimeSeriesHTC/BooleanParameter3> a opil:BooleanParameter ;
-    opil:defaultValue <http://strateos.com/only_endpoint_flow_default> ;
-    opil:name "run_info.only_endpoint_flow" ;
-    sbol:displayId "BooleanParameter3" .
-
-<http://strateos.com/TimeSeriesHTC/BooleanParameter4> a opil:BooleanParameter ;
-    opil:defaultValue <http://strateos.com/read_each_recovery_default> ;
-    opil:name "run_info.read_each_recovery" ;
-    sbol:displayId "BooleanParameter4" .
-
-<http://strateos.com/TimeSeriesHTC/BooleanParameter5> a opil:BooleanParameter ;
-    opil:defaultValue <http://strateos.com/read_each_induction_default> ;
-    opil:name "run_info.read_each_induction" ;
-    sbol:displayId "BooleanParameter5" .
-
-<http://strateos.com/TimeSeriesHTC/EnumeratedParameter1> a opil:EnumeratedParameter ;
-    opil:allowedValue "warm_30",
-        "warm_35",
-        "warm_37" ;
-    opil:name "exp_info.inc_temp" ;
-    sbol:displayId "EnumeratedParameter1" .
-
-<http://strateos.com/TimeSeriesHTC/EnumeratedParameter10> a opil:EnumeratedParameter ;
-    opil:allowedValue "None",
-        "Sytox" ;
-    opil:name "induction_info.sampling_info.stain_before_flow" ;
-    sbol:displayId "EnumeratedParameter10" .
-
-<http://strateos.com/TimeSeriesHTC/EnumeratedParameter2> a opil:EnumeratedParameter ;
-    opil:allowedValue "LB Cam",
-        "LB Chlor 5",
-        "LB Miller",
-        "M9 Minimal Media",
-        "Modified M9 Media",
-        "S750 Minimal Media",
-        "SC Media",
-        "YAPD",
-        "high_osm_media",
-        "rich_media",
-        "slow_media" ;
-    opil:name "inoc_info.inoculation_media" ;
-    sbol:displayId "EnumeratedParameter2" .
-
-<http://strateos.com/TimeSeriesHTC/EnumeratedParameter3> a opil:EnumeratedParameter ;
-    opil:allowedValue "LB Cam",
-        "LB Chlor 5",
-        "LB Miller",
-        "M9 Minimal Media",
-        "Modified M9 Media",
-        "S750 Minimal Media",
-        "SC Media",
-        "YAPD",
-        "high_osm_media",
-        "rich_media",
-        "slow_media" ;
-    opil:name "recovery_info.recovery_media" ;
-    sbol:displayId "EnumeratedParameter3" .
-
-<http://strateos.com/TimeSeriesHTC/EnumeratedParameter4> a opil:EnumeratedParameter ;
-    opil:allowedValue "new-induction-plate",
-        "same-induction-plate" ;
-    opil:name "induction_info.induction_time.induction_plate_info" ;
-    sbol:displayId "EnumeratedParameter4" .
-
-<http://strateos.com/TimeSeriesHTC/EnumeratedParameter5> a opil:EnumeratedParameter ;
-    opil:allowedValue "LB Cam",
-        "LB Chlor 5",
-        "LB Miller",
-        "M9 Minimal Media",
-        "Modified M9 Media",
-        "S750 Minimal Media",
-        "SC Media",
-        "YAPD",
-        "high_osm_media",
-        "rich_media",
-        "slow_media" ;
-    opil:name "induction_info.induction_reagents.induction_base_media" ;
-    sbol:displayId "EnumeratedParameter5" .
-
-<http://strateos.com/TimeSeriesHTC/EnumeratedParameter6> a opil:EnumeratedParameter ;
-    opil:allowedValue "microgram/milliliter",
-        "micromolar",
-        "millimolar",
-        "nanogram/milliliter",
-        "nanomolar",
-        "percent" ;
-    opil:name "induction_info.induction_reagents.inducer_layout.inducer_unit" ;
-    sbol:displayId "EnumeratedParameter6" .
-
-<http://strateos.com/TimeSeriesHTC/EnumeratedParameter7> a opil:EnumeratedParameter ;
-    opil:allowedValue "microgram/milliliter",
-        "micromolar",
-        "millimolar",
-        "nanogram/milliliter",
-        "nanomolar",
-        "percent" ;
-    opil:name "induction_info.induction_reagents.inducer_layout.inducer_unit" ;
-    sbol:displayId "EnumeratedParameter7" .
-
-<http://strateos.com/TimeSeriesHTC/EnumeratedParameter8> a opil:EnumeratedParameter ;
-    opil:allowedValue "None",
-        "PBS",
-        "PBS 2 mg per mL Kan" ;
-    opil:name "induction_info.sampling_info.read_solv" ;
-    sbol:displayId "EnumeratedParameter8" .
-
-<http://strateos.com/TimeSeriesHTC/EnumeratedParameter9> a opil:EnumeratedParameter ;
-    opil:allowedValue "None",
-        "PBS",
-        "PBS 2 mg per mL Kan" ;
-    opil:name "induction_info.sampling_info.flow_solv" ;
-    sbol:displayId "EnumeratedParameter9" .
-
-<http://strateos.com/TimeSeriesHTC/IntegerParameter1> a opil:IntegerParameter ;
-    opil:defaultValue <http://strateos.com/col_num_default> ;
-    opil:name "induction_info.induction_reagents.inducer_layout.col_and_conc.col_num" ;
-    sbol:displayId "IntegerParameter1" .
-
-<http://strateos.com/TimeSeriesHTC/MeasureParameter1> a opil:MeasureParameter ;
-    opil:defaultValue <http://strateos.com/inoc_vol_default> ;
-    opil:name "inoc_info.inoc_vol" ;
-    opil:required true ;
-    sbol:displayId "MeasureParameter1" .
-
-<http://strateos.com/TimeSeriesHTC/MeasureParameter10> a opil:MeasureParameter ;
-    opil:defaultValue <http://strateos.com/conc_default> ;
-    opil:name "induction_info.induction_reagents.inducer_layout.col_and_conc.conc" ;
-    sbol:displayId "MeasureParameter10" .
-
-<http://strateos.com/TimeSeriesHTC/MeasureParameter11> a opil:MeasureParameter ;
-    opil:defaultValue <http://strateos.com/read_cult_vol_default> ;
-    opil:name "induction_info.sampling_info.read_cult_vol" ;
-    opil:required true ;
-    sbol:displayId "MeasureParameter11" .
-
-<http://strateos.com/TimeSeriesHTC/MeasureParameter12> a opil:MeasureParameter ;
-    opil:defaultValue <http://strateos.com/read_solv_vol_default> ;
-    opil:name "induction_info.sampling_info.read_solv_vol" ;
-    opil:required true ;
-    sbol:displayId "MeasureParameter12" .
-
-<http://strateos.com/TimeSeriesHTC/MeasureParameter13> a opil:MeasureParameter ;
-    opil:defaultValue <http://strateos.com/flow_cult_vol_default> ;
-    opil:name "induction_info.sampling_info.flow_cult_vol" ;
-    opil:required true ;
-    sbol:displayId "MeasureParameter13" .
-
-<http://strateos.com/TimeSeriesHTC/MeasureParameter14> a opil:MeasureParameter ;
-    opil:defaultValue <http://strateos.com/flow_solv_vol_default> ;
-    opil:name "induction_info.sampling_info.flow_solv_vol" ;
-    opil:required true ;
-    sbol:displayId "MeasureParameter14" .
-
-<http://strateos.com/TimeSeriesHTC/MeasureParameter15> a opil:MeasureParameter ;
-    opil:defaultValue <http://strateos.com/fluor_ex_default> ;
-    opil:name "plate_reader_info.fluor_ex" ;
-    sbol:displayId "MeasureParameter15" .
-
-<http://strateos.com/TimeSeriesHTC/MeasureParameter16> a opil:MeasureParameter ;
-    opil:defaultValue <http://strateos.com/fluor_em_default> ;
-    opil:name "plate_reader_info.fluor_em" ;
-    sbol:displayId "MeasureParameter16" .
-
-<http://strateos.com/TimeSeriesHTC/MeasureParameter17> a opil:MeasureParameter ;
-    opil:defaultValue <http://strateos.com/gain_default> ;
-    opil:name "plate_reader_info.gain" ;
-    sbol:displayId "MeasureParameter17" .
-
-<http://strateos.com/TimeSeriesHTC/MeasureParameter2> a opil:MeasureParameter ;
-    opil:defaultValue <http://strateos.com/inoc_media_vol_default> ;
-    opil:name "inoc_info.inoc_media_vol" ;
-    opil:required true ;
-    sbol:displayId "MeasureParameter2" .
-
-<http://strateos.com/TimeSeriesHTC/MeasureParameter3> a opil:MeasureParameter ;
-    opil:defaultValue <http://strateos.com/inc_time_1_default> ;
-    opil:name "inoc_info.inc_time_1" ;
-    sbol:displayId "MeasureParameter3" .
-
-<http://strateos.com/TimeSeriesHTC/MeasureParameter4> a opil:MeasureParameter ;
-    opil:defaultValue <http://strateos.com/recovery_sample_vol_default> ;
-    opil:name "recovery_info.recovery_sample_vol" ;
-    opil:required true ;
-    sbol:displayId "MeasureParameter4" .
-
-<http://strateos.com/TimeSeriesHTC/MeasureParameter5> a opil:MeasureParameter ;
-    opil:defaultValue <http://strateos.com/recovery_media_vol_default> ;
-    opil:name "recovery_info.recovery_media_vol" ;
-    opil:required true ;
-    sbol:displayId "MeasureParameter5" .
-
-<http://strateos.com/TimeSeriesHTC/MeasureParameter6> a opil:MeasureParameter ;
-    opil:defaultValue <http://strateos.com/inc_time_2_default> ;
-    opil:name "recovery_info.inc_time_2" ;
-    sbol:displayId "MeasureParameter6" .
-
-<http://strateos.com/TimeSeriesHTC/MeasureParameter7> a opil:MeasureParameter ;
-    opil:defaultValue <http://strateos.com/ind_cult_vol_default> ;
-    opil:name "induction_info.induction_reagents.ind_cult_vol" ;
-    opil:required true ;
-    sbol:displayId "MeasureParameter7" .
-
-<http://strateos.com/TimeSeriesHTC/MeasureParameter8> a opil:MeasureParameter ;
-    opil:defaultValue <http://strateos.com/media_vol_default> ;
-    opil:name "induction_info.induction_reagents.media_vol" ;
-    opil:required true ;
-    sbol:displayId "MeasureParameter8" .
-
-<http://strateos.com/TimeSeriesHTC/MeasureParameter9> a opil:MeasureParameter ;
-    opil:defaultValue <http://strateos.com/inducer_conc_default> ;
-    opil:name "induction_info.induction_reagents.inducer_layout.inducer_conc" ;
-    opil:required true ;
-    sbol:displayId "MeasureParameter9" .
-
-<http://strateos.com/TimeSeriesHTC/StringParameter1> a opil:StringParameter ;
-    opil:name "exp_info.src_samples" ;
-    sbol:displayId "StringParameter1" .
-
-<http://strateos.com/TimeSeriesHTC/StringParameter2> a opil:StringParameter ;
-    opil:defaultValue <http://strateos.com/media_well_strings_default> ;
-    opil:name "exp_info.media_well_strings" ;
-    sbol:displayId "StringParameter2" .
-
-<http://strateos.com/TimeSeriesHTC/StringParameter3> a opil:StringParameter ;
-    opil:defaultValue <http://strateos.com/sample_points_default> ;
-    opil:name "induction_info.induction_time.sample_points" ;
-    sbol:displayId "StringParameter3" .
-
-<http://strateos.com/TimeSeriesHTC/StringParameter4> a opil:StringParameter ;
-    opil:name "induction_info.induction_reagents.inducer" ;
-    sbol:displayId "StringParameter4" .
-
-<http://strateos.com/TimeSeriesHTC/StringParameter5> a opil:StringParameter ;
-    opil:defaultValue <http://strateos.com/experiment_id_default> ;
-    opil:name "experimental_info.experiment_id" ;
-    sbol:displayId "StringParameter5" .
-
-<http://strateos.com/TimeSeriesHTC/StringParameter6> a opil:StringParameter ;
-    opil:defaultValue <http://strateos.com/experiment_reference_default> ;
-    opil:name "experimental_info.experiment_reference" ;
-    sbol:displayId "StringParameter6" .
-
-<http://strateos.com/TimeSeriesHTC/StringParameter7> a opil:StringParameter ;
-    opil:defaultValue <http://strateos.com/experiment_reference_url_default> ;
-    opil:name "experimental_info.experiment_reference_url" ;
-    sbol:displayId "StringParameter7" .
-
-<http://strateos.com/col_num_default> a opil:IntegerValue ;
-    opil:value 4 ;
-    sbol:displayId "col_num_default" .
-
-<http://strateos.com/conc_default> a opil:MeasureValue ;
-    opil:hasMeasure <http://strateos.com/conc_default/Measure1> ;
-    sbol:displayId "conc_default" .
-
-<http://strateos.com/conc_default/Measure1> a om:Measure ;
-    sbol:displayId "Measure1" ;
-    om:hasNumericalValue 1.5e+01 ;
-    om:hasUnit opil:pureNumber .
-
-<http://strateos.com/experiment_id_default> a opil:StringValue ;
-    opil:value " " ;
-    sbol:displayId "experiment_id_default" .
-
-<http://strateos.com/experiment_reference_default> a opil:StringValue ;
-    opil:value " " ;
-    sbol:displayId "experiment_reference_default" .
-
-<http://strateos.com/experiment_reference_url_default> a opil:StringValue ;
-    opil:value " " ;
-    sbol:displayId "experiment_reference_url_default" .
-
-<http://strateos.com/flow_cult_vol_default> a opil:MeasureValue ;
-    opil:hasMeasure <http://strateos.com/flow_cult_vol_default/Measure1> ;
-    sbol:displayId "flow_cult_vol_default" .
-
-<http://strateos.com/flow_cult_vol_default/Measure1> a om:Measure ;
-    sbol:displayId "Measure1" ;
-    om:hasNumericalValue 1e+02 ;
-    om:hasUnit om:microlitre .
-
-<http://strateos.com/flow_solv_vol_default> a opil:MeasureValue ;
-    opil:hasMeasure <http://strateos.com/flow_solv_vol_default/Measure1> ;
-    sbol:displayId "flow_solv_vol_default" .
-
-<http://strateos.com/flow_solv_vol_default/Measure1> a om:Measure ;
-    sbol:displayId "Measure1" ;
-    om:hasNumericalValue 0e+00 ;
-    om:hasUnit om:microlitre .
-
-<http://strateos.com/fluor_em_default> a opil:MeasureValue ;
-    opil:hasMeasure <http://strateos.com/fluor_em_default/Measure1> ;
-    sbol:displayId "fluor_em_default" .
-
-<http://strateos.com/fluor_em_default/Measure1> a om:Measure ;
-    sbol:displayId "Measure1" ;
-    om:hasNumericalValue 6.2e+02 ;
-    om:hasUnit om:nanometre .
-
-<http://strateos.com/fluor_ex_default> a opil:MeasureValue ;
-    opil:hasMeasure <http://strateos.com/fluor_ex_default/Measure1> ;
-    sbol:displayId "fluor_ex_default" .
-
-<http://strateos.com/fluor_ex_default/Measure1> a om:Measure ;
-    sbol:displayId "Measure1" ;
-    om:hasNumericalValue 5.88e+02 ;
-    om:hasUnit om:nanometre .
-
-<http://strateos.com/gain_default> a opil:MeasureValue ;
-    opil:hasMeasure <http://strateos.com/gain_default/Measure1> ;
-    sbol:displayId "gain_default" .
-
-<http://strateos.com/gain_default/Measure1> a om:Measure ;
-    sbol:displayId "Measure1" ;
-    om:hasNumericalValue 2.74e-01 ;
-    om:hasUnit opil:pureNumber .
-
-<http://strateos.com/inc_time_1_default> a opil:MeasureValue ;
-    opil:hasMeasure <http://strateos.com/inc_time_1_default/Measure1> ;
-    sbol:displayId "inc_time_1_default" .
-
-<http://strateos.com/inc_time_1_default/Measure1> a om:Measure ;
-    sbol:displayId "Measure1" ;
-    om:hasNumericalValue 1.6e+01 ;
-    om:hasUnit om:hour .
-
-<http://strateos.com/inc_time_2_default> a opil:MeasureValue ;
-    opil:hasMeasure <http://strateos.com/inc_time_2_default/Measure1> ;
-    sbol:displayId "inc_time_2_default" .
-
-<http://strateos.com/inc_time_2_default/Measure1> a om:Measure ;
-    sbol:displayId "Measure1" ;
-    om:hasNumericalValue 6e+00 ;
-    om:hasUnit om:hour .
-
-<http://strateos.com/ind_cult_vol_default> a opil:MeasureValue ;
-    opil:hasMeasure <http://strateos.com/ind_cult_vol_default/Measure1> ;
-    sbol:displayId "ind_cult_vol_default" .
-
-<http://strateos.com/ind_cult_vol_default/Measure1> a om:Measure ;
-    sbol:displayId "Measure1" ;
-    om:hasNumericalValue 1e+01 ;
-    om:hasUnit om:microlitre .
-
-<http://strateos.com/inducer_conc_default> a opil:MeasureValue ;
-    opil:hasMeasure <http://strateos.com/inducer_conc_default/Measure1> ;
-    sbol:displayId "inducer_conc_default" .
-
-<http://strateos.com/inducer_conc_default/Measure1> a om:Measure ;
-    sbol:displayId "Measure1" ;
-    om:hasNumericalValue 1e+01 ;
-    om:hasUnit opil:pureNumber .
-
-<http://strateos.com/inoc_media_vol_default> a opil:MeasureValue ;
-    opil:hasMeasure <http://strateos.com/inoc_media_vol_default/Measure1> ;
-    sbol:displayId "inoc_media_vol_default" .
-
-<http://strateos.com/inoc_media_vol_default/Measure1> a om:Measure ;
-    sbol:displayId "Measure1" ;
-    om:hasNumericalValue 7e+02 ;
-    om:hasUnit om:microlitre .
-
-<http://strateos.com/inoc_vol_default> a opil:MeasureValue ;
-    opil:hasMeasure <http://strateos.com/inoc_vol_default/Measure1> ;
-    sbol:displayId "inoc_vol_default" .
-
-<http://strateos.com/inoc_vol_default/Measure1> a om:Measure ;
-    sbol:displayId "Measure1" ;
-    om:hasNumericalValue 1e+01 ;
-    om:hasUnit om:microlitre .
-
-<http://strateos.com/media_vol_default> a opil:MeasureValue ;
-    opil:hasMeasure <http://strateos.com/media_vol_default/Measure1> ;
-    sbol:displayId "media_vol_default" .
-
-<http://strateos.com/media_vol_default/Measure1> a om:Measure ;
-    sbol:displayId "Measure1" ;
-    om:hasNumericalValue 1e+03 ;
-    om:hasUnit om:microlitre .
-
-<http://strateos.com/media_well_strings_default> a opil:StringValue ;
-    opil:value "" ;
-    sbol:displayId "media_well_strings_default" .
-
-<http://strateos.com/only_endpoint_flow_default> a opil:BooleanValue ;
-    opil:value true ;
-    sbol:displayId "only_endpoint_flow_default" .
-
-<http://strateos.com/read_cult_vol_default> a opil:MeasureValue ;
-    opil:hasMeasure <http://strateos.com/read_cult_vol_default/Measure1> ;
-    sbol:displayId "read_cult_vol_default" .
-
-<http://strateos.com/read_cult_vol_default/Measure1> a om:Measure ;
-    sbol:displayId "Measure1" ;
-    om:hasNumericalValue 1e+02 ;
-    om:hasUnit om:microlitre .
-
-<http://strateos.com/read_each_induction_default> a opil:BooleanValue ;
-    opil:value true ;
-    sbol:displayId "read_each_induction_default" .
-
-<http://strateos.com/read_each_recovery_default> a opil:BooleanValue ;
-    opil:value true ;
-    sbol:displayId "read_each_recovery_default" .
-
-<http://strateos.com/read_solv_vol_default> a opil:MeasureValue ;
-    opil:hasMeasure <http://strateos.com/read_solv_vol_default/Measure1> ;
-    sbol:displayId "read_solv_vol_default" .
-
-<http://strateos.com/read_solv_vol_default/Measure1> a om:Measure ;
-    sbol:displayId "Measure1" ;
-    om:hasNumericalValue 0e+00 ;
-    om:hasUnit om:microlitre .
-
-<http://strateos.com/recovery_media_vol_default> a opil:MeasureValue ;
-    opil:hasMeasure <http://strateos.com/recovery_media_vol_default/Measure1> ;
-    sbol:displayId "recovery_media_vol_default" .
-
-<http://strateos.com/recovery_media_vol_default/Measure1> a om:Measure ;
-    sbol:displayId "Measure1" ;
-    om:hasNumericalValue 1e+03 ;
-    om:hasUnit om:microlitre .
-
-<http://strateos.com/recovery_sample_vol_default> a opil:MeasureValue ;
-    opil:hasMeasure <http://strateos.com/recovery_sample_vol_default/Measure1> ;
-    sbol:displayId "recovery_sample_vol_default" .
-
-<http://strateos.com/recovery_sample_vol_default/Measure1> a om:Measure ;
-    sbol:displayId "Measure1" ;
-    om:hasNumericalValue 1e+01 ;
-    om:hasUnit om:microlitre .
-
-<http://strateos.com/sample_points_default> a opil:StringValue ;
-    opil:value "3,4,5,6" ;
-    sbol:displayId "sample_points_default" .
-
-<http://strateos.com/save_for_rnaseq_default> a opil:BooleanValue ;
-    opil:value false ;
-    sbol:displayId "save_for_rnaseq_default" .
-
-<http://strateos.com/skip_first_flow_default> a opil:BooleanValue ;
-    opil:value true ;
-    sbol:displayId "skip_first_flow_default" .
-
+<file:///Users/rmarkelo/TBCMEWorkspace/SynBio/TimeSeriesHTC.ttl>
+  a owl:Ontology ;
+  owl:imports <http://bbn.com/synbio/opil> ;
+.
+<http://strateos.com/TimeSeriesHTC>
+  a opil:ProtocolInterface ;
+  opil:hasParameter <http://strateos.com/TimeSeriesHTC/BooleanParameter1> ;
+  opil:hasParameter <http://strateos.com/TimeSeriesHTC/BooleanParameter2> ;
+  opil:hasParameter <http://strateos.com/TimeSeriesHTC/BooleanParameter3> ;
+  opil:hasParameter <http://strateos.com/TimeSeriesHTC/BooleanParameter4> ;
+  opil:hasParameter <http://strateos.com/TimeSeriesHTC/BooleanParameter5> ;
+  opil:hasParameter <http://strateos.com/TimeSeriesHTC/EnumeratedParameter1> ;
+  opil:hasParameter <http://strateos.com/TimeSeriesHTC/EnumeratedParameter10> ;
+  opil:hasParameter <http://strateos.com/TimeSeriesHTC/EnumeratedParameter2> ;
+  opil:hasParameter <http://strateos.com/TimeSeriesHTC/EnumeratedParameter3> ;
+  opil:hasParameter <http://strateos.com/TimeSeriesHTC/EnumeratedParameter4> ;
+  opil:hasParameter <http://strateos.com/TimeSeriesHTC/EnumeratedParameter5> ;
+  opil:hasParameter <http://strateos.com/TimeSeriesHTC/EnumeratedParameter6> ;
+  opil:hasParameter <http://strateos.com/TimeSeriesHTC/EnumeratedParameter7> ;
+  opil:hasParameter <http://strateos.com/TimeSeriesHTC/EnumeratedParameter8> ;
+  opil:hasParameter <http://strateos.com/TimeSeriesHTC/EnumeratedParameter9> ;
+  opil:hasParameter <http://strateos.com/TimeSeriesHTC/IntegerParameter1> ;
+  opil:hasParameter <http://strateos.com/TimeSeriesHTC/MeasureParameter1> ;
+  opil:hasParameter <http://strateos.com/TimeSeriesHTC/MeasureParameter10> ;
+  opil:hasParameter <http://strateos.com/TimeSeriesHTC/MeasureParameter11> ;
+  opil:hasParameter <http://strateos.com/TimeSeriesHTC/MeasureParameter12> ;
+  opil:hasParameter <http://strateos.com/TimeSeriesHTC/MeasureParameter13> ;
+  opil:hasParameter <http://strateos.com/TimeSeriesHTC/MeasureParameter14> ;
+  opil:hasParameter <http://strateos.com/TimeSeriesHTC/MeasureParameter15> ;
+  opil:hasParameter <http://strateos.com/TimeSeriesHTC/MeasureParameter16> ;
+  opil:hasParameter <http://strateos.com/TimeSeriesHTC/MeasureParameter17> ;
+  opil:hasParameter <http://strateos.com/TimeSeriesHTC/MeasureParameter2> ;
+  opil:hasParameter <http://strateos.com/TimeSeriesHTC/MeasureParameter3> ;
+  opil:hasParameter <http://strateos.com/TimeSeriesHTC/MeasureParameter4> ;
+  opil:hasParameter <http://strateos.com/TimeSeriesHTC/MeasureParameter5> ;
+  opil:hasParameter <http://strateos.com/TimeSeriesHTC/MeasureParameter6> ;
+  opil:hasParameter <http://strateos.com/TimeSeriesHTC/MeasureParameter7> ;
+  opil:hasParameter <http://strateos.com/TimeSeriesHTC/MeasureParameter8> ;
+  opil:hasParameter <http://strateos.com/TimeSeriesHTC/MeasureParameter9> ;
+  opil:hasParameter <http://strateos.com/TimeSeriesHTC/StringParameter1> ;
+  opil:hasParameter <http://strateos.com/TimeSeriesHTC/StringParameter2> ;
+  opil:hasParameter <http://strateos.com/TimeSeriesHTC/StringParameter3> ;
+  opil:hasParameter <http://strateos.com/TimeSeriesHTC/StringParameter4> ;
+  opil:hasParameter <http://strateos.com/TimeSeriesHTC/StringParameter5> ;
+  opil:hasParameter <http://strateos.com/TimeSeriesHTC/StringParameter6> ;
+  opil:hasParameter <http://strateos.com/TimeSeriesHTC/StringParameter7> ;
+  opil:name "TimeSeriesHTC" ;
+  sbol:displayId "TimeSeriesHTC" ;
+.
+<http://strateos.com/TimeSeriesHTC/BooleanParameter1>
+  a opil:BooleanParameter ;
+  opil:defaultValue <http://strateos.com/save_for_rnaseq_default> ;
+  opil:name "run_info.save_for_rnaseq" ;
+  sbol:displayId "BooleanParameter1" ;
+.
+<http://strateos.com/TimeSeriesHTC/BooleanParameter2>
+  a opil:BooleanParameter ;
+  opil:defaultValue <http://strateos.com/skip_first_flow_default> ;
+  opil:name "run_info.skip_first_flow" ;
+  sbol:displayId "BooleanParameter2" ;
+.
+<http://strateos.com/TimeSeriesHTC/BooleanParameter3>
+  a opil:BooleanParameter ;
+  opil:defaultValue <http://strateos.com/only_endpoint_flow_default> ;
+  opil:name "run_info.only_endpoint_flow" ;
+  sbol:displayId "BooleanParameter3" ;
+.
+<http://strateos.com/TimeSeriesHTC/BooleanParameter4>
+  a opil:BooleanParameter ;
+  opil:defaultValue <http://strateos.com/read_each_recovery_default> ;
+  opil:name "run_info.read_each_recovery" ;
+  sbol:displayId "BooleanParameter4" ;
+.
+<http://strateos.com/TimeSeriesHTC/BooleanParameter5>
+  a opil:BooleanParameter ;
+  opil:defaultValue <http://strateos.com/read_each_induction_default> ;
+  opil:name "run_info.read_each_induction" ;
+  sbol:displayId "BooleanParameter5" ;
+.
+<http://strateos.com/TimeSeriesHTC/EnumeratedParameter1>
+  a opil:EnumeratedParameter ;
+  opil:allowedValue "warm_30" ;
+  opil:allowedValue "warm_35" ;
+  opil:allowedValue "warm_37" ;
+  opil:name "exp_info.inc_temp" ;
+  sbol:displayId "EnumeratedParameter1" ;
+.
+<http://strateos.com/TimeSeriesHTC/EnumeratedParameter10>
+  a opil:EnumeratedParameter ;
+  opil:allowedValue "None" ;
+  opil:allowedValue "Sytox" ;
+  opil:name "induction_info.sampling_info.stain_before_flow" ;
+  sbol:displayId "EnumeratedParameter10" ;
+.
+<http://strateos.com/TimeSeriesHTC/EnumeratedParameter2>
+  a opil:EnumeratedParameter ;
+  opil:allowedValue "LB Cam" ;
+  opil:allowedValue "LB Chlor 5" ;
+  opil:allowedValue "LB Miller" ;
+  opil:allowedValue "M9 Minimal Media" ;
+  opil:allowedValue "Modified M9 Media" ;
+  opil:allowedValue "S750 Minimal Media" ;
+  opil:allowedValue "SC Media" ;
+  opil:allowedValue "YAPD" ;
+  opil:allowedValue "high_osm_media" ;
+  opil:allowedValue "rich_media" ;
+  opil:allowedValue "slow_media" ;
+  opil:name "inoc_info.inoculation_media" ;
+  sbol:displayId "EnumeratedParameter2" ;
+.
+<http://strateos.com/TimeSeriesHTC/EnumeratedParameter3>
+  a opil:EnumeratedParameter ;
+  opil:allowedValue "LB Cam" ;
+  opil:allowedValue "LB Chlor 5" ;
+  opil:allowedValue "LB Miller" ;
+  opil:allowedValue "M9 Minimal Media" ;
+  opil:allowedValue "Modified M9 Media" ;
+  opil:allowedValue "S750 Minimal Media" ;
+  opil:allowedValue "SC Media" ;
+  opil:allowedValue "YAPD" ;
+  opil:allowedValue "high_osm_media" ;
+  opil:allowedValue "rich_media" ;
+  opil:allowedValue "slow_media" ;
+  opil:name "recovery_info.recovery_media" ;
+  sbol:displayId "EnumeratedParameter3" ;
+.
+<http://strateos.com/TimeSeriesHTC/EnumeratedParameter4>
+  a opil:EnumeratedParameter ;
+  opil:allowedValue "new-induction-plate" ;
+  opil:allowedValue "same-induction-plate" ;
+  opil:name "induction_info.induction_time.induction_plate_info" ;
+  sbol:displayId "EnumeratedParameter4" ;
+.
+<http://strateos.com/TimeSeriesHTC/EnumeratedParameter5>
+  a opil:EnumeratedParameter ;
+  opil:allowedValue "LB Cam" ;
+  opil:allowedValue "LB Chlor 5" ;
+  opil:allowedValue "LB Miller" ;
+  opil:allowedValue "M9 Minimal Media" ;
+  opil:allowedValue "Modified M9 Media" ;
+  opil:allowedValue "S750 Minimal Media" ;
+  opil:allowedValue "SC Media" ;
+  opil:allowedValue "YAPD" ;
+  opil:allowedValue "high_osm_media" ;
+  opil:allowedValue "rich_media" ;
+  opil:allowedValue "slow_media" ;
+  opil:name "induction_info.induction_reagents.induction_base_media" ;
+  sbol:displayId "EnumeratedParameter5" ;
+.
+<http://strateos.com/TimeSeriesHTC/EnumeratedParameter6>
+  a opil:EnumeratedParameter ;
+  opil:allowedValue "microgram/milliliter" ;
+  opil:allowedValue "micromolar" ;
+  opil:allowedValue "millimolar" ;
+  opil:allowedValue "nanogram/milliliter" ;
+  opil:allowedValue "nanomolar" ;
+  opil:allowedValue "percent" ;
+  opil:name "induction_info.induction_reagents.inducer_layout.inducer_unit" ;
+  sbol:displayId "EnumeratedParameter6" ;
+.
+<http://strateos.com/TimeSeriesHTC/EnumeratedParameter7>
+  a opil:EnumeratedParameter ;
+  opil:allowedValue "microgram/milliliter" ;
+  opil:allowedValue "micromolar" ;
+  opil:allowedValue "millimolar" ;
+  opil:allowedValue "nanogram/milliliter" ;
+  opil:allowedValue "nanomolar" ;
+  opil:allowedValue "percent" ;
+  opil:name "induction_info.induction_reagents.inducer_layout.inducer_unit" ;
+  sbol:displayId "EnumeratedParameter7" ;
+.
+<http://strateos.com/TimeSeriesHTC/EnumeratedParameter8>
+  a opil:EnumeratedParameter ;
+  opil:allowedValue "None" ;
+  opil:allowedValue "PBS 2 mg per mL Kan" ;
+  opil:allowedValue "PBS" ;
+  opil:name "induction_info.sampling_info.read_solv" ;
+  sbol:displayId "EnumeratedParameter8" ;
+.
+<http://strateos.com/TimeSeriesHTC/EnumeratedParameter9>
+  a opil:EnumeratedParameter ;
+  opil:allowedValue "None" ;
+  opil:allowedValue "PBS 2 mg per mL Kan" ;
+  opil:allowedValue "PBS" ;
+  opil:name "induction_info.sampling_info.flow_solv" ;
+  sbol:displayId "EnumeratedParameter9" ;
+.
+<http://strateos.com/TimeSeriesHTC/IntegerParameter1>
+  a opil:IntegerParameter ;
+  opil:defaultValue <http://strateos.com/col_num_default> ;
+  opil:name "induction_info.induction_reagents.inducer_layout.col_and_conc.col_num" ;
+  sbol:displayId "IntegerParameter1" ;
+.
+<http://strateos.com/TimeSeriesHTC/MeasureParameter1>
+  a opil:MeasureParameter ;
+  opil:defaultValue <http://strateos.com/inoc_vol_default> ;
+  opil:name "inoc_info.inoc_vol" ;
+  opil:required true ;
+  sbol:displayId "MeasureParameter1" ;
+.
+<http://strateos.com/TimeSeriesHTC/MeasureParameter10>
+  a opil:MeasureParameter ;
+  opil:defaultValue <http://strateos.com/conc_default> ;
+  opil:name "induction_info.induction_reagents.inducer_layout.col_and_conc.conc" ;
+  sbol:displayId "MeasureParameter10" ;
+.
+<http://strateos.com/TimeSeriesHTC/MeasureParameter11>
+  a opil:MeasureParameter ;
+  opil:defaultValue <http://strateos.com/read_cult_vol_default> ;
+  opil:name "induction_info.sampling_info.read_cult_vol" ;
+  opil:required true ;
+  sbol:displayId "MeasureParameter11" ;
+.
+<http://strateos.com/TimeSeriesHTC/MeasureParameter12>
+  a opil:MeasureParameter ;
+  opil:defaultValue <http://strateos.com/read_solv_vol_default> ;
+  opil:name "induction_info.sampling_info.read_solv_vol" ;
+  opil:required true ;
+  sbol:displayId "MeasureParameter12" ;
+.
+<http://strateos.com/TimeSeriesHTC/MeasureParameter13>
+  a opil:MeasureParameter ;
+  opil:defaultValue <http://strateos.com/flow_cult_vol_default> ;
+  opil:name "induction_info.sampling_info.flow_cult_vol" ;
+  opil:required true ;
+  sbol:displayId "MeasureParameter13" ;
+.
+<http://strateos.com/TimeSeriesHTC/MeasureParameter14>
+  a opil:MeasureParameter ;
+  opil:defaultValue <http://strateos.com/flow_solv_vol_default> ;
+  opil:name "induction_info.sampling_info.flow_solv_vol" ;
+  opil:required true ;
+  sbol:displayId "MeasureParameter14" ;
+.
+<http://strateos.com/TimeSeriesHTC/MeasureParameter15>
+  a opil:MeasureParameter ;
+  opil:defaultValue <http://strateos.com/fluor_ex_default> ;
+  opil:name "plate_reader_info.fluor_ex" ;
+  sbol:displayId "MeasureParameter15" ;
+.
+<http://strateos.com/TimeSeriesHTC/MeasureParameter16>
+  a opil:MeasureParameter ;
+  opil:defaultValue <http://strateos.com/fluor_em_default> ;
+  opil:name "plate_reader_info.fluor_em" ;
+  sbol:displayId "MeasureParameter16" ;
+.
+<http://strateos.com/TimeSeriesHTC/MeasureParameter17>
+  a opil:MeasureParameter ;
+  opil:defaultValue <http://strateos.com/gain_default> ;
+  opil:name "plate_reader_info.gain" ;
+  sbol:displayId "MeasureParameter17" ;
+.
+<http://strateos.com/TimeSeriesHTC/MeasureParameter2>
+  a opil:MeasureParameter ;
+  opil:defaultValue <http://strateos.com/inoc_media_vol_default> ;
+  opil:name "inoc_info.inoc_media_vol" ;
+  opil:required true ;
+  sbol:displayId "MeasureParameter2" ;
+.
+<http://strateos.com/TimeSeriesHTC/MeasureParameter3>
+  a opil:MeasureParameter ;
+  opil:defaultValue <http://strateos.com/inc_time_1_default> ;
+  opil:name "inoc_info.inc_time_1" ;
+  sbol:displayId "MeasureParameter3" ;
+.
+<http://strateos.com/TimeSeriesHTC/MeasureParameter4>
+  a opil:MeasureParameter ;
+  opil:defaultValue <http://strateos.com/recovery_sample_vol_default> ;
+  opil:name "recovery_info.recovery_sample_vol" ;
+  opil:required true ;
+  sbol:displayId "MeasureParameter4" ;
+.
+<http://strateos.com/TimeSeriesHTC/MeasureParameter5>
+  a opil:MeasureParameter ;
+  opil:defaultValue <http://strateos.com/recovery_media_vol_default> ;
+  opil:name "recovery_info.recovery_media_vol" ;
+  opil:required true ;
+  sbol:displayId "MeasureParameter5" ;
+.
+<http://strateos.com/TimeSeriesHTC/MeasureParameter6>
+  a opil:MeasureParameter ;
+  opil:defaultValue <http://strateos.com/inc_time_2_default> ;
+  opil:name "recovery_info.inc_time_2" ;
+  sbol:displayId "MeasureParameter6" ;
+.
+<http://strateos.com/TimeSeriesHTC/MeasureParameter7>
+  a opil:MeasureParameter ;
+  opil:defaultValue <http://strateos.com/ind_cult_vol_default> ;
+  opil:name "induction_info.induction_reagents.ind_cult_vol" ;
+  opil:required true ;
+  sbol:displayId "MeasureParameter7" ;
+.
+<http://strateos.com/TimeSeriesHTC/MeasureParameter8>
+  a opil:MeasureParameter ;
+  opil:defaultValue <http://strateos.com/media_vol_default> ;
+  opil:name "induction_info.induction_reagents.media_vol" ;
+  opil:required true ;
+  sbol:displayId "MeasureParameter8" ;
+.
+<http://strateos.com/TimeSeriesHTC/MeasureParameter9>
+  a opil:MeasureParameter ;
+  opil:defaultValue <http://strateos.com/inducer_conc_default> ;
+  opil:name "induction_info.induction_reagents.inducer_layout.inducer_conc" ;
+  opil:required true ;
+  sbol:displayId "MeasureParameter9" ;
+.
+<http://strateos.com/TimeSeriesHTC/StringParameter1>
+  a opil:StringParameter ;
+  opil:name "exp_info.src_samples" ;
+  sbol:displayId "StringParameter1" ;
+.
+<http://strateos.com/TimeSeriesHTC/StringParameter2>
+  a opil:StringParameter ;
+  opil:defaultValue <http://strateos.com/media_well_strings_default> ;
+  opil:name "exp_info.media_well_strings" ;
+  sbol:displayId "StringParameter2" ;
+.
+<http://strateos.com/TimeSeriesHTC/StringParameter3>
+  a opil:StringParameter ;
+  opil:defaultValue <http://strateos.com/sample_points_default> ;
+  opil:name "induction_info.induction_time.sample_points" ;
+  sbol:displayId "StringParameter3" ;
+.
+<http://strateos.com/TimeSeriesHTC/StringParameter4>
+  a opil:StringParameter ;
+  opil:name "induction_info.induction_reagents.inducer" ;
+  sbol:displayId "StringParameter4" ;
+.
+<http://strateos.com/TimeSeriesHTC/StringParameter5>
+  a opil:StringParameter ;
+  opil:defaultValue <http://strateos.com/experiment_id_default> ;
+  opil:name "experimental_info.experiment_id" ;
+  sbol:displayId "StringParameter5" ;
+.
+<http://strateos.com/TimeSeriesHTC/StringParameter6>
+  a opil:StringParameter ;
+  opil:defaultValue <http://strateos.com/experiment_reference_default> ;
+  opil:name "experimental_info.experiment_reference" ;
+  sbol:displayId "StringParameter6" ;
+.
+<http://strateos.com/TimeSeriesHTC/StringParameter7>
+  a opil:StringParameter ;
+  opil:defaultValue <http://strateos.com/experiment_reference_url_default> ;
+  opil:name "experimental_info.experiment_reference_url" ;
+  sbol:displayId "StringParameter7" ;
+.
+<http://strateos.com/col_num_default>
+  a opil:IntegerValue ;
+  opil:value "4"^^xsd:int ;
+  sbol:displayId "col_num_default" ;
+.
+<http://strateos.com/conc_default>
+  a opil:MeasureValue ;
+  opil:hasMeasure <http://strateos.com/conc_default/Measure1> ;
+  sbol:displayId "conc_default" ;
+.
+<http://strateos.com/conc_default/Measure1>
+  a om:Measure ;
+  sbol:displayId "Measure1" ;
+  om:hasNumericalValue 1.5e+01 ;
+  om:hasUnit opil:pureNumber ;
+.
+<http://strateos.com/experiment_id_default>
+  a opil:StringValue ;
+  opil:value " " ;
+  sbol:displayId "experiment_id_default" ;
+.
+<http://strateos.com/experiment_reference_default>
+  a opil:StringValue ;
+  opil:value " " ;
+  sbol:displayId "experiment_reference_default" ;
+.
+<http://strateos.com/experiment_reference_url_default>
+  a opil:StringValue ;
+  opil:value " " ;
+  sbol:displayId "experiment_reference_url_default" ;
+.
+<http://strateos.com/flow_cult_vol_default>
+  a opil:MeasureValue ;
+  opil:hasMeasure <http://strateos.com/flow_cult_vol_default/Measure1> ;
+  sbol:displayId "flow_cult_vol_default" ;
+.
+<http://strateos.com/flow_cult_vol_default/Measure1>
+  a om:Measure ;
+  sbol:displayId "Measure1" ;
+  om:hasNumericalValue 1e+02 ;
+  om:hasUnit om:microlitre ;
+.
+<http://strateos.com/flow_solv_vol_default>
+  a opil:MeasureValue ;
+  opil:hasMeasure <http://strateos.com/flow_solv_vol_default/Measure1> ;
+  sbol:displayId "flow_solv_vol_default" ;
+.
+<http://strateos.com/flow_solv_vol_default/Measure1>
+  a om:Measure ;
+  sbol:displayId "Measure1" ;
+  om:hasNumericalValue 0e+00 ;
+  om:hasUnit om:microlitre ;
+.
+<http://strateos.com/fluor_em_default>
+  a opil:MeasureValue ;
+  opil:hasMeasure <http://strateos.com/fluor_em_default/Measure1> ;
+  sbol:displayId "fluor_em_default" ;
+.
+<http://strateos.com/fluor_em_default/Measure1>
+  a om:Measure ;
+  sbol:displayId "Measure1" ;
+  om:hasNumericalValue 6.2e+02 ;
+  om:hasUnit om:nanometre ;
+.
+<http://strateos.com/fluor_ex_default>
+  a opil:MeasureValue ;
+  opil:hasMeasure <http://strateos.com/fluor_ex_default/Measure1> ;
+  sbol:displayId "fluor_ex_default" ;
+.
+<http://strateos.com/fluor_ex_default/Measure1>
+  a om:Measure ;
+  sbol:displayId "Measure1" ;
+  om:hasNumericalValue 5.88e+02 ;
+  om:hasUnit om:nanometre ;
+.
+<http://strateos.com/gain_default>
+  a opil:MeasureValue ;
+  opil:hasMeasure <http://strateos.com/gain_default/Measure1> ;
+  sbol:displayId "gain_default" ;
+.
+<http://strateos.com/gain_default/Measure1>
+  a om:Measure ;
+  sbol:displayId "Measure1" ;
+  om:hasNumericalValue 2.74e-01 ;
+  om:hasUnit opil:pureNumber ;
+.
+<http://strateos.com/inc_time_1_default>
+  a opil:MeasureValue ;
+  opil:hasMeasure <http://strateos.com/inc_time_1_default/Measure1> ;
+  sbol:displayId "inc_time_1_default" ;
+.
+<http://strateos.com/inc_time_1_default/Measure1>
+  a om:Measure ;
+  sbol:displayId "Measure1" ;
+  om:hasNumericalValue 1.6e+01 ;
+  om:hasUnit om:hour ;
+.
+<http://strateos.com/inc_time_2_default>
+  a opil:MeasureValue ;
+  opil:hasMeasure <http://strateos.com/inc_time_2_default/Measure1> ;
+  sbol:displayId "inc_time_2_default" ;
+.
+<http://strateos.com/inc_time_2_default/Measure1>
+  a om:Measure ;
+  sbol:displayId "Measure1" ;
+  om:hasNumericalValue 6e+00 ;
+  om:hasUnit om:hour ;
+.
+<http://strateos.com/ind_cult_vol_default>
+  a opil:MeasureValue ;
+  opil:hasMeasure <http://strateos.com/ind_cult_vol_default/Measure1> ;
+  sbol:displayId "ind_cult_vol_default" ;
+.
+<http://strateos.com/ind_cult_vol_default/Measure1>
+  a om:Measure ;
+  sbol:displayId "Measure1" ;
+  om:hasNumericalValue 1e+01 ;
+  om:hasUnit om:microlitre ;
+.
+<http://strateos.com/inducer_conc_default>
+  a opil:MeasureValue ;
+  opil:hasMeasure <http://strateos.com/inducer_conc_default/Measure1> ;
+  sbol:displayId "inducer_conc_default" ;
+.
+<http://strateos.com/inducer_conc_default/Measure1>
+  a om:Measure ;
+  sbol:displayId "Measure1" ;
+  om:hasNumericalValue 1e+01 ;
+  om:hasUnit opil:pureNumber ;
+.
+<http://strateos.com/inoc_media_vol_default>
+  a opil:MeasureValue ;
+  opil:hasMeasure <http://strateos.com/inoc_media_vol_default/Measure1> ;
+  sbol:displayId "inoc_media_vol_default" ;
+.
+<http://strateos.com/inoc_media_vol_default/Measure1>
+  a om:Measure ;
+  sbol:displayId "Measure1" ;
+  om:hasNumericalValue 7e+02 ;
+  om:hasUnit om:microlitre ;
+.
+<http://strateos.com/inoc_vol_default>
+  a opil:MeasureValue ;
+  opil:hasMeasure <http://strateos.com/inoc_vol_default/Measure1> ;
+  sbol:displayId "inoc_vol_default" ;
+.
+<http://strateos.com/inoc_vol_default/Measure1>
+  a om:Measure ;
+  sbol:displayId "Measure1" ;
+  om:hasNumericalValue 1e+01 ;
+  om:hasUnit om:microlitre ;
+.
+<http://strateos.com/media_vol_default>
+  a opil:MeasureValue ;
+  opil:hasMeasure <http://strateos.com/media_vol_default/Measure1> ;
+  sbol:displayId "media_vol_default" ;
+.
+<http://strateos.com/media_vol_default/Measure1>
+  a om:Measure ;
+  sbol:displayId "Measure1" ;
+  om:hasNumericalValue 1e+03 ;
+  om:hasUnit om:microlitre ;
+.
+<http://strateos.com/media_well_strings_default>
+  a opil:StringValue ;
+  opil:value "" ;
+  sbol:displayId "media_well_strings_default" ;
+.
+<http://strateos.com/only_endpoint_flow_default>
+  a opil:BooleanValue ;
+  opil:value true ;
+  sbol:displayId "only_endpoint_flow_default" ;
+.
+<http://strateos.com/read_cult_vol_default>
+  a opil:MeasureValue ;
+  opil:hasMeasure <http://strateos.com/read_cult_vol_default/Measure1> ;
+  sbol:displayId "read_cult_vol_default" ;
+.
+<http://strateos.com/read_cult_vol_default/Measure1>
+  a om:Measure ;
+  sbol:displayId "Measure1" ;
+  om:hasNumericalValue 1e+02 ;
+  om:hasUnit om:microlitre ;
+.
+<http://strateos.com/read_each_induction_default>
+  a opil:BooleanValue ;
+  opil:value true ;
+  sbol:displayId "read_each_induction_default" ;
+.
+<http://strateos.com/read_each_recovery_default>
+  a opil:BooleanValue ;
+  opil:value true ;
+  sbol:displayId "read_each_recovery_default" ;
+.
+<http://strateos.com/read_solv_vol_default>
+  a opil:MeasureValue ;
+  opil:hasMeasure <http://strateos.com/read_solv_vol_default/Measure1> ;
+  sbol:displayId "read_solv_vol_default" ;
+.
+<http://strateos.com/read_solv_vol_default/Measure1>
+  a om:Measure ;
+  sbol:displayId "Measure1" ;
+  om:hasNumericalValue 0e+00 ;
+  om:hasUnit om:microlitre ;
+.
+<http://strateos.com/recovery_media_vol_default>
+  a opil:MeasureValue ;
+  opil:hasMeasure <http://strateos.com/recovery_media_vol_default/Measure1> ;
+  sbol:displayId "recovery_media_vol_default" ;
+.
+<http://strateos.com/recovery_media_vol_default/Measure1>
+  a om:Measure ;
+  sbol:displayId "Measure1" ;
+  om:hasNumericalValue 1e+03 ;
+  om:hasUnit om:microlitre ;
+.
+<http://strateos.com/recovery_sample_vol_default>
+  a opil:MeasureValue ;
+  opil:hasMeasure <http://strateos.com/recovery_sample_vol_default/Measure1> ;
+  sbol:displayId "recovery_sample_vol_default" ;
+.
+<http://strateos.com/recovery_sample_vol_default/Measure1>
+  a om:Measure ;
+  sbol:displayId "Measure1" ;
+  om:hasNumericalValue 1e+01 ;
+  om:hasUnit om:microlitre ;
+.
+<http://strateos.com/sample_points_default>
+  a opil:StringValue ;
+  opil:value "3,4,5,6" ;
+  sbol:displayId "sample_points_default" ;
+.
+<http://strateos.com/save_for_rnaseq_default>
+  a opil:BooleanValue ;
+  opil:value false ;
+  sbol:displayId "save_for_rnaseq_default" ;
+.
+<http://strateos.com/skip_first_flow_default>
+  a opil:BooleanValue ;
+  opil:value true ;
+  sbol:displayId "skip_first_flow_default" ;
+.
