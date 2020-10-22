@@ -77,7 +77,8 @@ shacl:IntegerParameterShape
 # The following apply to ParameterValues
 
 # Measure parameter values have only one measure and it must be an
-# om:Measure, and can only be the value of a single MeasureParameter
+# om:Measure, and can only be the value of a single MeasureParameter.
+# The numerical value of the measure must be within bounds
 shacl:MeasureValueShape
     a sh:NodeShape ;
     sh:targetClass opil:MeasureValue ;
@@ -100,6 +101,36 @@ shacl:MeasureValueShape
           FILTER NOT EXISTS {$this opil:hasMeasure ?measure}
     }
     """ ;
+    ] ;
+    sh:sparql [
+      sh:message "MeasureValue measure numerical value exceeds maximum" ;
+      sh:prefixes <http://bbn.com/synbio/opil#> ;
+      sh:select """
+      select $this where
+      {
+          $this opil:hasMeasure ?meas ;
+                opil:valueOf ?param .
+          ?param opil:maxMeasure ?max .
+          ?max om:hasNumericalValue ?maxVal .
+          ?meas om:hasNumericalValue ?val .
+          FILTER (?val > ?maxVal)
+      }
+      """ ;
+    ] ;
+    sh:sparql [
+      sh:message "MeasureValue measure numerical value less than minimum" ;
+      sh:prefixes <http://bbn.com/synbio/opil#> ;
+      sh:select """
+      select $this where
+      {
+          $this opil:hasMeasure ?meas ;
+                opil:valueOf ?param .
+          ?param opil:minMeasure ?min .
+          ?min om:hasNumericalValue ?minVal .
+          ?meas om:hasNumericalValue ?val .
+          FILTER (?val < ?minVal)
+      }
+      """ ;
     ] ;
 .
 
@@ -131,7 +162,8 @@ shacl:BooleanValueShape
 .
 
 # Integer parameter values must have exactly one value and it must be an int
-# and can only be the value of a single integer parameter
+# and can only be the value of a single integer parameter. Furthermore, its
+# value must be within bounds
 shacl:IntegerValueShape
 	a sh:NodeShape ;
 	sh:targetClass opil:IntegerValue ;
@@ -152,6 +184,32 @@ shacl:IntegerValueShape
       select $this where
       {
           FILTER NOT EXISTS {$this opil:value ?value}
+      }
+      """ ;
+    ] ;
+     sh:sparql [
+      sh:message "IntegerValue value exceeds maximum" ;
+      sh:prefixes <http://bbn.com/synbio/opil#> ;
+      sh:select """
+      select $this where
+      {
+          $this opil:value ?value ;
+                opil:valueOf ?param .
+          ?param opil:maxValue ?max .
+          FILTER (?value > ?max)
+      }
+      """ ;
+    ] ;
+     sh:sparql [
+      sh:message "IntegerValue value less than minimum" ;
+      sh:prefixes <http://bbn.com/synbio/opil#> ;
+      sh:select """
+      select $this where
+      {
+          $this opil:value ?value ;
+                opil:valueOf ?param .
+          ?param opil:minValue ?min .
+          FILTER (?value < ?min)
       }
       """ ;
     ] ;
