@@ -16,13 +16,10 @@ class Document(sbol.Document):
         super(Document, self).__init__()
         self._validator = ShaclValidator()        
 
-    def write(self, path: str, file_format: str) -> None:
-        self.validate()
-        super(Document, self).write(path, file_format)
-
     def validate(self):
         conforms, results_graph, results_txt = self._validator.validate(self.graph())
         return ValidationReport(conforms, results_txt)
+
 
 class ValidationReport():
 
