@@ -53,3 +53,26 @@ The `name` attribute is used for human-readable and/or lab-specific identifiers.
 ```
 protocol = doc.find('http://strateos.com/TimeSeriesHTC')
 ```
+
+## Creating objects
+
+Every OPIL object is identified by a unique URI. When a new object is created, the URI for an object is automatically generated. Every constructor for an OPIL object takes a single argument which is its local ID. The full URI is then generated from a namespace and the local ID. This local ID must consist of only alphanumeric characters and/or underscores.
+
+When constructing a new `Document`, the general workflow is as follows. First, set the namespace that governs new objects. Second, create new objects. Finally, add the new object to the `Document`.  For example:
+
+```
+set_namespace('http://bbn.com/synbio/')
+doc = Document()
+protocol = ProtocolInterface('TimeSeries')
+doc.add(protocol)
+```
+
+## Validation
+
+A `Document` can be validated as follows:
+
+```
+validation_report = doc.validate()
+```
+
+This returns a `ValidationReport` object which has a boolean status field, `is_valid`, that indicates whether the `Document` is valid, and a `results` field which provides a text description of any validation issues that were identified.

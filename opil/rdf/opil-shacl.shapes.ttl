@@ -234,6 +234,8 @@ opil:ExperimentalRequestShape
 ] ;
 .
 
+# The following shape shows how to embed SPARQL into a shape description
+
 # Measurements cannot have more timepoints than the allowed maximum
 opil:MeasurementShape
   a sh:NodeShape ;
