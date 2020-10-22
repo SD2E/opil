@@ -53,3 +53,13 @@ The `name` attribute is used for human-readable and/or lab-specific identifiers.
 ```
 protocol = doc.find('http://strateos.com/TimeSeriesHTC')
 ```
+
+## Validation
+
+A `Document` can be validated as follows:
+
+```
+validation_report = doc.validate()
+```
+
+This returns a `ValidationReport` object which has a boolean status field, `is_valid`, that indicates whether the `Document` is valid, and a `results` field which provides a text description of any validation issues that were identified.
