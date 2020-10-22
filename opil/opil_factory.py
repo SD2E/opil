@@ -1,13 +1,34 @@
 import sbol3 as sbol
+from sbol3 import set_namespace
+
 import rdflib
 import os
 import posixpath
 import logging
+from .shacl_validator import ShaclValidator
+
 from math import inf
 
-
 # Expose Document through the OPIL API
-Document = sbol.Document
+class Document(sbol.Document):
+
+    def __init__(self):
+        super(Document, self).__init__()
+        self._validator = ShaclValidator()        
+
+    def write(self, path: str, file_format: str) -> None:
+        self.validate()
+        super(Document, self).write(path, file_format)
+
+    def validate(self):
+        conforms, results_graph, results_txt = self._validator.validate(self.graph())
+        return ValidationReport(conforms, results_txt)
+
+class ValidationReport():
+
+    def __init__(self, is_valid, results_txt):
+        self.is_valid = is_valid
+        self.results = results_txt
 
 logging.basicConfig(level=logging.CRITICAL)
 
