@@ -71,6 +71,16 @@ opil:ExperimentalRequest
   a owl:Class ;
   rdfs:label "Experimental request" ;
   rdfs:subClassOf owl:Thing ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom opil:ProtocolInterface ;
+      owl:onProperty opil:instanceOf ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty opil:instanceOf ;
+    ] ;
 .
 opil:IntegerParameter
   a owl:Class ;
@@ -291,6 +301,14 @@ opil:hasParameter
   rdfs:range opil:Parameter ;
   rdfs:subPropertyOf opil:compositionalProperty ;
 .
+opil:hasParameterValue
+  a owl:ObjectProperty ;
+  rdfs:comment "" ;
+  rdfs:domain opil:ExperimentalRequest ;
+  rdfs:label "has parameter value" ;
+  rdfs:range opil:ParameterValue ;
+  rdfs:subPropertyOf opil:compositionalProperty ;
+.
 opil:hasValue
   a owl:ObjectProperty ;
   rdfs:comment "" ;
@@ -303,6 +321,13 @@ opil:index
   rdfs:domain opil:ParameterValue ;
   rdfs:label "index" ;
   rdfs:range xsd:integer ;
+.
+opil:instanceOf
+  a owl:ObjectProperty ;
+  rdfs:comment "" ;
+  rdfs:domain opil:ExperimentalRequest ;
+  rdfs:label "instance of" ;
+  rdfs:range opil:ProtocolInterface ;
 .
 opil:list
   a owl:DatatypeProperty ;

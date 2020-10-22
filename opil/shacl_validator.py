@@ -24,6 +24,7 @@ class ShaclValidator:
         #self.g.parse('rdf/TimeSeriesProtocol.ttl', format='ttl')
         self.g.parse(abs_path('../TimeSeriesHTC.ttl'), format='ttl')
         #self.g.parse('rdf/YeastSTATES_1.0_Time_Series_Round_1.ttl', format='ttl')
+        g.parse('rdf/TestER.ttl', format='ttl')
 
         # Do the validation
         print('Validating graph...')

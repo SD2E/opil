@@ -74,7 +74,36 @@ shacl:IntegerParameterShape
 	] ;
 .
 
-# Boolean parameter values have only value and it must be a boolen
+# The following apply to ParameterValues
+
+# Measure parameter values have only one measure and it must be an
+# om:Measure, and can only be the value of a single MeasureParameter
+shacl:MeasureValueShape
+    a sh:NodeShape ;
+    sh:targetClass opil:MeasureValue ;
+    sh:property [
+        sh:path opil:hasMeasure ;
+        sh:maxCount 1 ;
+        sh:class om:Measure ;
+    ] ;
+    sh:property [
+        sh:path opil:valueOf ;
+        sh:maxCount 1 ;
+        sh:class opil:MeasureParameter ;
+    ] ;
+    sh:sparql [
+    sh:message "MeasureValue has no measure" ;
+    sh:prefixes <http://bbn.com/synbio/opil#> ;
+    sh:select """
+    select $this where
+    {
+          FILTER NOT EXISTS {$this opil:hasMeasure ?measure}
+    }
+    """ ;
+    ] ;
+.
+
+# Boolean parameter values must have exactly one value and it must be a boolean
 # and can only be the value of a single boolean parameter
 shacl:BooleanValueShape
 	a sh:NodeShape ;
@@ -89,9 +118,19 @@ shacl:BooleanValueShape
 		sh:maxCount 1 ;
 		sh:class opil:BooleanParameter ;
 	] ;
+    sh:sparql [
+      sh:message "BooleanValue has no value" ;
+      sh:prefixes <http://bbn.com/synbio/opil#> ;
+      sh:select """
+      select $this where
+      {
+          FILTER NOT EXISTS {$this opil:value ?value}
+       }
+       """ ;
+    ] ;
 .
 
-# Integer parameter values have only value and it must be an int
+# Integer parameter values must have exactly one value and it must be an int
 # and can only be the value of a single integer parameter
 shacl:IntegerValueShape
 	a sh:NodeShape ;
@@ -106,9 +145,19 @@ shacl:IntegerValueShape
 		sh:maxCount 1 ;
 		sh:class opil:IntegerParameter ;
 	] ;
+     sh:sparql [
+      sh:message "IntegerValue has no value" ;
+      sh:prefixes <http://bbn.com/synbio/opil#> ;
+      sh:select """
+      select $this where
+      {
+          FILTER NOT EXISTS {$this opil:value ?value}
+      }
+      """ ;
+    ] ;
 .
 
-# String parameter values have only value and it must be a string
+# String parameter values must have exactly one value and it must be a string
 # and can only be the value of a single string parameter
 shacl:StringValueShape
 	a sh:NodeShape ;
@@ -123,9 +172,19 @@ shacl:StringValueShape
 		sh:maxCount 1 ;
 		sh:class opil:StringParameter ;
 	] ;
+      sh:sparql [
+      sh:message "StringValue has no value" ;
+      sh:prefixes <http://bbn.com/synbio/opil#> ;
+      sh:select """
+      select $this where
+      {
+          FILTER NOT EXISTS {$this opil:value ?value}
+      }
+      """ ;
+    ] ;
 .
 
-# URI parameter values have only value and it must be a URI
+# URI parameter values must have exactly one value and it must be a URI
 # and can only be the value of a single URI parameter
 shacl:URIValueShape
 	a sh:NodeShape ;
@@ -140,6 +199,39 @@ shacl:URIValueShape
 		sh:maxCount 1 ;
 		sh:class opil:URIParameter ;
 	] ;
+      sh:sparql [
+      sh:message "URIValue has no value" ;
+      sh:prefixes <http://bbn.com/synbio/opil#> ;
+      sh:select """
+      select $this where
+      {
+          FILTER NOT EXISTS {$this opil:value ?value}
+      }
+      """ ;
+    ] ;
+.
+
+# The following shapes are based on SPARQL
+
+# ExperimentalRequests must have values for all required Parameters for
+# their ProtocolInterface
+opil:ExperimentalRequestShape
+  a sh:NodeShape ;
+  sh:targetClass opil:ExperimentalRequest ;
+  sh:severity sh:Violation ;
+  sh:sparql [
+      sh:message "Experimental request is missing a value for  a required parameter" ;
+      sh:prefixes <http://bbn.com/synbio/opil#> ;
+      sh:select """
+      select $this where
+      {
+          $this opil:instanceOf ?protoInt .
+          ?protoInt opil:hasParameter ?param.
+          ?param opil:required true.
+          FILTER NOT EXISTS {?paramValue opil:valueOf ?param}
+      }
+      """ ;
+] ;
 .
 
 # The following shape shows how to embed SPARQL into a shape description
