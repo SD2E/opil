@@ -63,7 +63,7 @@ class StrateosOpilGenerator():
         # Parse the JSON and return a SBOL document
         print('Generating OPIL from JSON file ', args_dict['in_file'])
         document = self.parse_strateos_json(args_dict['namespace'],
-                                            args_dict['protocol_name'], document_dict)
+                                            args_dict['protocol_name'], document_dict['inputs'])
 
         # Write out the document to a file
         document.bind('opil', opil.Query.OPIL)  # Set namespace prefix
@@ -89,6 +89,8 @@ class StrateosOpilGenerator():
 
         # Iterate through the top-level JSON objects and add Parameters to the list
         for section_name in document_dict:
+            if type(document_dict[section_name]) is not dict:
+                continue
             section_dict = document_dict[section_name]
 
             # Parameters are found in 'inputs' JSON objects
@@ -98,8 +100,8 @@ class StrateosOpilGenerator():
 
                     # The 'type' value indicates what Parameter subclass should be used.
                     # Form the Strateos dotname from the section name and parameter name
-                    type = inputs_dict[param_name]['type']
-                    self.handle_type(type, param_name, inputs_dict[param_name],
+                    param_type = inputs_dict[param_name]['type']
+                    self.handle_type(param_type, param_name, inputs_dict[param_name],
                                      section_name + '.' + param_name)
 
         # Add parameters to ProtocolInterface
@@ -107,12 +109,14 @@ class StrateosOpilGenerator():
 
         return self.doc
 
-    def handle_type(self, type, id_string, param_dict, dotname):
+    def handle_type(self, param_type, id_string, param_dict, dotname):
         '''
         The handle_type method selects the method for parsing the parameter JSON object
         based on its type field
         '''
-        method = StrateosOpilGenerator.type_handlers[type]
+        method = StrateosOpilGenerator.type_handlers[param_type]
+        if id_string[0].isnumeric():  # Sanitize id
+            id_string = '_' + id_string
         method(self, id_string, param_dict, dotname)
 
     def handle_choice(self, id_string, param_dict, dotname):
@@ -163,7 +167,15 @@ class StrateosOpilGenerator():
         param = opil.MeasureParameter(id_string)
         param.name = dotname
         if 'default' in param_dict:
-            default_instance = opil.MeasureValue(id_string + '_default')
+            SUCCESS = False
+            i = 0
+            while not SUCCESS:
+                try:
+                    default_instance = opil.MeasureValue(id_string + '_default' + str(i))
+                    self.doc.add(default_instance)
+                    SUCCESS = True
+                except ValueError:
+                    i += 1
             default_value = param_dict['default']
             if isinstance(default_value, str):
 
@@ -181,7 +193,6 @@ class StrateosOpilGenerator():
             measure = sbol3.Measure(value, unit_iri, name=measure_name)
             default_instance.has_measure = measure
             param.default_value = [default_instance]
-            self.doc.add(default_instance)
         if 'required' in param_dict:
             param.required = True
         self.param_list.append(param)
@@ -230,7 +241,8 @@ class StrateosOpilGenerator():
                      'bool': handle_bool, 'group': handle_group,
                      'group+': handle_group, 'group-choice': handle_group_choice,
                      'integer': handle_integer,
-                     'aliquot': handle_string, 'aliquot+': handle_string}
+                     'aliquot': handle_string, 'aliquot+': handle_string,
+                     'container': handle_string}
 
 if __name__ == "__main__":
     opil_generator = StrateosOpilGenerator()
