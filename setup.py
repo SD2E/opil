@@ -1,8 +1,12 @@
 from setuptools import setup
 
+# This version includes a patch that squelches logging in
+# the opil factory, which was conflicting with logging in
+# other modules
+
 setup(name='opil',
       description='Python package for demonstrating OPIL',
-      version='1.0a2',
+      version='1.0a2.post1',
       install_requires=[
             'sbol3>=1.0a3',
             'rdflib>=5.0.0',

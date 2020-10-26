@@ -4,7 +4,7 @@ from sbol3 import set_namespace
 import rdflib
 import os
 import posixpath
-import logging
+#import logging
 from .shacl_validator import ShaclValidator
 
 from math import inf
@@ -27,11 +27,11 @@ class ValidationReport():
         self.is_valid = is_valid
         self.results = results_txt
 
-logging.basicConfig(level=logging.CRITICAL)
+#logging.basicConfig(level=logging.CRITICAL)
 
 
 def help():
-    logging.getLogger().setLevel(logging.INFO)
+    #logging.getLogger().setLevel(logging.INFO)
     OPILFactory.generate()
 
 
@@ -143,8 +143,8 @@ class OPILFactory():
             #     datatype = f'list of {datatype}'
             # log += f'\t{property_name}\t{datatype}\n'
 
-        if logging.getLogger().level == logging.INFO:
-            print(log.rstrip())
+        #if logging.getLogger().level == logging.INFO:
+        #    print(log.rstrip())
 
         return sbol_toplevel
 
@@ -247,8 +247,8 @@ class OPILFactory():
             #     datatype = f'list of {datatype}'
             # log += f'\t{property_name}\t{datatype}\n'
 
-        if logging.getLogger().level == logging.INFO:
-            print(log.rstrip())
+        #if logging.getLogger().level == logging.INFO:
+        #    print(log.rstrip())
 
     def create_derived_classes(base_class):
         rdf_subtypes = Query.query_subclasses(base_class)
@@ -483,10 +483,10 @@ class Query():
         response = [str(row[0]) for row in response]
         datatypes.extend(response)
         datatypes = list(set(datatypes))
-        if len(datatypes) == 0:
-            logging.warn(f'{property_uri} datatype is undefined')
-        if len(datatypes) > 1:
-            logging.warn(f'{property_uri} has more than one datatype')
+        #if len(datatypes) == 0:
+        #    logging.warn(f'{property_uri} datatype is undefined')
+        #if len(datatypes) > 1:
+        #    logging.warn(f'{property_uri} has more than one datatype')
         return list(set(datatypes))
 
     @staticmethod
