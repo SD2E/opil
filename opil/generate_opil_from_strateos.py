@@ -63,7 +63,8 @@ class StrateosOpilGenerator():
         # Parse the JSON and return a SBOL document
         print('Generating OPIL from JSON file ', args_dict['in_file'])
         document = self.parse_strateos_json(args_dict['namespace'],
-                                            args_dict['protocol_name'], document_dict['inputs'])
+                                            args_dict['protocol_name'], document_dict['id'],
+                                            document_dict['inputs'])
 
         # Write out the document to a file
         document.bind('opil', opil.Query.OPIL)  # Set namespace prefix
@@ -72,13 +73,16 @@ class StrateosOpilGenerator():
         # data types that occurs with Turtle serialization
         document.write(args_dict['out_file'], file_format='nt')
 
-    def parse_strateos_json(self, namespace, protocol_name, document_dict):
+    def parse_strateos_json(self, namespace, protocol_name, protocol_id, document_dict):
         # Set the namespace for created instances
         sbol3.set_namespace(namespace)
 
         # Create the ProtocolInterface instance
         self.protocol = opil.ProtocolInterface(protocol_name)
         self.protocol.name = protocol_name
+        self.protocol.strateos_id = sbol3.TextProperty(self.protocol,
+                                                       namespace + 'strateos_id', 0, 1,
+                                                       None, protocol_id)
 
         # Create the document and add the ProtocolInterface to it
         self.doc = sbol3.Document()
