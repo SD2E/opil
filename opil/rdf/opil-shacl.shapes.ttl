@@ -65,12 +65,12 @@ shacl:IntegerParameterShape
 	sh:property [
 		sh:path opil:maxValue ;
 		sh:maxCount 1 ;
-		sh:datatype xsd:int ;
+		sh:datatype xsd:integer ;
 	] ;
 	sh:property [
 		sh:path opil:minValue ;
 		sh:maxCount 1 ;
-		sh:datatype xsd:int ;
+		sh:datatype xsd:integer ;
 	] ;
 .
 
@@ -170,7 +170,7 @@ shacl:IntegerValueShape
 	sh:property [
 		sh:path opil:value ;
 		sh:maxCount 1 ;
-		sh:datatype xsd:int ;
+		sh:datatype xsd:integer ;
 	] ;
 	sh:property [
 		sh:path opil:valueOf ;
