@@ -199,6 +199,11 @@ opil:Parameter
       owl:cardinality "1"^^xsd:nonNegativeInteger ;
       owl:onProperty opil:name ;
     ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty opil:defaultValue ;
+    ] ;
 .
 opil:ParameterValue
   a owl:Class ;
