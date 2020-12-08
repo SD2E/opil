@@ -1,5 +1,6 @@
 import sbol3 as sbol
 from sbol3 import set_namespace
+from sbol3 import CombinatorialDerivation, Component, VariableComponent
 
 import rdflib
 import os
@@ -105,9 +106,12 @@ class OPILFactory():
                 elif datatypes[0] == 'http://www.w3.org/2001/XMLSchema#boolean':
                     self.__dict__[property_name] = sbol.BooleanProperty(self, property_uri, 0, upper_bound)
 
+        # Define class
         class_name = sbol.utils.parse_class_name(rdf_type)
         log = f'\n{class_name}\n'
         log += '-' * (len(log) - 2) + '\n'
+        if class_name in globals().keys():
+            return globals()[class_name]
 
         # Query and instantiate properties
         attribute_dict = {}
