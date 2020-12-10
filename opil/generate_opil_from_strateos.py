@@ -62,16 +62,22 @@ class StrateosOpilGenerator():
 
         # Parse the JSON and return a SBOL document
         print('Generating OPIL from JSON file ', args_dict['in_file'])
+        if 'id' not in document_dict:
+            protocol_id = None
+        if 'inputs' in document_dict:
+            protocol_params = document_dict['inputs']
+        else:
+            protocol_params = document_dict  # TimeSeries schema
         document = self.parse_strateos_json(args_dict['namespace'],
-                                            args_dict['protocol_name'], document_dict['id'],
-                                            document_dict['inputs'])
+                                            args_dict['protocol_name'], protocol_id,
+                                            protocol_params)
 
         # Write out the document to a file
         document.bind('opil', opil.Query.OPIL)  # Set namespace prefix
 
         # Use Ntriples serialization to avoid rdflib issue with literal
         # data types that occurs with Turtle serialization
-        document.write(args_dict['out_file'], file_format='nt')
+        document.write(args_dict['out_file'], file_format='ttl')
 
     def parse_strateos_json(self, namespace, protocol_name, protocol_id, document_dict):
         # Set the namespace for created instances
@@ -80,9 +86,10 @@ class StrateosOpilGenerator():
         # Create the ProtocolInterface instance
         self.protocol = opil.ProtocolInterface(protocol_name)
         self.protocol.name = protocol_name
-        self.protocol.strateos_id = sbol3.TextProperty(self.protocol,
-                                                       namespace + 'strateos_id', 0, 1,
-                                                       None, protocol_id)
+        if protocol_id:
+            self.protocol.strateos_id = sbol3.TextProperty(self.protocol,
+                                                           namespace + 'strateos_id', 0, 1,
+                                                           None, protocol_id)
 
         # Create the document and add the ProtocolInterface to it
         self.doc = sbol3.Document()
@@ -109,7 +116,11 @@ class StrateosOpilGenerator():
                                      section_name + '.' + param_name)
 
         # Add parameters to ProtocolInterface
-        self.protocol.has_parameter = self.param_list
+        try:
+            self.protocol.has_parameter = self.param_list
+        except:
+            print(self.param_list)
+            raise
 
         return self.doc
 
@@ -118,10 +129,24 @@ class StrateosOpilGenerator():
         The handle_type method selects the method for parsing the parameter JSON object
         based on its type field
         '''
-        method = StrateosOpilGenerator.type_handlers[param_type]
-        if id_string[0].isnumeric():  # Sanitize id
+
+        # Sanitize id
+        if id_string[0].isnumeric():
             id_string = '_' + id_string
-        method(self, id_string, param_dict, dotname)
+
+        if param_type == 'group' or param_type == 'group+':
+            self.handle_group(id_string, param_dict, dotname)
+        elif param_type == 'group-choice':
+            self.handle_group_choice(id_string, param_dict, dotname)
+        else:
+            handler = StrateosOpilGenerator.type_handlers[param_type]
+            param = handler(self, id_string, param_dict, dotname)
+            if 'description' in param_dict.keys():
+                param.description = param_dict['description']
+            if param == None:
+                print(param_type)
+                raise
+            self.param_list.append(param)
 
     def handle_choice(self, id_string, param_dict, dotname):
         '''
@@ -136,7 +161,7 @@ class StrateosOpilGenerator():
         param.allowed_value = allowed_values
         if 'required' in param_dict:
             param.required = True
-        self.param_list.append(param)
+        return param
 
     def handle_string(self, id_string, param_dict, dotname):
         param = opil.StringParameter(id_string)
@@ -148,7 +173,7 @@ class StrateosOpilGenerator():
             self.doc.add(default)
         if 'required' in param_dict:
             param.required = True
-        self.param_list.append(param)
+        return param
 
     def handle_integer(self, id_string, param_dict, dotname):
         param = opil.IntegerParameter(id_string)
@@ -160,7 +185,7 @@ class StrateosOpilGenerator():
             self.doc.add(default)
         if 'required' in param_dict:
             param.required = True
-        self.param_list.append(param)
+        return param
 
     def handle_measure(self, id_string, param_dict, dotname):
         '''
@@ -199,7 +224,7 @@ class StrateosOpilGenerator():
             param.default_value = [default_instance]
         if 'required' in param_dict:
             param.required = True
-        self.param_list.append(param)
+        return param
 
     def handle_bool(self, id_string, param_dict, dotname):
         param = opil.BooleanParameter(id_string)
@@ -211,7 +236,7 @@ class StrateosOpilGenerator():
             self.doc.add(default)
         if 'required' in param_dict:
             param.required = True
-        self.param_list.append(param)
+        return param
 
     def handle_group(self, id_string, param_dict, dotname):
         '''
@@ -242,9 +267,7 @@ class StrateosOpilGenerator():
     type_handlers = {'choice': handle_choice, 'string': handle_string,
                      'volume': handle_measure, 'time': handle_measure,
                      'length': handle_measure, 'decimal': handle_measure,
-                     'bool': handle_bool, 'group': handle_group,
-                     'group+': handle_group, 'group-choice': handle_group_choice,
-                     'integer': handle_integer,
+                     'bool': handle_bool, 'integer': handle_integer,
                      'aliquot': handle_string, 'aliquot+': handle_string,
                      'container': handle_string}
 
