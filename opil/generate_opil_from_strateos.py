@@ -62,7 +62,9 @@ class StrateosOpilGenerator():
 
         # Parse the JSON and return a SBOL document
         print('Generating OPIL from JSON file ', args_dict['in_file'])
-        if 'id' not in document_dict:
+        if 'id' in document_dict:
+            protocol_id = document_dict['id']
+        else:
             protocol_id = None
         if 'inputs' in document_dict:
             protocol_params = document_dict['inputs']
@@ -79,7 +81,7 @@ class StrateosOpilGenerator():
         # data types that occurs with Turtle serialization
         document.write(args_dict['out_file'], file_format='ttl')
 
-    def parse_strateos_json(self, namespace, protocol_name, protocol_id, document_dict):
+    def parse_strateos_json(self, namespace, protocol_name, protocol_id, inputs_dict):
         # Set the namespace for created instances
         sbol3.set_namespace(namespace)
 
@@ -92,28 +94,27 @@ class StrateosOpilGenerator():
                                                            None, protocol_id)
 
         # Create the document and add the ProtocolInterface to it
-        self.doc = sbol3.Document()
+        self.doc = opil.Document()
         self.doc.add(self.protocol)
 
         # Create a list of Parameters
         self.param_list = []
 
         # Iterate through the top-level JSON objects and add Parameters to the list
-        for section_name in document_dict:
-            if type(document_dict[section_name]) is not dict:
+        for param_name in inputs_dict:
+            if type(inputs_dict[param_name]) is not dict:
                 continue
-            section_dict = document_dict[section_name]
-
+            param_dict = inputs_dict[param_name]
             # Parameters are found in 'inputs' JSON objects
-            if 'inputs' in section_dict:
-                inputs_dict = section_dict['inputs']
-                for param_name in inputs_dict:
+            # if 'inputs' in section_dict:
+            #     inputs_dict = section_dict['inputs']
 
-                    # The 'type' value indicates what Parameter subclass should be used.
-                    # Form the Strateos dotname from the section name and parameter name
-                    param_type = inputs_dict[param_name]['type']
-                    self.handle_type(param_type, param_name, inputs_dict[param_name],
-                                     section_name + '.' + param_name)
+            # print(param_name)
+            # The 'type' value indicates what Parameter subclass should be used.
+            # Form the Strateos dotname from the section name and parameter name
+            param_type = param_dict['type']
+            self.handle_type(param_type, param_name, param_dict,
+                             param_name)
 
         # Add parameters to ProtocolInterface
         try:
@@ -169,7 +170,7 @@ class StrateosOpilGenerator():
         if 'default' in param_dict:
             default = opil.StringValue(id_string + '_default')
             default.value = param_dict['default']
-            param.default_value = [default]
+            param.default_value = default
             self.doc.add(default)
         if 'required' in param_dict:
             param.required = True
@@ -181,7 +182,7 @@ class StrateosOpilGenerator():
         if 'default' in param_dict:
             default = opil.IntegerValue(id_string + '_default')
             default.value = param_dict['default']
-            param.default_value = [default]
+            param.default_value = default
             self.doc.add(default)
         if 'required' in param_dict:
             param.required = True
@@ -221,7 +222,7 @@ class StrateosOpilGenerator():
             measure_name = id_string + '_default_measure'
             measure = sbol3.Measure(value, unit_iri, name=measure_name)
             default_instance.has_measure = measure
-            param.default_value = [default_instance]
+            param.default_value = default_instance
         if 'required' in param_dict:
             param.required = True
         return param
@@ -232,7 +233,7 @@ class StrateosOpilGenerator():
         if 'default' in param_dict:
             default = opil.BooleanValue(id_string + '_default')
             default.value = param_dict['default']
-            param.default_value = [default]
+            param.default_value = default
             self.doc.add(default)
         if 'required' in param_dict:
             param.required = True
