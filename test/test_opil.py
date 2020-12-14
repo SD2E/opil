@@ -1,10 +1,11 @@
 from opil import *
 from sbol3 import TextProperty
 import rdflib
+
 from math import inf
 import unittest
 import os
-
+import json
 
 MODULE_LOCATION = os.path.dirname(os.path.abspath(__file__))
 TEST_FILES = os.path.join(MODULE_LOCATION, 'test_files')
@@ -43,5 +44,39 @@ class TestOpil(unittest.TestCase):
     def test_opil_files(self):
         doc = Document()
         doc.read(os.path.join(TEST_FILES, 'opil_output.xml'), 'xml')
+        report = doc.validate()
+        self.assertTrue(report.is_valid)
+
+    def test_growth_curve(self):
+        with open(os.path.join(TEST_FILES, 'GrowthCurve.json')) as f:
+            document_dict = json.load(f)
+        protocol_params = document_dict['inputs']
+        s = StrateosOpilGenerator()
+        doc = s.parse_strateos_json('http://strateos.com',
+                                         document_dict['name'], 
+                                         document_dict['id'],
+                                         document_dict['inputs'])
+        report = doc.validate()
+        self.assertTrue(report.is_valid)
+
+    def test_time_series(self):
+        with open(os.path.join(TEST_FILES, 'TimeSeriesHTP.json')) as f:
+            document_dict = json.load(f)
+        s = StrateosOpilGenerator()
+        doc = s.parse_strateos_json('http://strateos.com',
+                                         document_dict['name'], 
+                                         document_dict['id'],
+                                         document_dict['inputs'])
+        report = doc.validate()
+        self.assertTrue(report.is_valid)
+
+    def test_obstacle_course(self):
+        with open(os.path.join(TEST_FILES, 'ObstacleCourse.json')) as f:
+            document_dict = json.load(f)
+        s = StrateosOpilGenerator()
+        doc = s.parse_strateos_json('http://strateos.com',
+                                         document_dict['name'], 
+                                         document_dict['id'],
+                                         document_dict['inputs'])
         report = doc.validate()
         self.assertTrue(report.is_valid)
