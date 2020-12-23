@@ -27,6 +27,13 @@ class ValidationReport():
     def __init__(self, is_valid, results_txt):
         self.is_valid = is_valid
         self.results = results_txt
+        self.message = ''
+        if not is_valid:
+            i_message = results_txt.find('Message: ') + 9
+            self.message = results_txt[i_message:]
+
+    def __repr__(self):
+        return self.message
 
 #logging.basicConfig(level=logging.CRITICAL)
 

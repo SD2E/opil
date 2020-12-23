@@ -73,6 +73,7 @@ A `Document` can be validated as follows:
 
 ```
 validation_report = doc.validate()
+print(validation_report)
 ```
 
-This returns a `ValidationReport` object which has a boolean status field, `is_valid`, that indicates whether the `Document` is valid, and a `results` field which provides a text description of any validation issues that were identified.
+This returns a `ValidationReport` object which has a boolean status field, `is_valid`, that indicates whether the `Document` is valid, and a `message` field which provides a text description of any validation issues that were identified.
