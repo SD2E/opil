@@ -118,7 +118,8 @@ class StrateosOpilGenerator():
 
         # Add parameters to ProtocolInterface
         try:
-            self.protocol.has_parameter = self.param_list
+            self.protocol.has_parameter = self.param_list.copy()
+            self.param_list = []
         except:
             print(self.param_list)
             raise
@@ -144,25 +145,7 @@ class StrateosOpilGenerator():
             param = handler(self, id_string, param_dict, dotname)
             if 'description' in param_dict.keys():
                 param.description = param_dict['description']
-            if param == None:
-                print(param_type)
-                raise
             self.param_list.append(param)
-
-    def handle_choice(self, id_string, param_dict, dotname):
-        '''
-        Choice type maps to Enumerated parameters
-        '''
-        param = opil.EnumeratedParameter(id_string)
-        param.name = dotname
-        options_list = param_dict['options']
-        allowed_values = []
-        for option in options_list:
-            allowed_values.append(option['value'])
-        param.allowed_value = allowed_values
-        if 'required' in param_dict:
-            param.required = True
-        return param
 
     def handle_string(self, id_string, param_dict, dotname):
         param = opil.StringParameter(id_string)
@@ -250,12 +233,29 @@ class StrateosOpilGenerator():
                 type = inputs_dict[key]['type']
                 self.handle_type(type, key, inputs_dict[key], dotname + '.' + key)
 
+    def handle_choice(self, id_string, param_dict, dotname):
+        '''
+        Choice type maps to Enumerated parameters
+        '''
+        param = opil.EnumeratedParameter(id_string)
+        param.name = dotname
+        options_list = param_dict['options']
+        allowed_values = []
+        for option in options_list:
+            allowed_values.append(option['value'])
+        param.allowed_value = allowed_values
+        if 'required' in param_dict:
+            param.required = True
+        return param
+
     def handle_group_choice(self, id_string, param_dict, dotname):
         '''
         The group-choice type contains an 'options' list of parameters
         '''
+        params = []
         if 'options' in param_dict:
              dict_list = param_dict['options']
+             param = self.handle_type('choice', id_string, param_dict, dotname)
              for dict in dict_list:
                 inputs_dict = dict['inputs']
                 for key in inputs_dict:
