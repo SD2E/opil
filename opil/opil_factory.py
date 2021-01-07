@@ -1,6 +1,6 @@
 import sbol3 as sbol
 from sbol3 import set_namespace
-from sbol3 import CombinatorialDerivation, Component, VariableComponent
+from sbol3 import CombinatorialDerivation, Component, VariableComponent, TopLevel, Identified
 
 import rdflib
 import os
@@ -43,200 +43,99 @@ def help():
     OPILFactory.generate()
 
 
+
 class OPILFactory():
 
     @staticmethod
-    def generate():
-        opil_types = Query.query_base_classes()
-        for opil_type in opil_types:
-            OPILFactory.create_base_class(opil_type)
-            OPILFactory.create_derived_classes(opil_type)
+    def generate(class_uri):
+        if Query.OPIL not in class_uri:
+            return
+        superclass_uri = Query.query_superclass(class_uri)
+        OPILFactory.generate(superclass_uri)
 
-    def create_base_class(rdf_type):
-        "Create subclass using the 'type' metaclass"
-        def __init__(self, name=None, type_uri=rdf_type):
-            if name is None:
-                raise ValueError('Cannot instantiate {rdf_type} object. Please specify a URI')
-            sbol.TopLevel.__init__(self, name=name, type_uri=rdf_type)
-            self.__dict__['name'] = sbol.TextProperty(self, str(Query.OPIL + 'name'),
-                                                      0, 1, [])
+        CLASS_URI = class_uri
+        CLASS_NAME = sbol.utils.parse_class_name(class_uri)
+        SUPERCLASS_NAME = sbol.utils.parse_class_name(superclass_uri)
 
-            # Object properties can be either compositional or associative
-            property_uris = Query.query_object_properties(rdf_type)
-            compositional_properties = Query.query_compositional_properties(rdf_type)
-            associative_properties = [uri for uri in property_uris if uri not in
-                                        compositional_properties]
+        if CLASS_NAME in globals().keys():
+            return
 
-            # Initialize associative properties
-            for property_uri in associative_properties:
-                property_name = Query.query_label(property_uri).replace(' ', '_')
-                cardinality = Query.query_cardinality(property_uri, rdf_type)
-                if len(cardinality):
-                    upper_bound = 1
-                else:
-                    upper_bound = inf
-                self.__dict__[property_name] = sbol.ReferencedObject(self, property_uri, 0, upper_bound)
-
-            # Initialize compositional properties
-            for property_uri in compositional_properties:
-                property_name = Query.query_label(property_uri).replace(' ', '_')
-                cardinality = Query.query_cardinality(property_uri, rdf_type)
-                if len(cardinality):
-                    upper_bound = 1
-                else:
-                    upper_bound = inf
-                self.__dict__[property_name] = sbol.OwnedObject(self, property_uri, 0, upper_bound)
-
-            # Initialize datatype properties
-            property_uris = Query.query_datatype_properties(rdf_type)
-            for property_uri in property_uris:
-                property_name = Query.query_label(property_uri).replace(' ', '_')
-
-                # Get the datatype of this property
-                datatypes = Query.query_property_datatype(property_uri, rdf_type)
-                if len(datatypes) == 0:
-                    continue
-                if len(datatypes) > 1:
-                    continue
-
-                # Get the cardinality of this datatype property
-                cardinality = Query.query_cardinality(property_uri, rdf_type)
-                if len(cardinality):
-                    upper_bound = 1
-                else:
-                    upper_bound = inf
-
-                if datatypes[0] == 'http://www.w3.org/2001/XMLSchema#string':
-                    self.__dict__[property_name] = sbol.TextProperty(self, property_uri, 0, upper_bound)
-                elif datatypes[0] == 'http://www.w3.org/2001/XMLSchema#int':
-                    self.__dict__[property_name] = sbol.IntProperty(self, property_uri, 0, upper_bound)                    
-                elif datatypes[0] == 'http://www.w3.org/2001/XMLSchema#boolean':
-                    self.__dict__[property_name] = sbol.BooleanProperty(self, property_uri, 0, upper_bound)
-
-        # Define class
-        class_name = sbol.utils.parse_class_name(rdf_type)
-        log = f'\n{class_name}\n'
-        log += '-' * (len(log) - 2) + '\n'
-        if class_name in globals().keys():
-            return globals()[class_name]
-
-        # Query and instantiate properties
-        attribute_dict = {}
-        attribute_dict['__init__'] = __init__
-        sbol_toplevel = type(class_name, (sbol.TopLevel, ), attribute_dict)
-        globals()[class_name] = sbol_toplevel
-        sbol.Document.register_builder(str(rdf_type), sbol_toplevel)
-
-        # Print out properties -- this is for logging only
-        property_uris = Query.query_object_properties(rdf_type)
-        for property_uri in property_uris:
-            property_name = Query.query_label(property_uri).replace(' ', '_')
-            datatype = Query.query_property_datatype(property_uri, rdf_type)
-            if len(datatype):
-                datatype = sbol.utils.parse_class_name(datatype[0])
-            else:
-                datatype = None
-            # cardinality = Query.query_cardinality(property_uri, rdf_type)
-            # if len(cardinality):
-            #     datatype = f'list of {datatype}'
-            log += f'\t{property_name}\t{datatype}\n'
-
-        property_uris = Query.query_datatype_properties(rdf_type)
-        for property_uri in property_uris:
-            property_name = Query.query_label(property_uri).replace(' ', '_')
-            datatype = Query.query_property_datatype(property_uri, rdf_type)
-            if len(datatype):
-                datatype = sbol.utils.parse_class_name(datatype[0])
-            else:
-                datatype = None
-            cardinality = Query.query_cardinality(property_uri, rdf_type)
-            # if len(cardinality):
-            #     datatype = f'list of {datatype}'
-            # log += f'\t{property_name}\t{datatype}\n'
-
-        #if logging.getLogger().level == logging.INFO:
-        #    print(log.rstrip())
-
-        return sbol_toplevel
-
-    def create_derived_class(rdf_type):
-        CLASS_NAME = sbol.utils.parse_class_name(rdf_type)
-        SUPERCLASS_NAME = sbol.utils.parse_class_name(Query.query_superclass(rdf_type))
-
-        def __init__(self, name=None, type_uri=rdf_type):
-            if name is None:
-                raise ValueError('Cannot instantiate {rdf_type} object. Please specify a URI')
-            Base = globals()[SUPERCLASS_NAME]
-            Base.__init__(self, name)
-            self.type_uri = rdf_type
-
-            # Object properties can be either compositional or associative
-            property_uris = Query.query_object_properties(rdf_type)
-            compositional_properties = Query.query_compositional_properties(rdf_type)
-            associative_properties = [uri for uri in property_uris if uri not in
-                                        compositional_properties]
-
-            # Initialize associative properties
-            for property_uri in associative_properties:
-                property_name = Query.query_label(property_uri).replace(' ', '_')
-                cardinality = Query.query_cardinality(property_uri, rdf_type)
-                if len(cardinality):
-                    upper_bound = 1
-                else:
-                    upper_bound = inf
-                self.__dict__[property_name] = sbol.ReferencedObject(self, property_uri, 0, upper_bound)
-
-            # Initialize compositional properties
-            for property_uri in compositional_properties:
-                property_name = Query.query_label(property_uri).replace(' ', '_')
-                cardinality = Query.query_cardinality(property_uri, rdf_type)
-                if len(cardinality):
-                    upper_bound = 1
-                else:
-                    upper_bound = inf
-                self.__dict__[property_name] = sbol.OwnedObject(self, property_uri, 0, upper_bound)
-
-            # Initialize datatype properties
-            property_uris = Query.query_datatype_properties(rdf_type)
-            for property_uri in property_uris:
-                property_name = Query.query_label(property_uri).replace(' ', '_')
-
-                # Get the datatype of this property
-                datatypes = Query.query_property_datatype(property_uri, rdf_type)
-                if len(datatypes) == 0:
-                    continue
-                if len(datatypes) > 1:
-                    continue
-
-                # Get the cardinality of this datatype property
-                cardinality = Query.query_cardinality(property_uri, rdf_type)
-                if len(cardinality):
-                    upper_bound = 1
-                else:
-                    upper_bound = inf
-
-                if datatypes[0] == 'http://www.w3.org/2001/XMLSchema#string':
-                    self.__dict__[property_name] = sbol.TextProperty(self, property_uri, 0, upper_bound)
-                elif datatypes[0] == 'http://www.w3.org/2001/XMLSchema#int':
-                    self.__dict__[property_name] = sbol.IntProperty(self, property_uri, 0, upper_bound)                    
-                elif datatypes[0] == 'http://www.w3.org/2001/XMLSchema#boolean':
-                    self.__dict__[property_name] = sbol.BooleanProperty(self, property_uri, 0, upper_bound)
-
-        # Query and instantiate properties
-        attribute_dict = {}
-        attribute_dict['__init__'] = __init__
-
+        #Logging
         log = f'\n{CLASS_NAME}\n'
         log += '-' * (len(log) - 2) + '\n'
+
+        # Define constructor
+        def __init__(self, name=None, type_uri=CLASS_URI):
+            if name is None:
+                raise ValueError(f'Cannot instantiate {CLASS_NAME} object. Please specify a URI')
+            Base = globals()[SUPERCLASS_NAME]
+            Base.__init__(self, name, type_uri=CLASS_URI)
+            self.type_uri = CLASS_URI
+
+            # Object properties can be either compositional or associative
+            property_uris = Query.query_object_properties(CLASS_URI)
+            compositional_properties = Query.query_compositional_properties(CLASS_URI)
+            associative_properties = [uri for uri in property_uris if uri not in
+                                        compositional_properties]
+
+            # Initialize associative properties
+            for property_uri in associative_properties:
+                property_name = Query.query_label(property_uri).replace(' ', '_')
+                cardinality = Query.query_cardinality(property_uri, CLASS_URI)
+                if len(cardinality):
+                    upper_bound = 1
+                else:
+                    upper_bound = inf
+                self.__dict__[property_name] = sbol.ReferencedObject(self, property_uri, 0, upper_bound)
+
+            # Initialize compositional properties
+            for property_uri in compositional_properties:
+                property_name = Query.query_label(property_uri).replace(' ', '_')
+                cardinality = Query.query_cardinality(property_uri, CLASS_URI)
+                if len(cardinality):
+                    upper_bound = 1
+                else:
+                    upper_bound = inf
+                self.__dict__[property_name] = sbol.OwnedObject(self, property_uri, 0, upper_bound)
+
+            # Initialize datatype properties
+            property_uris = Query.query_datatype_properties(CLASS_URI)
+            for property_uri in property_uris:
+                property_name = Query.query_label(property_uri).replace(' ', '_')
+
+                # Get the datatype of this property
+                datatypes = Query.query_property_datatype(property_uri, CLASS_URI)
+                if len(datatypes) == 0:
+                    continue
+                if len(datatypes) > 1:
+                    continue
+
+                # Get the cardinality of this datatype property
+                cardinality = Query.query_cardinality(property_uri, CLASS_URI)
+                if len(cardinality):
+                    upper_bound = 1
+                else:
+                    upper_bound = inf
+
+                if datatypes[0] == 'http://www.w3.org/2001/XMLSchema#string':
+                    self.__dict__[property_name] = sbol.TextProperty(self, property_uri, 0, upper_bound)
+                elif datatypes[0] == 'http://www.w3.org/2001/XMLSchema#int':
+                    self.__dict__[property_name] = sbol.IntProperty(self, property_uri, 0, upper_bound)                    
+                elif datatypes[0] == 'http://www.w3.org/2001/XMLSchema#boolean':
+                    self.__dict__[property_name] = sbol.BooleanProperty(self, property_uri, 0, upper_bound)
+
+        # Instantiate metaclass
+        attribute_dict = {}
+        attribute_dict['__init__'] = __init__
         Class = type(CLASS_NAME, (globals()[SUPERCLASS_NAME],), attribute_dict)
         globals()[CLASS_NAME] = Class
-        sbol.Document.register_builder(str(rdf_type), Class)
+        sbol.Document.register_builder(str(CLASS_URI), Class)
 
         # Print out properties -- this is for logging only
-        property_uris = Query.query_object_properties(rdf_type)
+        property_uris = Query.query_object_properties(CLASS_URI)
         for property_uri in property_uris:
             property_name = Query.query_label(property_uri).replace(' ', '_')
-            datatype = Query.query_property_datatype(property_uri, rdf_type)
+            datatype = Query.query_property_datatype(property_uri, CLASS_URI)
             if len(datatype):
                 datatype = sbol.utils.parse_class_name(datatype[0])
             else:
@@ -245,27 +144,15 @@ class OPILFactory():
             # if len(cardinality):
             #     datatype = f'list of {datatype}'
             log += f'\t{property_name}\t{datatype}\n'
-        property_uris = Query.query_datatype_properties(rdf_type)
+        property_uris = Query.query_datatype_properties(CLASS_URI)
         for property_uri in property_uris:
             property_name = Query.query_label(property_uri).replace(' ', '_')
-            datatype = Query.query_property_datatype(property_uri, rdf_type)
+            datatype = Query.query_property_datatype(property_uri, CLASS_URI)
             if len(datatype):
                 datatype = sbol.utils.parse_class_name(datatype[0])
             else:
                 datatype = None
-            cardinality = Query.query_cardinality(property_uri, rdf_type)
-            # if len(cardinality):
-            #     datatype = f'list of {datatype}'
-            # log += f'\t{property_name}\t{datatype}\n'
-
-        #if logging.getLogger().level == logging.INFO:
-        #    print(log.rstrip())
-
-    def create_derived_classes(base_class):
-        rdf_subtypes = Query.query_subclasses(base_class)
-        for rdf_subtype in rdf_subtypes:
-            OPILFactory.create_derived_class(rdf_subtype)
-            OPILFactory.create_derived_classes(rdf_subtype)
+            cardinality = Query.query_cardinality(property_uri, CLASS_URI)            
 
 
 class Query():
@@ -276,6 +163,7 @@ class Query():
     OPIL = rdflib.URIRef('http://bbn.com/synbio/opil#')
     graph = rdflib.Graph()
     graph.parse(posixpath.join(os.path.dirname(os.path.realpath(__file__)), 'rdf/opil.ttl'), format ='ttl')
+    graph.parse(posixpath.join(os.path.dirname(os.path.realpath(__file__)), 'rdf/sbol3.ttl'), format ='ttl')
     graph.namespace_manager.bind('sbol', SBOL)
     graph.namespace_manager.bind('opil', OPIL)
     graph.namespace_manager.bind('tawny', rdflib.URIRef('http://www.purl.org/ontolink/tawny#'))
@@ -518,4 +406,6 @@ class Query():
         property_name = response[0]
         return property_name
 
-OPILFactory.generate()
+
+for class_uri in Query.query_classes():
+    OPILFactory.generate(class_uri)

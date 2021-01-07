@@ -14,7 +14,7 @@ class TestOpil(unittest.TestCase):
 
     def test_valid(self):
         doc = Document()
-        p = Parameter('p')
+        p = ProtocolInterface('p')
         p.name = 'foo'
         doc.add(p)
         validation_report = doc.validate()
@@ -23,15 +23,35 @@ class TestOpil(unittest.TestCase):
     def test_invalid(self):
         # Parameters are forbidden to have more than one name
         doc = Document()
-        p = Parameter('p')
+        protocol = ProtocolInterface('protocol')
+        p = Parameter('param')
         p.__dict__['name'] = TextProperty(p, 'http://bbn.com/synbio/opil#name', 0, inf)
         p.name = ['foo', 'bar']
-        doc.add(p)
+        protocol.has_parameter = [p]
+        doc.add(protocol)
         validation_report = doc.validate()
         self.assertFalse(validation_report.is_valid)
         i_message = validation_report.results.find('Message: ') + 9
         message = validation_report.results[i_message:]
         self.assertEqual(validation_report.__repr__(), message)
+
+    def test_top_level(self):
+        # See issue 38
+        doc = Document()
+        protocol = ProtocolInterface('protocol')
+        param = Parameter('param')
+        doc.add(protocol)
+        protocol.has_parameter = [param]
+        object_ids = [o.identity for o in doc.objects]
+        self.assertIn(protocol.identity, object_ids)
+        self.assertNotIn(param.identity, object_ids)
+        doc2 = Document()
+        doc2.read_string(doc.write_string('nt'), 'nt')
+        object_ids = [o.identity for o in doc2.objects]
+        self.assertIn(protocol.identity, object_ids)
+
+        # The following failed prior to resolution of 38
+        self.assertNotIn(param.identity, object_ids)
 
     # def test_rdf_files(self):
     #     # In order for this to pass, the TestER graph needs to be merged
