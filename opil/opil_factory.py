@@ -40,16 +40,18 @@ class ValidationReport():
 
 def help():
     #logging.getLogger().setLevel(logging.INFO)
-    OPILFactory.generate()
+    print(OPILFactory.__doc__)
 
 
 
 class OPILFactory():
 
+    __doc__ = ''  # Documentation string
+
     @staticmethod
     def generate(class_uri):
         if Query.OPIL not in class_uri:
-            return
+            return ''
         superclass_uri = Query.query_superclass(class_uri)
         OPILFactory.generate(superclass_uri)
 
@@ -58,7 +60,7 @@ class OPILFactory():
         SUPERCLASS_NAME = sbol.utils.parse_class_name(superclass_uri)
 
         if CLASS_NAME in globals().keys():
-            return
+            return ''
 
         #Logging
         log = f'\n{CLASS_NAME}\n'
@@ -154,6 +156,7 @@ class OPILFactory():
                 datatype = None
             cardinality = Query.query_cardinality(property_uri, CLASS_URI)            
 
+        return log
 
 class Query():
     filename='sbol.rdf'
@@ -407,5 +410,7 @@ class Query():
         return property_name
 
 
+log = ''
 for class_uri in Query.query_classes():
-    OPILFactory.generate(class_uri)
+    log += OPILFactory.generate(class_uri)
+OPILFactory.__doc__ = log
