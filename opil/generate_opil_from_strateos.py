@@ -79,7 +79,7 @@ class StrateosOpilGenerator():
 
         # Use Ntriples serialization to avoid rdflib issue with literal
         # data types that occurs with Turtle serialization
-        document.write(args_dict['out_file'], file_format='ttl')
+        document.write(args_dict['out_file'], file_format='nt')
 
     def parse_strateos_json(self, namespace, protocol_name, protocol_id, inputs_dict):
         # Set the namespace for created instances
