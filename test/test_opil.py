@@ -72,7 +72,8 @@ class TestOpil(unittest.TestCase):
         protocol = doc.find('http://strateos.com/TimeSeriesHTP')
         dotnames = []
         for param in protocol.has_parameter:
-            dotnames.append(param.name)
+            self.assertIn('.', param.dotname)
+            dotnames.append(param.dotname)
 
         # Confirm that options that contain nested JSON objects are being handled
         self.assertIn('induction_info.induction_reagents.inducer_layout',

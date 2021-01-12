@@ -149,7 +149,8 @@ class StrateosOpilGenerator():
 
     def handle_string(self, id_string, param_dict, dotname):
         param = opil.StringParameter(id_string)
-        param.name = dotname
+        param.name = param_dict['label']
+        self.add_dotname(param, dotname)
         if 'default' in param_dict:
             default = opil.StringValue(id_string + '_default')
             default.value = param_dict['default']
@@ -161,7 +162,8 @@ class StrateosOpilGenerator():
 
     def handle_integer(self, id_string, param_dict, dotname):
         param = opil.IntegerParameter(id_string)
-        param.name = dotname
+        param.name = param_dict['label']
+        self.add_dotname(param, dotname)
         if 'default' in param_dict:
             default = opil.IntegerValue(id_string + '_default')
             default.value = param_dict['default']
@@ -178,7 +180,8 @@ class StrateosOpilGenerator():
         instances carrying the numerical values and units
         '''
         param = opil.MeasureParameter(id_string)
-        param.name = dotname
+        param.name = param_dict['label']
+        self.add_dotname(param, dotname)
         if 'default' in param_dict:
             SUCCESS = False
             i = 0
@@ -212,7 +215,8 @@ class StrateosOpilGenerator():
 
     def handle_bool(self, id_string, param_dict, dotname):
         param = opil.BooleanParameter(id_string)
-        param.name = dotname
+        param.name = param_dict['label']
+        self.add_dotname(param, dotname)
         if 'default' in param_dict:
             default = opil.BooleanValue(id_string + '_default')
             default.value = param_dict['default']
@@ -238,7 +242,8 @@ class StrateosOpilGenerator():
         Choice type maps to Enumerated parameters
         '''
         param = opil.EnumeratedParameter(id_string)
-        param.name = dotname
+        param.name = param_dict['label']
+        self.add_dotname(param, dotname)
         options_list = param_dict['options']
         allowed_values = []
         for option in options_list:
@@ -259,10 +264,17 @@ class StrateosOpilGenerator():
              for d in dict_list:
                 inputs_dict = d['inputs']
                 for key in inputs_dict:
-                    option_dotname = dotname + '.|.' + d['value'] + '.' + key
                     param_dict = inputs_dict[key]
                     type = param_dict['type']
+                    # Use special syntax for choices
+                    option_dotname = dotname + '.|.' + d['value'] + '.' + key
                     self.handle_type(type, key, param_dict, option_dotname)
+
+    def add_dotname(self, param, dotname):
+        # Add the dotname as an annotation property in Strateos namespace
+        param.dotname = sbol3.TextProperty(param, 'http://strateos.com/dotname', 0, 1,
+                                           None, dotname)
+
 
     # Mappings of JSON object types to methods. Not that aliquot and aliquot+ types
     # become string parameters
