@@ -92,15 +92,23 @@ class TestOpil(unittest.TestCase):
         protocol = doc.find('http://strateos.com/TimeSeriesHTP')
         dotnames = []
         for param in protocol.has_parameter:
-            dotnames.append(param.name)
-        # Confirm that multiple instances with the same dotname are created.
-        # (These indicate correct handling of `options` objects in the JSON schema)
-        self.assertEqual(dotnames.count(
-                         'induction_info.induction_reagents.inducer_layout.inducer_unit'), 2)
+            dotnames.append(param.dotname)
 
         # Confirm that options that contain nested JSON objects are being handled
         self.assertIn('induction_info.induction_reagents.inducer_layout',
                       dotnames)
+
+        # Confirm that multiple instances with the same dotname are not created, see #56
+        # (These indicate correct handling of `options` objects in the JSON schema)
+        self.assertEqual(dotnames.count(
+                         'induction_info.induction_reagents.inducer_layout.inducer_unit'), 0)
+
+        # Confirm that Strateos dotname encodes options syntax, see #76
+        self.assertIn('induction_info.induction_reagents.inducer_layout.|.full_plate.inducer_unit',
+                      dotnames)
+        self.assertIn('induction_info.induction_reagents.inducer_layout.|.select_cols.inducer_unit',
+                      dotnames)
+
         report = doc.validate()
         self.assertTrue(report.is_valid)
 
