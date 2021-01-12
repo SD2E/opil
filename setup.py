@@ -6,9 +6,9 @@ from setuptools import setup
 
 setup(name='opil',
       description='Python package for demonstrating OPIL',
-      version='1.0a4',
+      version='1.0a5',
       install_requires=[
-            'sbol3>=1.0a3',
+            'sbol3>=1.0a4',
             'rdflib>=5.0.0',
             'rdflib-jsonld>=0.5.0',
             'sparqlwrapper>=1.8.5',
