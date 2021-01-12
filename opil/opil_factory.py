@@ -1,13 +1,16 @@
 import sbol3 as sbol
 from sbol3 import set_namespace
 from sbol3 import CombinatorialDerivation, Component, VariableComponent, TopLevel, Identified
+# pySBOL extension classes are aliased because they are not present in SBOL-OWL
+from sbol3 import CustomTopLevel as TopLevel
+from sbol3 import CustomIdentified as Identified
+
+from .shacl_validator import ShaclValidator
 
 import rdflib
 import os
 import posixpath
 #import logging
-from .shacl_validator import ShaclValidator
-
 from math import inf
 
 # Expose Document through the OPIL API
@@ -71,7 +74,7 @@ class OPILFactory():
             if name is None:
                 raise ValueError(f'Cannot instantiate {CLASS_NAME} object. Please specify a URI')
             Base = globals()[SUPERCLASS_NAME]
-            Base.__init__(self, name, type_uri=CLASS_URI)
+            Base.__init__(self, name=name, type_uri=CLASS_URI)
             self.type_uri = CLASS_URI
 
             # Object properties can be either compositional or associative
