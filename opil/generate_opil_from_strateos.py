@@ -256,12 +256,13 @@ class StrateosOpilGenerator():
         if 'options' in param_dict:
              dict_list = param_dict['options']
              param = self.handle_type('choice', id_string, param_dict, dotname)
-             for dict in dict_list:
-                inputs_dict = dict['inputs']
+             for d in dict_list:
+                inputs_dict = d['inputs']
                 for key in inputs_dict:
+                    option_dotname = dotname + '.|.' + d['value'] + '.' + key
                     param_dict = inputs_dict[key]
                     type = param_dict['type']
-                    self.handle_type(type, key, param_dict, dotname + '.' + key)
+                    self.handle_type(type, key, param_dict, option_dotname)
 
     # Mappings of JSON object types to methods. Not that aliquot and aliquot+ types
     # become string parameters
