@@ -52,7 +52,12 @@ class StrateosOpilGenerator():
             help="Protocol name",
             default='TimeSeriesHTC'
         )
-
+        parser.add_argument(
+            "--file_format",
+            dest="file_format",
+            help="Serialization format of RDF, e.g., nt, ttl",
+            default='nt'
+        )
         # Generate a dictionary from the command-line arguments
         args_dict = vars(parser.parse_args())
 
@@ -79,7 +84,7 @@ class StrateosOpilGenerator():
 
         # Use Ntriples serialization to avoid rdflib issue with literal
         # data types that occurs with Turtle serialization
-        document.write(args_dict['out_file'], file_format='nt')
+        document.write(args_dict['out_file'], file_format=args_dict['file_format'])
 
     def parse_strateos_json(self, namespace, protocol_name, protocol_id, inputs_dict):
         # Set the namespace for created instances
@@ -154,7 +159,6 @@ class StrateosOpilGenerator():
             default = opil.StringValue(id_string + '_default')
             default.value = param_dict['default']
             param.default_value = default
-            self.doc.add(default)
         if 'required' in param_dict:
             param.required = True
         return param
@@ -166,7 +170,6 @@ class StrateosOpilGenerator():
             default = opil.IntegerValue(id_string + '_default')
             default.value = param_dict['default']
             param.default_value = default
-            self.doc.add(default)
         if 'required' in param_dict:
             param.required = True
         return param
@@ -185,7 +188,6 @@ class StrateosOpilGenerator():
             while not SUCCESS:
                 try:
                     default_instance = opil.MeasureValue(id_string + '_default' + str(i))
-                    self.doc.add(default_instance)
                     SUCCESS = True
                 except ValueError:
                     i += 1
@@ -217,7 +219,6 @@ class StrateosOpilGenerator():
             default = opil.BooleanValue(id_string + '_default')
             default.value = param_dict['default']
             param.default_value = default
-            self.doc.add(default)
         if 'required' in param_dict:
             param.required = True
         return param
