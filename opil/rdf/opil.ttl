@@ -259,6 +259,10 @@ opil:BooleanValue rdf:type owl:Class ;
                                   [ rdf:type owl:Restriction ;
                                     owl:onProperty opil:value ;
                                     owl:allValuesFrom xsd:boolean
+                                  ] ,
+                                  [ rdf:type owl:Restriction ;
+                                    owl:onProperty opil:value ;
+                                    owl:maxCardinality "1"^^xsd:nonNegativeInteger
                                   ] ;
                   rdfs:label "Boolean value" .
 
@@ -330,6 +334,10 @@ opil:IntegerValue rdf:type owl:Class ;
                                   [ rdf:type owl:Restriction ;
                                     owl:onProperty opil:value ;
                                     owl:allValuesFrom xsd:int
+                                  ] ,
+                                  [ rdf:type owl:Restriction ;
+                                    owl:onProperty opil:value ;
+                                    owl:maxCardinality "1"^^xsd:nonNegativeInteger
                                   ] ;
                   rdfs:label "Integer value" .
 
@@ -364,12 +372,12 @@ opil:MeasureValue rdf:type owl:Class ;
                                     owl:allValuesFrom om:Measure
                                   ] ,
                                   [ rdf:type owl:Restriction ;
-                                 owl:onProperty opil:hasMeasure ;
-                                 owl:maxCardinality "1"^^xsd:nonNegativeInteger
-                                  ] ,
-                                  [ rdf:type owl:Restriction ;
                                     owl:onProperty opil:valueOf ;
                                     owl:allValuesFrom opil:MeasureParameter
+                                  ] ,
+                                  [ rdf:type owl:Restriction ;
+                                    owl:onProperty opil:hasMeasure ;
+                                    owl:maxCardinality "1"^^xsd:nonNegativeInteger
                                   ] ;
                   rdfs:label "Measure value" .
 
@@ -409,11 +417,11 @@ opil:Parameter rdf:type owl:Class ;
                                  owl:allValuesFrom xsd:boolean
                                ] ,
                                [ rdf:type owl:Restriction ;
-                                 owl:onProperty opil:required ;
+                                 owl:onProperty opil:name ;
                                  owl:maxCardinality "1"^^xsd:nonNegativeInteger
                                ] ,
                                [ rdf:type owl:Restriction ;
-                                 owl:onProperty opil:name ;
+                                 owl:onProperty opil:required ;
                                  owl:maxCardinality "1"^^xsd:nonNegativeInteger
                                ] ;
                rdfs:comment "Parameters are required to have a name, and can have only one name." ;
@@ -470,6 +478,10 @@ opil:StringValue rdf:type owl:Class ;
                                  [ rdf:type owl:Restriction ;
                                    owl:onProperty opil:value ;
                                    owl:allValuesFrom xsd:string
+                                 ] ,
+                                 [ rdf:type owl:Restriction ;
+                                   owl:onProperty opil:value ;
+                                   owl:maxCardinality "1"^^xsd:nonNegativeInteger
                                  ] ;
                  rdfs:label "String value" .
 
@@ -490,6 +502,10 @@ opil:URIValue rdf:type owl:Class ;
                               [ rdf:type owl:Restriction ;
                                 owl:onProperty opil:value ;
                                 owl:allValuesFrom xsd:anyURI
+                              ] ,
+                              [ rdf:type owl:Restriction ;
+                                owl:onProperty opil:value ;
+                                owl:maxCardinality "1"^^xsd:nonNegativeInteger
                               ] ;
               rdfs:label "URIValue" .
 
