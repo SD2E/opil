@@ -297,7 +297,8 @@ opil:ExperimentalRequest rdf:type owl:Class ;
                                          owl:Thing ,
                                          [ rdf:type owl:Restriction ;
                                            owl:onProperty opil:instanceOf ;
-                                           owl:cardinality "1"^^xsd:nonNegativeInteger
+                                           owl:minCardinality "0"^^xsd:nonNegativeInteger ;
+                                           owl:maxCardinality "1"^^xsd:nonNegativeInteger
                                          ] ;
                          rdfs:label "Experimental request" .
 
