@@ -71,8 +71,6 @@ class OPILFactory():
 
         # Define constructor
         def __init__(self, name=None, type_uri=CLASS_URI):
-            if name is None:
-                raise ValueError(f'Cannot instantiate {CLASS_NAME} object. Please specify a URI')
             Base = globals()[SUPERCLASS_NAME]
             Base.__init__(self, name=name, type_uri=CLASS_URI)
             self.type_uri = CLASS_URI
