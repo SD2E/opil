@@ -1,6 +1,6 @@
 import sbol3 as sbol
 from sbol3 import set_namespace
-from sbol3 import CombinatorialDerivation, Component, VariableComponent, TopLevel, Identified
+from sbol3 import CombinatorialDerivation, Component, VariableFeature, TopLevel, Identified
 # pySBOL extension classes are aliased because they are not present in SBOL-OWL
 from sbol3 import CustomTopLevel as TopLevel
 from sbol3 import CustomIdentified as Identified
@@ -70,11 +70,9 @@ class OPILFactory():
         log += '-' * (len(log) - 2) + '\n'
 
         # Define constructor
-        def __init__(self, name=None, type_uri=CLASS_URI):
-            if name is None:
-                raise ValueError(f'Cannot instantiate {CLASS_NAME} object. Please specify a URI')
+        def __init__(self, identity=None, type_uri=CLASS_URI):
             Base = globals()[SUPERCLASS_NAME]
-            Base.__init__(self, name=name, type_uri=CLASS_URI)
+            Base.__init__(self, identity=identity, type_uri=CLASS_URI)
             self.type_uri = CLASS_URI
 
             # Object properties can be either compositional or associative
@@ -112,8 +110,8 @@ class OPILFactory():
                 datatypes = Query.query_property_datatype(property_uri, CLASS_URI)
                 if len(datatypes) == 0:
                     continue
-                if len(datatypes) > 1:
-                    continue
+                if len(datatypes) > 1:  # This might indicate an error in the ontology
+                    raise
 
                 # Get the cardinality of this datatype property
                 cardinality = Query.query_cardinality(property_uri, CLASS_URI)
@@ -128,6 +126,8 @@ class OPILFactory():
                     self.__dict__[property_name] = sbol.IntProperty(self, property_uri, 0, upper_bound)                    
                 elif datatypes[0] == 'http://www.w3.org/2001/XMLSchema#boolean':
                     self.__dict__[property_name] = sbol.BooleanProperty(self, property_uri, 0, upper_bound)
+                elif datatypes[0] == 'http://www.w3.org/2001/XMLSchema#anyURI':
+                    self.__dict__[property_name] = sbol.URIProperty(self, property_uri, 0, upper_bound)
 
         # Instantiate metaclass
         attribute_dict = {}
