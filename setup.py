@@ -5,8 +5,8 @@ from setuptools import setup
 # other modules
 
 setup(name='opil',
-      description='Python package for demonstrating OPIL',
-      version='1.0a6',
+      description='Open Protocol Interface Language (OPIL)',
+      version='1.0b0',
       install_requires=[
             'sbol3==1.0a5',
             'rdflib>=5.0.0',
