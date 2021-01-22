@@ -208,7 +208,7 @@ class StrateosOpilGenerator():
                 value = default_value
                 unit_iri = 'http://bbn.com/synbio/opil#pureNumber'
             measure_name = id_string + '_default_measure'
-            measure = sbol3.Measure(value, unit_iri, name=measure_name)
+            measure = sbol3.Measure(value, unit_iri, identity=measure_name)
             default_instance.has_measure = measure
             param.default_value = default_instance
         if 'required' in param_dict:

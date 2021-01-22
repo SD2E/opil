@@ -1,6 +1,6 @@
 import sbol3 as sbol
 from sbol3 import set_namespace
-from sbol3 import CombinatorialDerivation, Component, VariableComponent, TopLevel, Identified
+from sbol3 import CombinatorialDerivation, Component, VariableFeature, TopLevel, Identified
 # pySBOL extension classes are aliased because they are not present in SBOL-OWL
 from sbol3 import CustomTopLevel as TopLevel
 from sbol3 import CustomIdentified as Identified
@@ -70,9 +70,9 @@ class OPILFactory():
         log += '-' * (len(log) - 2) + '\n'
 
         # Define constructor
-        def __init__(self, name=None, type_uri=CLASS_URI):
+        def __init__(self, identity=None, type_uri=CLASS_URI):
             Base = globals()[SUPERCLASS_NAME]
-            Base.__init__(self, name=name, type_uri=CLASS_URI)
+            Base.__init__(self, identity=identity, type_uri=CLASS_URI)
             self.type_uri = CLASS_URI
 
             # Object properties can be either compositional or associative
