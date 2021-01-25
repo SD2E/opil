@@ -40,13 +40,24 @@ class TestOpil(unittest.TestCase):
         # A Parameter with required == True must have ParameterValue specified
         doc = Document()
         protocol = ProtocolInterface('protocol')
+        p = Parameter('p')
+        p.required = True
+        protocol.has_parameter = [p]
+
         er = ExperimentalRequest('er')
+        v = ParameterValue('v')
+        er.has_parameter_value = [v]
+
         er.instance_of = protocol
         doc.add(protocol)
         doc.add(er)
         validation_report = doc.validate()
-        print(validation_report.results)
+        self.assertFalse(validation_report.is_valid)
+
+        v.value_of = p
+        validation_report = doc.validate()
         self.assertTrue(validation_report.is_valid)
+
 
     # def test_top_level(self):
     #     # See issue 38

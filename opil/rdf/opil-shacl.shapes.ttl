@@ -26,19 +26,6 @@ opil:PrefixDeclaration
   sh:prefix "opil" ;
 .
 
-# If an ExperimentalRequest is linked to a Protocol Interface,
-# then every Parameter with required == True must have ParameterValue specified
-shacl:RequiredParameterShape
-  a sh:NodeShape ;
-    sh:targetClass opil:ExperimentalRequest ;
-    sh:property [
-      sh:path opil:instanceOf ;
-      sh:minCount 2 ;
-      sh:class opil:ExperimentalRequest ;
-    ] ;
-.
-
-
 # The following shapes apply to Parameters and are useful for
 # validating ProtocolInterfaces
 
