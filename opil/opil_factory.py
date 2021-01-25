@@ -1,6 +1,6 @@
 import sbol3 as sbol
 from sbol3 import set_namespace
-from sbol3 import CombinatorialDerivation, Component, VariableFeature, TopLevel, Identified
+from sbol3 import CombinatorialDerivation, Component, Measure, VariableFeature
 # pySBOL extension classes are aliased because they are not present in SBOL-OWL
 from sbol3 import CustomTopLevel as TopLevel
 from sbol3 import CustomIdentified as Identified
