@@ -343,7 +343,7 @@ opil:ExperimentalRequest rdf:type owl:Class ;
                                          owl:Thing ,
                                          [ rdf:type owl:Restriction ;
                                            owl:onProperty opil:instanceOf ;
-                                           owl:cardinality "1"^^xsd:nonNegativeInteger
+                                           owl:maxCardinality "1"^^xsd:nonNegativeInteger
                                          ] ;
                          rdfs:label "Experimental request" .
 
@@ -521,6 +521,10 @@ opil:ParameterValue rdf:type owl:Class ;
                                     [ rdf:type owl:Restriction ;
                                       owl:onProperty opil:valueOf ;
                                       owl:allValuesFrom opil:Parameter
+                                    ] ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty opil:valueOf ;
+                                      owl:maxCardinality "1"^^xsd:nonNegativeInteger
                                     ] ;
                     rdfs:comment "Parameter values are holders for the values for a parmeter" ;
                     rdfs:label "Parameter value" .
