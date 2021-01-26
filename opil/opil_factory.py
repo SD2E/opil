@@ -313,7 +313,6 @@ class Query():
         property_types.extend(response) 
         return property_types
 
-
     @staticmethod
     def query_datatype_properties(class_uri):
         query =     '''
