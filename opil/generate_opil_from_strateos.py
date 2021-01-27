@@ -154,7 +154,8 @@ class StrateosOpilGenerator():
 
     def handle_string(self, id_string, param_dict, dotname):
         param = opil.StringParameter(id_string)
-        param.name = param_dict['label']
+        if 'label' in param_dict:
+            param.name = param_dict['label']
         self.add_dotname(param, dotname)
         if 'default' in param_dict:
             default = opil.StringValue(id_string + '_default')
@@ -166,7 +167,8 @@ class StrateosOpilGenerator():
 
     def handle_integer(self, id_string, param_dict, dotname):
         param = opil.IntegerParameter(id_string)
-        param.name = param_dict['label']
+        if 'label' in param_dict:
+            param.name = param_dict['label']
         self.add_dotname(param, dotname)
         if 'default' in param_dict:
             default = opil.IntegerValue(id_string + '_default')
@@ -183,7 +185,8 @@ class StrateosOpilGenerator():
         instances carrying the numerical values and units
         '''
         param = opil.MeasureParameter(id_string)
-        param.name = param_dict['label']
+        if 'label' in param_dict:
+            param.name = param_dict['label']
         self.add_dotname(param, dotname)
         if 'default' in param_dict:
             SUCCESS = False
@@ -217,7 +220,8 @@ class StrateosOpilGenerator():
 
     def handle_bool(self, id_string, param_dict, dotname):
         param = opil.BooleanParameter(id_string)
-        param.name = param_dict['label']
+        if 'label' in param_dict:
+            param.name = param_dict['label']
         self.add_dotname(param, dotname)
         if 'default' in param_dict:
             default = opil.BooleanValue(id_string + '_default')
@@ -243,7 +247,8 @@ class StrateosOpilGenerator():
         Choice type maps to Enumerated parameters
         '''
         param = opil.EnumeratedParameter(id_string)
-        param.name = param_dict['label']
+        if 'label' in param_dict:
+            param.name = param_dict['label']
         self.add_dotname(param, dotname)
         options_list = param_dict['options']
         allowed_values = []

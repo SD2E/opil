@@ -58,7 +58,6 @@ class TestOpil(unittest.TestCase):
         validation_report = doc.validate()
         self.assertTrue(validation_report.is_valid)
 
-
     def test_top_level(self):
         # See issue 38
         doc = Document()
@@ -144,6 +143,18 @@ class TestOpil(unittest.TestCase):
                                          document_dict['name'], 
                                          document_dict['id'],
                                          document_dict['inputs'])
+        report = doc.validate()
+        self.assertTrue(report.is_valid)
+
+    def test_cell_free_bioswitches(self):
+        with open(os.path.join(TEST_FILES, 'CellFreeRiboswitches.json')) as f:
+            document_dict = json.load(f)
+        s = StrateosOpilGenerator()
+        doc = s.parse_strateos_json('http://strateos.com',
+                                         document_dict['name'], 
+                                         document_dict['id'],
+                                         document_dict['inputs'])
+        protocol = doc.find('http://strateos.com/CellFreeRiboswitches')
         report = doc.validate()
         self.assertTrue(report.is_valid)
 
