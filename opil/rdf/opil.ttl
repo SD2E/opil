@@ -441,11 +441,6 @@ opil:Measurement rdf:type owl:Class ;
                                    owl:onProperty opil:instanceOfMeasurementType ;
                                    owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
                                    owl:onClass opil:MeasurementType
-                                 ] ,
-                                 [ rdf:type owl:Restriction ;
-                                   owl:onProperty opil:time ;
-                                   owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
-                                   owl:onClass om:Measure
                                  ] ;
                  rdfs:label "Measurement" .
 
@@ -622,6 +617,10 @@ sbol:CombinatorialDerivation rdf:type owl:Class .
 
 ###  http://sbols.org/v3#Component
 sbol:Component rdf:type owl:Class .
+
+
+###  http://www.ontology-of-units-of-measure.org/resource/om-2/RankineScale
+om:RankineScale rdfs:subClassOf om:Function .
 
 
 #################################################################
