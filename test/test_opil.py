@@ -162,16 +162,16 @@ class TestOpil(unittest.TestCase):
         # Confirm functionality of Measurement and MeasurementType part of data model
         doc = Document()
         mt = MeasurementType('mt')
+        mt.type = 'foo'
         m = Measurement('m')
         m.instance_of = mt
         self.assertEqual(m.instance_of, mt.identity)
-        m.type = 'foo'
-        self.assertEqual(type(m.type), str)  # Confirm value is a string not list of characters
+        self.assertEqual(type(mt.type), str)  # Confirm value is a string not list of characters
         mt.allowed_time = TimeInterval()
         mt.allowed_time.min_time = Measure(0, 'http://www.ontology-of-units-of-measure.org/resource/om-2#minute')
         mt.allowed_time.max_time = Measure(60,'http://www.ontology-of-units-of-measure.org/resource/om-2#minute')
         mt.minimum_interval = Measure(0.1, 'http://www.ontology-of-units-of-measure.org/resource/om-2#minute')
-        m.time = Measure(50, 'http://www.ontology-of-units-of-measure.org/resource/om-2#minute')
+        m.time = [ Measure(50, 'http://www.ontology-of-units-of-measure.org/resource/om-2#minute') ]
         p = ProtocolInterface('p')
         e = ExperimentalRequest('e')
         e.measurements = [m]
