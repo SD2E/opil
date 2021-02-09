@@ -434,12 +434,12 @@ opil:Measurement rdf:type owl:Class ;
                                  owl:Thing ,
                                  [ rdf:type owl:Restriction ;
                                    owl:onProperty opil:instanceOfMeasurementType ;
-                                   owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+                                   owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
                                    owl:onClass opil:MeasurementType
                                  ] ,
                                  [ rdf:type owl:Restriction ;
                                    owl:onProperty opil:instanceOfMeasurementType ;
-                                   owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+                                   owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
                                    owl:onClass opil:MeasurementType
                                  ] ;
                  rdfs:label "Measurement" .
@@ -451,38 +451,30 @@ opil:MeasurementType rdf:type owl:Class ;
                                      owl:Thing ,
                                      [ rdf:type owl:Restriction ;
                                        owl:onProperty opil:allowedTime ;
-                                       owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+                                       owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
                                        owl:onClass opil:TimeInterval
                                      ] ,
                                      [ rdf:type owl:Restriction ;
                                        owl:onProperty opil:maxCount ;
-                                       owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+                                       owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
                                        owl:onDataRange xsd:integer
                                      ] ,
                                      [ rdf:type owl:Restriction ;
                                        owl:onProperty opil:minCount ;
-                                       owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+                                       owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
                                        owl:onDataRange xsd:integer
                                      ] ,
                                      [ rdf:type owl:Restriction ;
                                        owl:onProperty opil:required ;
-                                       owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+                                       owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
                                        owl:onDataRange xsd:boolean
                                      ] ,
                                      [ rdf:type owl:Restriction ;
                                        owl:onProperty opil:type ;
-                                       owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+                                       owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
                                        owl:onDataRange xsd:anyURI
                                      ] ;
                      rdfs:label "Measurement type" .
-
-
-###  http://bbn.com/synbio/opil#Media
-opil:Media rdf:type owl:Class ;
-           rdfs:subClassOf sbol:Component ,
-                           owl:Thing ;
-           rdfs:comment "Media instances have a string value (such as a name) and could also have SynBioHub URI" ;
-           rdfs:label "Media" .
 
 
 ###  http://bbn.com/synbio/opil#Parameter
@@ -539,14 +531,6 @@ opil:SampleSet rdf:type owl:Class ;
                rdfs:label "Sample set" .
 
 
-###  http://bbn.com/synbio/opil#Strain
-opil:Strain rdf:type owl:Class ;
-            rdfs:subClassOf sbol:Component ,
-                            owl:Thing ;
-            rdfs:comment "Strains have URIs pointing to SynBioHub instances. This is equivalent to owl:sameAs." ;
-            rdfs:label "Strain" .
-
-
 ###  http://bbn.com/synbio/opil#StringParameter
 opil:StringParameter rdf:type owl:Class ;
                      rdfs:subClassOf opil:Parameter ;
@@ -577,12 +561,12 @@ opil:TimeInterval rdf:type owl:Class ;
                                   owl:Thing ,
                                   [ rdf:type owl:Restriction ;
                                     owl:onProperty opil:maxTime ;
-                                    owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+                                    owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
                                     owl:onClass om:Measure
                                   ] ,
                                   [ rdf:type owl:Restriction ;
                                     owl:onProperty opil:minTime ;
-                                    owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+                                    owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
                                     owl:onClass om:Measure
                                   ] .
 
