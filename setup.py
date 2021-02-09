@@ -6,7 +6,7 @@ from setuptools import setup
 
 setup(name='opil',
       description='Open Protocol Interface Language (OPIL)',
-      version='1.0b2',
+      version='1.0b3',
       install_requires=[
             'sbol3==1.0a6',
             'rdflib>=5.0.0',
