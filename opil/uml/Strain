@@ -1,0 +1,5 @@
+digraph Strain {
+	Component -> Strain [arrowtail=empty dir=back fontname="Bitstream Vera Sans" fontsize=8]
+	Component [label="{Component|}" fontname="Bitstream Vera Sans" fontsize=8 shape=record]
+	Strain [label="{Strain|}" fontname="Bitstream Vera Sans" fontsize=8 shape=record]
+}

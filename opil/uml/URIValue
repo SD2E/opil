@@ -1,0 +1,7 @@
+digraph URIValue {
+	ParameterValue -> URIValue [arrowtail=empty dir=back fontname="Bitstream Vera Sans" fontsize=8]
+	ParameterValue [label="{ParameterValue|}" fontname="Bitstream Vera Sans" fontsize=8 shape=record]
+	URIValue -> Parameter [label="value_of [0..*]" arrowhead=vee arrowtail=odiamond dir=both fontname="Bitstream Vera Sans" fontsize=8]
+	Parameter [label="{Parameter|}" fontname="Bitstream Vera Sans" fontsize=8 shape=record]
+	URIValue [label="{URIValue|value [0..1]: anyURI\l}" fontname="Bitstream Vera Sans" fontsize=8 shape=record]
+}

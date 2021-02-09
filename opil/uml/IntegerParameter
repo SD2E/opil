@@ -1,0 +1,5 @@
+digraph IntegerParameter {
+	Parameter -> IntegerParameter [arrowtail=empty dir=back fontname="Bitstream Vera Sans" fontsize=8]
+	Parameter [label="{Parameter|}" fontname="Bitstream Vera Sans" fontsize=8 shape=record]
+	IntegerParameter [label="{IntegerParameter|max_value [0..1]: integer\lmin_value [0..1]: integer\l}" fontname="Bitstream Vera Sans" fontsize=8 shape=record]
+}

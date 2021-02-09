@@ -1,0 +1,5 @@
+digraph BooleanParameter {
+	Parameter -> BooleanParameter [arrowtail=empty dir=back fontname="Bitstream Vera Sans" fontsize=8]
+	Parameter [label="{Parameter|}" fontname="Bitstream Vera Sans" fontsize=8 shape=record]
+	BooleanParameter [label="{BooleanParameter|}" fontname="Bitstream Vera Sans" fontsize=8 shape=record]
+}

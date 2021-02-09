@@ -1,0 +1,9 @@
+digraph TimeInterval {
+	Identified -> TimeInterval [arrowtail=empty dir=back fontname="Bitstream Vera Sans" fontsize=8]
+	Identified [label="{Identified|}" fontname="Bitstream Vera Sans" fontsize=8 shape=record]
+	TimeInterval -> Measure [label="max_time [0..*]" arrowhead=vee arrowtail=diamond dir=both fontname="Bitstream Vera Sans" fontsize=8]
+	Measure [label="{Measure|}" fontname="Bitstream Vera Sans" fontsize=8 shape=record]
+	TimeInterval -> Measure [label="min_time [0..*]" arrowhead=vee arrowtail=diamond dir=both fontname="Bitstream Vera Sans" fontsize=8]
+	Measure [label="{Measure|}" fontname="Bitstream Vera Sans" fontsize=8 shape=record]
+	TimeInterval [label="{TimeInterval|}" fontname="Bitstream Vera Sans" fontsize=8 shape=record]
+}

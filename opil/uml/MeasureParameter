@@ -1,0 +1,9 @@
+digraph MeasureParameter {
+	Parameter -> MeasureParameter [arrowtail=empty dir=back fontname="Bitstream Vera Sans" fontsize=8]
+	Parameter [label="{Parameter|}" fontname="Bitstream Vera Sans" fontsize=8 shape=record]
+	MeasureParameter -> Measure [label="min_measure [0..1]" arrowhead=vee arrowtail=diamond dir=both fontname="Bitstream Vera Sans" fontsize=8]
+	Measure [label="{Measure|}" fontname="Bitstream Vera Sans" fontsize=8 shape=record]
+	MeasureParameter -> Measure [label="max_measure [0..1]" arrowhead=vee arrowtail=diamond dir=both fontname="Bitstream Vera Sans" fontsize=8]
+	Measure [label="{Measure|}" fontname="Bitstream Vera Sans" fontsize=8 shape=record]
+	MeasureParameter [label="{MeasureParameter|}" fontname="Bitstream Vera Sans" fontsize=8 shape=record]
+}

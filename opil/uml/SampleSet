@@ -1,0 +1,7 @@
+digraph SampleSet {
+	CombinatorialDerivation -> SampleSet [arrowtail=empty dir=back fontname="Bitstream Vera Sans" fontsize=8]
+	CombinatorialDerivation [label="{CombinatorialDerivation|}" fontname="Bitstream Vera Sans" fontsize=8 shape=record]
+	SampleSet -> Measurement [label="measurement [0..*]" arrowhead=vee arrowtail=odiamond dir=both fontname="Bitstream Vera Sans" fontsize=8]
+	Measurement [label="{Measurement|}" fontname="Bitstream Vera Sans" fontsize=8 shape=record]
+	SampleSet [label="{SampleSet|replicates [0..*]: integer\l}" fontname="Bitstream Vera Sans" fontsize=8 shape=record]
+}

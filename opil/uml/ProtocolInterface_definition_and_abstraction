@@ -1,0 +1,9 @@
+digraph ProtocolInterface {
+	TopLevel -> ProtocolInterface [arrowtail=empty dir=back fontname="Bitstream Vera Sans" fontsize=8]
+	TopLevel [label="{TopLevel|}" fontname="Bitstream Vera Sans" fontsize=8 shape=record]
+	ProtocolInterface -> MeasurementType [label="protocol_measurement_type [0..*]" arrowhead=vee arrowtail=odiamond dir=both fontname="Bitstream Vera Sans" fontsize=8]
+	MeasurementType [label="{MeasurementType|}" fontname="Bitstream Vera Sans" fontsize=8 shape=record]
+	ProtocolInterface -> Parameter [label="has_parameter [0..*]" arrowhead=vee arrowtail=odiamond dir=both fontname="Bitstream Vera Sans" fontsize=8]
+	Parameter [label="{Parameter|}" fontname="Bitstream Vera Sans" fontsize=8 shape=record]
+	ProtocolInterface [label="{ProtocolInterface|}" fontname="Bitstream Vera Sans" fontsize=8 shape=record]
+}

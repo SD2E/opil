@@ -1,0 +1,5 @@
+digraph EnumeratedParameter {
+	Parameter -> EnumeratedParameter [arrowtail=empty dir=back fontname="Bitstream Vera Sans" fontsize=8]
+	Parameter [label="{Parameter|}" fontname="Bitstream Vera Sans" fontsize=8 shape=record]
+	EnumeratedParameter [label="{EnumeratedParameter|allowed_value [0..*]: string\l}" fontname="Bitstream Vera Sans" fontsize=8 shape=record]
+}

@@ -1,0 +1,13 @@
+digraph ExperimentalRequest {
+	TopLevel -> ExperimentalRequest [arrowtail=empty dir=back fontname="Bitstream Vera Sans" fontsize=8]
+	TopLevel [label="{TopLevel|}" fontname="Bitstream Vera Sans" fontsize=8 shape=record]
+	ExperimentalRequest -> ParameterValue [label="has_parameter_value [0..*]" arrowhead=vee arrowtail=odiamond dir=both fontname="Bitstream Vera Sans" fontsize=8]
+	ParameterValue [label="{ParameterValue|}" fontname="Bitstream Vera Sans" fontsize=8 shape=record]
+	ExperimentalRequest -> ProtocolInterface [label="instance_of [0..1]" arrowhead=vee arrowtail=odiamond dir=both fontname="Bitstream Vera Sans" fontsize=8]
+	ProtocolInterface [label="{ProtocolInterface|}" fontname="Bitstream Vera Sans" fontsize=8 shape=record]
+	ExperimentalRequest -> SampleSet [label="sample_set [0..*]" arrowhead=vee arrowtail=odiamond dir=both fontname="Bitstream Vera Sans" fontsize=8]
+	SampleSet [label="{SampleSet|}" fontname="Bitstream Vera Sans" fontsize=8 shape=record]
+	ExperimentalRequest -> Measurement [label="measurements [0..*]" arrowhead=vee arrowtail=odiamond dir=both fontname="Bitstream Vera Sans" fontsize=8]
+	Measurement [label="{Measurement|}" fontname="Bitstream Vera Sans" fontsize=8 shape=record]
+	ExperimentalRequest [label="{ExperimentalRequest|}" fontname="Bitstream Vera Sans" fontsize=8 shape=record]
+}

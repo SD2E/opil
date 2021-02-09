@@ -1,0 +1,7 @@
+digraph Parameter {
+	Identified -> Parameter [arrowtail=empty dir=back fontname="Bitstream Vera Sans" fontsize=8]
+	Identified [label="{Identified|}" fontname="Bitstream Vera Sans" fontsize=8 shape=record]
+	Parameter -> ParameterValue [label="default_value [0..1]" arrowhead=vee arrowtail=diamond dir=both fontname="Bitstream Vera Sans" fontsize=8]
+	ParameterValue [label="{ParameterValue|}" fontname="Bitstream Vera Sans" fontsize=8 shape=record]
+	Parameter [label="{Parameter|required [0..1]: boolean\llist [0..*]: boolean\l}" fontname="Bitstream Vera Sans" fontsize=8 shape=record]
+}

@@ -1,0 +1,5 @@
+digraph "digraph" {
+	Foo [label="{Animal|+ name : string\lFoo}" fontname="Bitstream Vera Sans" fontsize=8 shape=record]
+	Bar [label="{Animal|+ name : string\lFoo}" fontname="Bitstream Vera Sans" fontsize=8 shape=record]
+	Foo -> Bar
+}

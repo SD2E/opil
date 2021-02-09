@@ -1,0 +1,9 @@
+digraph Measurement {
+	Identified -> Measurement [arrowtail=empty dir=back fontname="Bitstream Vera Sans" fontsize=8]
+	Identified [label="{Identified|}" fontname="Bitstream Vera Sans" fontsize=8 shape=record]
+	Measurement -> Measurement [label="instance_of [0..*]" arrowhead=vee arrowtail=odiamond dir=both fontname="Bitstream Vera Sans" fontsize=8]
+	Measurement [label="{Measurement|}" fontname="Bitstream Vera Sans" fontsize=8 shape=record]
+	Measurement -> Measure [label="time [0..*]" arrowhead=vee arrowtail=odiamond dir=both fontname="Bitstream Vera Sans" fontsize=8]
+	Measure [label="{Measure|}" fontname="Bitstream Vera Sans" fontsize=8 shape=record]
+	Measurement [label="{Measurement|}" fontname="Bitstream Vera Sans" fontsize=8 shape=record]
+}

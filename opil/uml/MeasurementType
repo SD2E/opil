@@ -1,0 +1,9 @@
+digraph MeasurementType {
+	Identified -> MeasurementType [arrowtail=empty dir=back fontname="Bitstream Vera Sans" fontsize=8]
+	Identified [label="{Identified|}" fontname="Bitstream Vera Sans" fontsize=8 shape=record]
+	MeasurementType -> Measure [label="min_interval [0..*]" arrowhead=vee arrowtail=odiamond dir=both fontname="Bitstream Vera Sans" fontsize=8]
+	Measure [label="{Measure|}" fontname="Bitstream Vera Sans" fontsize=8 shape=record]
+	MeasurementType -> TimeInterval [label="allowed_time [0..*]" arrowhead=vee arrowtail=diamond dir=both fontname="Bitstream Vera Sans" fontsize=8]
+	TimeInterval [label="{TimeInterval|}" fontname="Bitstream Vera Sans" fontsize=8 shape=record]
+	MeasurementType [label="{MeasurementType|min_count [0..*]: integer\lmax_count [0..*]: integer\lrequired [0..*]: boolean\ltype [0..*]: anyURI\l}" fontname="Bitstream Vera Sans" fontsize=8 shape=record]
+}

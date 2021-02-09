@@ -1,0 +1,7 @@
+digraph StringValue {
+	ParameterValue -> StringValue [arrowtail=empty dir=back fontname="Bitstream Vera Sans" fontsize=8]
+	ParameterValue [label="{ParameterValue|}" fontname="Bitstream Vera Sans" fontsize=8 shape=record]
+	StringValue -> Parameter [label="value_of [0..*]" arrowhead=vee arrowtail=odiamond dir=both fontname="Bitstream Vera Sans" fontsize=8]
+	Parameter [label="{Parameter|}" fontname="Bitstream Vera Sans" fontsize=8 shape=record]
+	StringValue [label="{StringValue|value [0..1]: string\l}" fontname="Bitstream Vera Sans" fontsize=8 shape=record]
+}
