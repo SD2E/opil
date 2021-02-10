@@ -153,7 +153,7 @@ class Query():
     OWL = rdflib.URIRef('http://www.w3.org/2002/07/owl#')
     RDF = rdflib.URIRef('http://www.w3.org/1999/02/22-rdf-syntax-ns#')
     SBOL = rdflib.URIRef('http://sbols.org/v2#')
-    OPIL = rdflib.URIRef('http://bbn.com/synbio/opil#')
+    OPIL = rdflib.URIRef('http://bioprotocols.org/opil/v1#')
     graph = rdflib.Graph()
     graph.parse(posixpath.join(os.path.dirname(os.path.realpath(__file__)), 'rdf/opil.ttl'), format ='ttl')
     graph.parse(posixpath.join(os.path.dirname(os.path.realpath(__file__)), 'rdf/sbol3.ttl'), format ='ttl')

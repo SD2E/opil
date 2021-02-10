@@ -25,7 +25,7 @@ class TestOpil(unittest.TestCase):
         doc = Document()
         protocol = ProtocolInterface('protocol')
         p = Parameter('param')
-        p.__dict__['name'] = TextProperty(p, 'http://bbn.com/synbio/opil#name', 0, inf)
+        p.__dict__['name'] = TextProperty(p, 'http://bioprotocols.org/opil/v1#name', 0, inf)
         p.name = ['foo', 'bar']
         protocol.has_parameter = [p]
         doc.add(protocol)
