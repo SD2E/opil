@@ -538,7 +538,12 @@ opil:ProtocolInterface rdf:type owl:Class ;
 ###  http://bioprotocols.org/opil/v1#SampleSet
 opil:SampleSet rdf:type owl:Class ;
                rdfs:subClassOf sbol:CombinatorialDerivation ,
-                               owl:Thing ;
+                               owl:Thing ,
+                               [ rdf:type owl:Restriction ;
+                                 owl:onProperty opil:replicates ;
+                                 owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+                                 owl:maxCardinality "1"^^xsd:nonNegativeInteger
+                               ] ; 
                rdfs:label "Sample set" .
 
 
