@@ -10,7 +10,7 @@
 @prefix MathM: <http://www.w3.org/1998/Math/MathML> .
 @base <http://bbn.com/synbio/opil> .
 
-<http://bbn.com/synbio/opil> rdf:type owl:Ontology ;
+<http://bioprotocols.org/opil/v1> rdf:type owl:Ontology ;
                               owl:imports <http://sbols.org/v3> ,
                                           om: ;
                               rdfs:comment "This is the Open Protocol Interface Languge (OPIL) ontology." ;
@@ -35,6 +35,13 @@ xsd:anySimpleType rdf:type rdfs:Datatype .
 #################################################################
 #    Object Properties
 #################################################################
+
+###  http://bioprotocols.org/opil/v1#allowedSample
+opil:allowedSample rdf:type owl:ObjectProperty ;
+                   rdfs:domain opil:ProtocolInterface ;
+                   rdfs:range opil:SampleSet ;
+                   rdfs:label "allowed samples" .
+
 
 ###  http://bioprotocols.org/opil/v1#allowedTime
 opil:allowedTime rdf:type owl:ObjectProperty ;
