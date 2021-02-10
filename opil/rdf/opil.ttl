@@ -295,6 +295,7 @@ opil:BooleanValue rdf:type owl:Class ;
                                   ] ,
                                   [ rdf:type owl:Restriction ;
                                     owl:onProperty opil:value ;
+                                    owl:minCardinality "1"^^xsd:nonNegativeInteger ;
                                     owl:maxCardinality "1"^^xsd:nonNegativeInteger
                                   ] ;
                   rdfs:label "Boolean value" .
@@ -377,6 +378,7 @@ opil:IntegerValue rdf:type owl:Class ;
                                   ] ,
                                   [ rdf:type owl:Restriction ;
                                     owl:onProperty opil:value ;
+                                    owl:minCardinality "1"^^xsd:nonNegativeInteger ;
                                     owl:maxCardinality "1"^^xsd:nonNegativeInteger
                                   ] ;
                   rdfs:label "Integer value" .
@@ -417,6 +419,7 @@ opil:MeasureValue rdf:type owl:Class ;
                                   ] ,
                                   [ rdf:type owl:Restriction ;
                                     owl:onProperty opil:hasMeasure ;
+                                    owl:minCardinality "1"^^xsd:nonNegativeInteger ;
                                     owl:maxCardinality "1"^^xsd:nonNegativeInteger
                                   ] ;
                   rdfs:label "Measure value" .
@@ -511,6 +514,7 @@ opil:ParameterValue rdf:type owl:Class ;
                                     ] ,
                                     [ rdf:type owl:Restriction ;
                                       owl:onProperty opil:valueOf ;
+                                      owl:minCardinality "1"^^xsd:nonNegativeInteger ;
                                       owl:maxCardinality "1"^^xsd:nonNegativeInteger
                                     ] ;
                     rdfs:comment "Parameter values are holders for the values for a parmeter" ;
@@ -550,6 +554,7 @@ opil:StringValue rdf:type owl:Class ;
                                  ] ,
                                  [ rdf:type owl:Restriction ;
                                    owl:onProperty opil:value ;
+                                   owl:minCardinality "1"^^xsd:nonNegativeInteger ;
                                    owl:maxCardinality "1"^^xsd:nonNegativeInteger
                                  ] ;
                  rdfs:label "String value" .
@@ -590,6 +595,7 @@ opil:URIValue rdf:type owl:Class ;
                               ] ,
                               [ rdf:type owl:Restriction ;
                                 owl:onProperty opil:value ;
+                                owl:minCardinality "1"^^xsd:nonNegativeInteger ;
                                 owl:maxCardinality "1"^^xsd:nonNegativeInteger
                               ] ;
               rdfs:label "URIValue" .
