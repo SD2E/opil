@@ -84,22 +84,14 @@ class OPILFactory():
             # Initialize associative properties
             for property_uri in associative_properties:
                 property_name = Query.query_label(property_uri).replace(' ', '_')
-                cardinality = Query.query_cardinality(property_uri, CLASS_URI)
-                if len(cardinality):
-                    upper_bound = 1
-                else:
-                    upper_bound = inf
-                self.__dict__[property_name] = sbol.ReferencedObject(self, property_uri, 0, upper_bound)
+                lower_bound, upper_bound = Query.query_cardinality(property_uri, CLASS_URI)
+                self.__dict__[property_name] = sbol.ReferencedObject(self, property_uri, lower_bound, upper_bound)
 
             # Initialize compositional properties
             for property_uri in compositional_properties:
                 property_name = Query.query_label(property_uri).replace(' ', '_')
-                cardinality = Query.query_cardinality(property_uri, CLASS_URI)
-                if len(cardinality):
-                    upper_bound = 1
-                else:
-                    upper_bound = inf
-                self.__dict__[property_name] = sbol.OwnedObject(self, property_uri, 0, upper_bound)
+                lower_bound, upper_bound = Query.query_cardinality(property_uri, CLASS_URI)
+                self.__dict__[property_name] = sbol.OwnedObject(self, property_uri, lower_bound, upper_bound)
 
             # Initialize datatype properties
             property_uris = Query.query_datatype_properties(CLASS_URI)
@@ -114,20 +106,15 @@ class OPILFactory():
                     raise
 
                 # Get the cardinality of this datatype property
-                cardinality = Query.query_cardinality(property_uri, CLASS_URI)
-                if len(cardinality):
-                    upper_bound = 1
-                else:
-                    upper_bound = inf
-
+                lower_bound, upper_bound = Query.query_cardinality(property_uri, CLASS_URI)
                 if datatypes[0] == 'http://www.w3.org/2001/XMLSchema#string':
-                    self.__dict__[property_name] = sbol.TextProperty(self, property_uri, 0, upper_bound)
+                    self.__dict__[property_name] = sbol.TextProperty(self, property_uri, lower_bound, upper_bound)
                 elif datatypes[0] == 'http://www.w3.org/2001/XMLSchema#int':
-                    self.__dict__[property_name] = sbol.IntProperty(self, property_uri, 0, upper_bound)                    
+                    self.__dict__[property_name] = sbol.IntProperty(self, property_uri, lower_bound, upper_bound)                    
                 elif datatypes[0] == 'http://www.w3.org/2001/XMLSchema#boolean':
-                    self.__dict__[property_name] = sbol.BooleanProperty(self, property_uri, 0, upper_bound)
+                    self.__dict__[property_name] = sbol.BooleanProperty(self, property_uri, lower_bound, upper_bound)
                 elif datatypes[0] == 'http://www.w3.org/2001/XMLSchema#anyURI':
-                    self.__dict__[property_name] = sbol.URIProperty(self, property_uri, 0, upper_bound)
+                    self.__dict__[property_name] = sbol.URIProperty(self, property_uri, lower_bound, upper_bound)
 
         # Instantiate metaclass
         attribute_dict = {}
@@ -145,10 +132,8 @@ class OPILFactory():
                 datatype = sbol.utils.parse_class_name(datatype[0])
             else:
                 datatype = None
-            # cardinality = Query.query_cardinality(property_uri, rdf_type)
-            # if len(cardinality):
-            #     datatype = f'list of {datatype}'
-            log += f'\t{property_name}\t{datatype}\n'
+            lower_bound, upper_bound = Query.query_cardinality(property_uri, CLASS_URI)
+            log += f'\t{property_name}\t{datatype}\t{lower_bound}\t{upper_bound}\n'
         property_uris = Query.query_datatype_properties(CLASS_URI)
         for property_uri in property_uris:
             property_name = Query.query_label(property_uri).replace(' ', '_')
@@ -157,7 +142,8 @@ class OPILFactory():
                 datatype = sbol.utils.parse_class_name(datatype[0])
             else:
                 datatype = None
-            cardinality = Query.query_cardinality(property_uri, CLASS_URI)            
+            lower_bound, upper_bound = Query.query_cardinality(property_uri, CLASS_URI)            
+            log += f'\t{property_name}\t{datatype}\t{lower_bound}\t{upper_bound}\n'
 
         return log
 
@@ -166,7 +152,7 @@ class Query():
     OWL = rdflib.URIRef('http://www.w3.org/2002/07/owl#')
     RDF = rdflib.URIRef('http://www.w3.org/1999/02/22-rdf-syntax-ns#')
     SBOL = rdflib.URIRef('http://sbols.org/v2#')
-    OPIL = rdflib.URIRef('http://bbn.com/synbio/opil#')
+    OPIL = rdflib.URIRef('http://bioprotocols.org/opil/v1#')
     graph = rdflib.Graph()
     graph.parse(posixpath.join(os.path.dirname(os.path.realpath(__file__)), 'rdf/opil.ttl'), format ='ttl')
     graph.parse(posixpath.join(os.path.dirname(os.path.realpath(__file__)), 'rdf/sbol3.ttl'), format ='ttl')
@@ -344,23 +330,33 @@ class Query():
 
     @staticmethod
     def query_cardinality(property_uri, class_uri):
+        # The OPIL ontology does not explicitly specify cardinality restrictions
+        # for every property, so some assumptions about defaults must be made
+        lower_bound = 0
+        upper_bound = inf
         query = '''
             SELECT distinct ?cardinality
             WHERE 
-            {{
+            {{{{
                 <{}> rdfs:subClassOf ?restriction .
                 ?restriction rdf:type owl:Restriction .
                 ?restriction owl:onProperty <{}> .
-                ?restriction owl:maxCardinality ?cardinality .
-            }}
+                ?restriction {{}} ?cardinality .
+            }}}}
             '''.format(class_uri, property_uri)
-        response = Query.graph.query(query)
+        response = Query.graph.query(query.format('owl:minCardinality'))
         response = [str(row[0]) for row in response]
-        cardinality = response
-        return cardinality
+        if len(response):
+            lower_bound = int(response[0])
+        response = Query.graph.query(query.format('owl:maxCardinality'))
+        response = [str(row[0]) for row in response]
+        if len(response):
+            upper_bound = int(response[0])
+        return (lower_bound, upper_bound)
 
     @staticmethod
     def query_property_datatype(property_uri, class_uri):
+        # Check for a restriction first on a specific property of a specific class
         query = '''
             SELECT distinct ?datatype
             WHERE 
@@ -374,7 +370,12 @@ class Query():
         response = Query.graph.query(query)
         response = [str(row[0]) for row in response]
         datatypes = response
-
+        if len(datatypes) > 1:
+            raise Exception(f'Conflicting owl:allValuesFrom restrictions found for values of {property_uri} property')
+        if len(datatypes) == 1:
+            return datatypes
+        # If no restrictions are found, then search for ranges.
+        # Ranges are more permissive, so more than one can range for a property can be found
         query = '''
             SELECT distinct ?datatype
             WHERE 
@@ -385,13 +386,11 @@ class Query():
             '''.format(property_uri, class_uri, property_uri)    
         response = Query.graph.query(query)
         response = [str(row[0]) for row in response]
-        datatypes.extend(response)
-        datatypes = list(set(datatypes))
-        #if len(datatypes) == 0:
-        #    logging.warn(f'{property_uri} datatype is undefined')
-        #if len(datatypes) > 1:
-        #    logging.warn(f'{property_uri} has more than one datatype')
-        return list(set(datatypes))
+        if len(datatypes) > 1:
+            raise Exception(f'Multiple ranges found for {property_uri} property. '
+                            'Please specify owl:allValuesFrom restrictions for each domain class')
+        datatypes = response
+        return datatypes
 
     @staticmethod
     def query_label(property_uri):
@@ -416,3 +415,4 @@ log = ''
 for class_uri in Query.query_classes():
     log += OPILFactory.generate(class_uri)
 OPILFactory.__doc__ = log
+print(log)

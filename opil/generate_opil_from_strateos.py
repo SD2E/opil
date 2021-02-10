@@ -209,7 +209,7 @@ class StrateosOpilGenerator():
                 # If the default value is a number, not a string,
                 # then use the opil:pureNumber Unit instance
                 value = default_value
-                unit_iri = 'http://bbn.com/synbio/opil#pureNumber'
+                unit_iri = 'http://bioprotocols.org/opil/v1#pureNumber'
             measure_name = id_string + '_default_measure'
             measure = sbol3.Measure(value, unit_iri, identity=measure_name)
             default_instance.has_measure = measure

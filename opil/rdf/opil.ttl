@@ -1,16 +1,16 @@
-@prefix : <http://bbn.com/synbio/opil#> .
+@prefix : <http://bioprotocols.org/opil/v1#> .
 @prefix om: <http://www.ontology-of-units-of-measure.org/resource/om-2/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix xml: <http://www.w3.org/XML/1998/namespace> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-@prefix opil: <http://bbn.com/synbio/opil#> .
+@prefix opil: <http://bioprotocols.org/opil/v1#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix sbol: <http://sbols.org/v3#> .
 @prefix MathM: <http://www.w3.org/1998/Math/MathML> .
 @base <http://bbn.com/synbio/opil> .
 
-<http://bbn.com/synbio/opil> rdf:type owl:Ontology ;
+<http://bioprotocols.org/opil/v1> rdf:type owl:Ontology ;
                               owl:imports <http://sbols.org/v3> ,
                                           om: ;
                               rdfs:comment "This is the Open Protocol Interface Languge (OPIL) ontology." ;
@@ -36,7 +36,14 @@ xsd:anySimpleType rdf:type rdfs:Datatype .
 #    Object Properties
 #################################################################
 
-###  http://bbn.com/synbio/opil#allowedTime
+###  http://bioprotocols.org/opil/v1#allowedSample
+opil:allowedSample rdf:type owl:ObjectProperty ;
+                   rdfs:domain opil:ProtocolInterface ;
+                   rdfs:range opil:SampleSet ;
+                   rdfs:label "allowed samples" .
+
+
+###  http://bioprotocols.org/opil/v1#allowedTime
 opil:allowedTime rdf:type owl:ObjectProperty ;
                  rdfs:subPropertyOf opil:compositionalProperty ;
                  rdfs:domain opil:MeasurementType ;
@@ -44,11 +51,11 @@ opil:allowedTime rdf:type owl:ObjectProperty ;
                  rdfs:label "allowed time" .
 
 
-###  http://bbn.com/synbio/opil#compositionalProperty
+###  http://bioprotocols.org/opil/v1#compositionalProperty
 opil:compositionalProperty rdf:type owl:ObjectProperty .
 
 
-###  http://bbn.com/synbio/opil#defaultValue
+###  http://bioprotocols.org/opil/v1#defaultValue
 opil:defaultValue rdf:type owl:ObjectProperty ;
                   rdfs:subPropertyOf opil:compositionalProperty ;
                   rdfs:domain opil:Parameter ;
@@ -56,7 +63,7 @@ opil:defaultValue rdf:type owl:ObjectProperty ;
                   rdfs:label "default value" .
 
 
-###  http://bbn.com/synbio/opil#hasMeasure
+###  http://bioprotocols.org/opil/v1#hasMeasure
 opil:hasMeasure rdf:type owl:ObjectProperty ;
                 rdfs:subPropertyOf opil:compositionalProperty ;
                 rdfs:domain opil:ParameterValue ;
@@ -64,7 +71,7 @@ opil:hasMeasure rdf:type owl:ObjectProperty ;
                 rdfs:label "has measure" .
 
 
-###  http://bbn.com/synbio/opil#hasMeasurement
+###  http://bioprotocols.org/opil/v1#hasMeasurement
 opil:hasMeasurement rdf:type owl:ObjectProperty ;
                     rdfs:subPropertyOf opil:compositionalProperty ;
                     rdfs:domain opil:ExperimentalRequest ;
@@ -72,7 +79,7 @@ opil:hasMeasurement rdf:type owl:ObjectProperty ;
                     rdfs:label "measurements" .
 
 
-###  http://bbn.com/synbio/opil#hasParameter
+###  http://bioprotocols.org/opil/v1#hasParameter
 opil:hasParameter rdf:type owl:ObjectProperty ;
                   rdfs:subPropertyOf opil:compositionalProperty ;
                   rdfs:domain opil:ProtocolInterface ;
@@ -80,7 +87,7 @@ opil:hasParameter rdf:type owl:ObjectProperty ;
                   rdfs:label "has parameter" .
 
 
-###  http://bbn.com/synbio/opil#hasParameterValue
+###  http://bioprotocols.org/opil/v1#hasParameterValue
 opil:hasParameterValue rdf:type owl:ObjectProperty ;
                        rdfs:subPropertyOf opil:compositionalProperty ;
                        rdfs:domain opil:ExperimentalRequest ;
@@ -89,29 +96,24 @@ opil:hasParameterValue rdf:type owl:ObjectProperty ;
                        rdfs:label "has parameter value" .
 
 
-###  http://bbn.com/synbio/opil#hasValue
+###  http://bioprotocols.org/opil/v1#hasValue
 opil:hasValue rdf:type owl:ObjectProperty ;
               owl:inverseOf opil:valueOf ;
               rdfs:comment "" ;
               rdfs:label "has value" .
 
 
-###  http://bbn.com/synbio/opil#instanceOf
+###  http://bioprotocols.org/opil/v1#instanceOf
 opil:instanceOf rdf:type owl:ObjectProperty ;
                 rdfs:domain opil:ExperimentalRequest ;
+                rdfs:domain opil:Measurement ;
                 rdfs:range opil:ProtocolInterface ;
+                rdfs:range opil:MeasurementType ;
                 rdfs:comment "" ;
                 rdfs:label "instance of" .
 
 
-###  http://bbn.com/synbio/opil#instanceOfMeasurementType
-opil:instanceOfMeasurementType rdf:type owl:ObjectProperty ;
-                               rdfs:domain opil:Measurement ;
-                               rdfs:range opil:Measurement ;
-                               rdfs:label "instance of" .
-
-
-###  http://bbn.com/synbio/opil#maxMeasure
+###  http://bioprotocols.org/opil/v1#maxMeasure
 opil:maxMeasure rdf:type owl:ObjectProperty ;
                 rdfs:subPropertyOf opil:compositionalProperty ;
                 rdfs:domain opil:MeasureParameter ;
@@ -119,7 +121,7 @@ opil:maxMeasure rdf:type owl:ObjectProperty ;
                 rdfs:label "max measure" .
 
 
-###  http://bbn.com/synbio/opil#maxTime
+###  http://bioprotocols.org/opil/v1#maxTime
 opil:maxTime rdf:type owl:ObjectProperty ;
              rdfs:subPropertyOf opil:compositionalProperty ;
              rdfs:domain opil:TimeInterval ;
@@ -127,15 +129,7 @@ opil:maxTime rdf:type owl:ObjectProperty ;
              rdfs:label "max time" .
 
 
-###  http://bbn.com/synbio/opil#measurement
-opil:measurement rdf:type owl:ObjectProperty ;
-                 rdfs:subPropertyOf opil:compositionalProperty ;
-                 rdfs:domain opil:SampleSet ;
-                 rdfs:range opil:Measurement ;
-                 rdfs:label "measurement" .
-
-
-###  http://bbn.com/synbio/opil#minInterval
+###  http://bioprotocols.org/opil/v1#minInterval
 opil:minInterval rdf:type owl:ObjectProperty ;
                  rdfs:subPropertyOf opil:compositionalProperty ;
                  rdfs:domain opil:MeasurementType ;
@@ -143,7 +137,7 @@ opil:minInterval rdf:type owl:ObjectProperty ;
                  rdfs:label "min interval" .
 
 
-###  http://bbn.com/synbio/opil#minMeasure
+###  http://bioprotocols.org/opil/v1#minMeasure
 opil:minMeasure rdf:type owl:ObjectProperty ;
                 rdfs:subPropertyOf opil:compositionalProperty ;
                 rdfs:domain opil:MeasureParameter ;
@@ -151,7 +145,7 @@ opil:minMeasure rdf:type owl:ObjectProperty ;
                 rdfs:label "min measure" .
 
 
-###  http://bbn.com/synbio/opil#minTime
+###  http://bioprotocols.org/opil/v1#minTime
 opil:minTime rdf:type owl:ObjectProperty ;
              rdfs:subPropertyOf opil:compositionalProperty ;
              rdfs:domain opil:TimeInterval ;
@@ -159,7 +153,7 @@ opil:minTime rdf:type owl:ObjectProperty ;
              rdfs:label "min time" .
 
 
-###  http://bbn.com/synbio/opil#protocolMeasurementType
+###  http://bioprotocols.org/opil/v1#protocolMeasurementType
 opil:protocolMeasurementType rdf:type owl:ObjectProperty ;
                              rdfs:subPropertyOf opil:compositionalProperty ;
                              rdfs:domain opil:ProtocolInterface ;
@@ -167,7 +161,7 @@ opil:protocolMeasurementType rdf:type owl:ObjectProperty ;
                              rdfs:label "protocol measurement type" .
 
 
-###  http://bbn.com/synbio/opil#sampleSet
+###  http://bioprotocols.org/opil/v1#sampleSet
 opil:sampleSet rdf:type owl:ObjectProperty ;
                rdfs:subPropertyOf opil:compositionalProperty ;
                rdfs:domain opil:ExperimentalRequest ;
@@ -175,7 +169,7 @@ opil:sampleSet rdf:type owl:ObjectProperty ;
                rdfs:label "sample set" .
 
 
-###  http://bbn.com/synbio/opil#time
+###  http://bioprotocols.org/opil/v1#time
 opil:time rdf:type owl:ObjectProperty ;
           rdfs:subPropertyOf opil:compositionalProperty ;
           rdfs:domain opil:Measurement ;
@@ -183,7 +177,7 @@ opil:time rdf:type owl:ObjectProperty ;
           rdfs:label "time" .
 
 
-###  http://bbn.com/synbio/opil#valueOf
+###  http://bioprotocols.org/opil/v1#valueOf
 opil:valueOf rdf:type owl:ObjectProperty ;
              rdfs:domain opil:ParameterValue ;
              rdfs:range opil:Parameter ;
@@ -194,14 +188,14 @@ opil:valueOf rdf:type owl:ObjectProperty ;
 #    Data properties
 #################################################################
 
-###  http://bbn.com/synbio/opil#allowedValue
+###  http://bioprotocols.org/opil/v1#allowedValue
 opil:allowedValue rdf:type owl:DatatypeProperty ;
                   rdfs:domain opil:EnumeratedParameter ;
                   rdfs:comment "" ;
                   rdfs:label "allowed value" .
 
 
-###  http://bbn.com/synbio/opil#index
+###  http://bioprotocols.org/opil/v1#index
 opil:index rdf:type owl:DatatypeProperty ;
            rdfs:domain opil:ParameterValue ;
            rdfs:range xsd:integer ;
@@ -209,56 +203,56 @@ opil:index rdf:type owl:DatatypeProperty ;
            rdfs:label "index" .
 
 
-###  http://bbn.com/synbio/opil#list
+###  http://bioprotocols.org/opil/v1#list
 opil:list rdf:type owl:DatatypeProperty ;
           rdfs:domain opil:Parameter ;
           rdfs:range xsd:boolean ;
           rdfs:label "list" .
 
 
-###  http://bbn.com/synbio/opil#maxCount
+###  http://bioprotocols.org/opil/v1#maxCount
 opil:maxCount rdf:type owl:DatatypeProperty ;
               rdfs:domain opil:MeasurementType ;
               rdfs:range xsd:integer ;
               rdfs:label "max count" .
 
 
-###  http://bbn.com/synbio/opil#maxValue
+###  http://bioprotocols.org/opil/v1#maxValue
 opil:maxValue rdf:type owl:DatatypeProperty ;
               rdfs:domain opil:IntegerParameter ;
               rdfs:range xsd:integer ;
               rdfs:label "max value" .
 
 
-###  http://bbn.com/synbio/opil#minCount
+###  http://bioprotocols.org/opil/v1#minCount
 opil:minCount rdf:type owl:DatatypeProperty ;
               rdfs:domain opil:MeasurementType ;
               rdfs:range xsd:integer ;
               rdfs:label "min count" .
 
 
-###  http://bbn.com/synbio/opil#minValue
+###  http://bioprotocols.org/opil/v1#minValue
 opil:minValue rdf:type owl:DatatypeProperty ;
               rdfs:domain opil:IntegerParameter ;
               rdfs:range xsd:integer ;
               rdfs:label "min value" .
 
 
-###  http://bbn.com/synbio/opil#name
+###  http://bioprotocols.org/opil/v1#name
 opil:name rdf:type owl:DatatypeProperty ;
           rdfs:range xsd:string ;
           rdfs:comment "Entities might be required to have a name that could be distinct from rdfs:label" ;
           rdfs:label "name" .
 
 
-###  http://bbn.com/synbio/opil#replicates
+###  http://bioprotocols.org/opil/v1#replicates
 opil:replicates rdf:type owl:DatatypeProperty ;
                 rdfs:domain opil:SampleSet ;
                 rdfs:range xsd:integer ;
                 rdfs:label "replicates" .
 
 
-###  http://bbn.com/synbio/opil#required
+###  http://bioprotocols.org/opil/v1#required
 opil:required rdf:type owl:DatatypeProperty ;
               rdfs:domain opil:MeasurementType ,
                           opil:Parameter ;
@@ -266,21 +260,21 @@ opil:required rdf:type owl:DatatypeProperty ;
               rdfs:label "required" .
 
 
-###  http://bbn.com/synbio/opil#type
+###  http://bioprotocols.org/opil/v1#type
 opil:type rdf:type owl:DatatypeProperty ;
           rdfs:domain opil:MeasurementType ;
           rdfs:range xsd:anyURI ;
           rdfs:label "type" .
 
 
-###  http://bbn.com/synbio/opil#uri
+###  http://bioprotocols.org/opil/v1#uri
 opil:uri rdf:type owl:DatatypeProperty ;
          rdfs:range xsd:anyURI ;
          rdfs:comment "Intended to represent SynBioHub URIs" ;
          rdfs:label "uri" .
 
 
-###  http://bbn.com/synbio/opil#value
+###  http://bioprotocols.org/opil/v1#value
 opil:value rdf:type owl:DatatypeProperty ;
            rdfs:range xsd:anySimpleType ;
            rdfs:label "value" .
@@ -290,13 +284,13 @@ opil:value rdf:type owl:DatatypeProperty ;
 #    Classes
 #################################################################
 
-###  http://bbn.com/synbio/opil#BooleanParameter
+###  http://bioprotocols.org/opil/v1#BooleanParameter
 opil:BooleanParameter rdf:type owl:Class ;
                       rdfs:subClassOf opil:Parameter ;
                       rdfs:label "Boolean parameter" .
 
 
-###  http://bbn.com/synbio/opil#BooleanValue
+###  http://bioprotocols.org/opil/v1#BooleanValue
 opil:BooleanValue rdf:type owl:Class ;
                   rdfs:subClassOf opil:ParameterValue ,
                                   [ rdf:type owl:Restriction ;
@@ -309,12 +303,13 @@ opil:BooleanValue rdf:type owl:Class ;
                                   ] ,
                                   [ rdf:type owl:Restriction ;
                                     owl:onProperty opil:value ;
+                                    owl:minCardinality "1"^^xsd:nonNegativeInteger ;
                                     owl:maxCardinality "1"^^xsd:nonNegativeInteger
                                   ] ;
                   rdfs:label "Boolean value" .
 
 
-###  http://bbn.com/synbio/opil#EnumeratedParameter
+###  http://bioprotocols.org/opil/v1#EnumeratedParameter
 opil:EnumeratedParameter rdf:type owl:Class ;
                          rdfs:subClassOf opil:Parameter ,
                                          [ rdf:type owl:Restriction ;
@@ -324,7 +319,7 @@ opil:EnumeratedParameter rdf:type owl:Class ;
                          rdfs:label "Enumerated parameter" .
 
 
-###  http://bbn.com/synbio/opil#EnumeratedValue
+###  http://bioprotocols.org/opil/v1#EnumeratedValue
 opil:EnumeratedValue rdf:type owl:Class ;
                      rdfs:subClassOf opil:ParameterValue ,
                                      [ rdf:type owl:Restriction ;
@@ -333,23 +328,30 @@ opil:EnumeratedValue rdf:type owl:Class ;
                                      ] ,
                                      [ rdf:type owl:Restriction ;
                                        owl:onProperty opil:value ;
+                                       owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+                                       owl:maxCardinality "1"^^xsd:nonNegativeInteger
+                                     ] ,
+                                     [ rdf:type owl:Restriction ;
+                                       owl:onProperty opil:value ;
                                        owl:allValuesFrom xsd:string
                                      ] ;
                      rdfs:label "Enumerated value" .
 
 
-###  http://bbn.com/synbio/opil#ExperimentalRequest
+###  http://bioprotocols.org/opil/v1#ExperimentalRequest
 opil:ExperimentalRequest rdf:type owl:Class ;
                          rdfs:subClassOf sbol:TopLevel ,
                                          owl:Thing ,
                                          [ rdf:type owl:Restriction ;
                                            owl:onProperty opil:instanceOf ;
-                                           owl:maxCardinality "1"^^xsd:nonNegativeInteger
+                                           owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+                                           owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+                                           owl:allValuesFrom opil:ProtocolInterface
                                          ] ;
                          rdfs:label "Experimental request" .
 
 
-###  http://bbn.com/synbio/opil#IntegerParameter
+###  http://bioprotocols.org/opil/v1#IntegerParameter
 opil:IntegerParameter rdf:type owl:Class ;
                       rdfs:subClassOf opil:Parameter ,
                                       [ rdf:type owl:Restriction ;
@@ -371,7 +373,7 @@ opil:IntegerParameter rdf:type owl:Class ;
                       rdfs:label "Integer parameter" .
 
 
-###  http://bbn.com/synbio/opil#IntegerValue
+###  http://bioprotocols.org/opil/v1#IntegerValue
 opil:IntegerValue rdf:type owl:Class ;
                   rdfs:subClassOf opil:ParameterValue ,
                                   [ rdf:type owl:Restriction ;
@@ -384,12 +386,13 @@ opil:IntegerValue rdf:type owl:Class ;
                                   ] ,
                                   [ rdf:type owl:Restriction ;
                                     owl:onProperty opil:value ;
+                                    owl:minCardinality "1"^^xsd:nonNegativeInteger ;
                                     owl:maxCardinality "1"^^xsd:nonNegativeInteger
                                   ] ;
                   rdfs:label "Integer value" .
 
 
-###  http://bbn.com/synbio/opil#MeasureParameter
+###  http://bioprotocols.org/opil/v1#MeasureParameter
 opil:MeasureParameter rdf:type owl:Class ;
                       rdfs:subClassOf opil:Parameter ,
                                       [ rdf:type owl:Restriction ;
@@ -411,7 +414,7 @@ opil:MeasureParameter rdf:type owl:Class ;
                       rdfs:label "Measure parameter" .
 
 
-###  http://bbn.com/synbio/opil#MeasureValue
+###  http://bioprotocols.org/opil/v1#MeasureValue
 opil:MeasureValue rdf:type owl:Class ;
                   rdfs:subClassOf opil:ParameterValue ,
                                   [ rdf:type owl:Restriction ;
@@ -424,69 +427,68 @@ opil:MeasureValue rdf:type owl:Class ;
                                   ] ,
                                   [ rdf:type owl:Restriction ;
                                     owl:onProperty opil:hasMeasure ;
+                                    owl:minCardinality "1"^^xsd:nonNegativeInteger ;
                                     owl:maxCardinality "1"^^xsd:nonNegativeInteger
                                   ] ;
                   rdfs:label "Measure value" .
 
 
-###  http://bbn.com/synbio/opil#Measurement
+###  http://bioprotocols.org/opil/v1#Measurement
 opil:Measurement rdf:type owl:Class ;
                  rdfs:subClassOf sbol:Identified ,
                                  owl:Thing ,
                                  [ rdf:type owl:Restriction ;
-                                   owl:onProperty opil:instanceOfMeasurementType ;
-                                   owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                                   owl:onClass opil:MeasurementType
-                                 ] ,
-                                 [ rdf:type owl:Restriction ;
-                                   owl:onProperty opil:instanceOfMeasurementType ;
-                                   owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                                   owl:onClass opil:MeasurementType
+                                   owl:onProperty opil:instanceOf ;
+                                   owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+                                   owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+                                   owl:allValuesFrom opil:MeasurementType ;
                                  ] ;
                  rdfs:label "Measurement" .
 
 
-###  http://bbn.com/synbio/opil#MeasurementType
+###  http://bioprotocols.org/opil/v1#MeasurementType
 opil:MeasurementType rdf:type owl:Class ;
                      rdfs:subClassOf sbol:Identified ,
                                      owl:Thing ,
                                      [ rdf:type owl:Restriction ;
+                                       owl:onProperty opil:minInterval ;
+                                       owl:minCardinality "0"^^xsd:nonNegativeInteger ;
+                                       owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+                                       owl:onClass opil:TimeInterval
+                                     ] ,
+                                     [ rdf:type owl:Restriction ;
                                        owl:onProperty opil:allowedTime ;
-                                       owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                       owl:minCardinality "0"^^xsd:nonNegativeInteger ;
                                        owl:onClass opil:TimeInterval
                                      ] ,
                                      [ rdf:type owl:Restriction ;
                                        owl:onProperty opil:maxCount ;
-                                       owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                       owl:minCardinality "0"^^xsd:nonNegativeInteger ;
+                                       owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
                                        owl:onDataRange xsd:integer
                                      ] ,
                                      [ rdf:type owl:Restriction ;
                                        owl:onProperty opil:minCount ;
-                                       owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                       owl:minCardinality "0"^^xsd:nonNegativeInteger ;
+                                       owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
                                        owl:onDataRange xsd:integer
                                      ] ,
                                      [ rdf:type owl:Restriction ;
                                        owl:onProperty opil:required ;
-                                       owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                       owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+                                       owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
                                        owl:onDataRange xsd:boolean
                                      ] ,
                                      [ rdf:type owl:Restriction ;
                                        owl:onProperty opil:type ;
-                                       owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                       owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+                                       owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
                                        owl:onDataRange xsd:anyURI
                                      ] ;
                      rdfs:label "Measurement type" .
 
 
-###  http://bbn.com/synbio/opil#Media
-opil:Media rdf:type owl:Class ;
-           rdfs:subClassOf sbol:Component ,
-                           owl:Thing ;
-           rdfs:comment "Media instances have a string value (such as a name) and could also have SynBioHub URI" ;
-           rdfs:label "Media" .
-
-
-###  http://bbn.com/synbio/opil#Parameter
+###  http://bioprotocols.org/opil/v1#Parameter
 opil:Parameter rdf:type owl:Class ;
                rdfs:subClassOf sbol:Identified ,
                                owl:Thing ,
@@ -510,7 +512,7 @@ opil:Parameter rdf:type owl:Class ;
                rdfs:label "Parameter" .
 
 
-###  http://bbn.com/synbio/opil#ParameterValue
+###  http://bioprotocols.org/opil/v1#ParameterValue
 opil:ParameterValue rdf:type owl:Class ;
                     rdfs:subClassOf sbol:Identified ,
                                     owl:Thing ,
@@ -520,41 +522,39 @@ opil:ParameterValue rdf:type owl:Class ;
                                     ] ,
                                     [ rdf:type owl:Restriction ;
                                       owl:onProperty opil:valueOf ;
+                                      owl:minCardinality "1"^^xsd:nonNegativeInteger ;
                                       owl:maxCardinality "1"^^xsd:nonNegativeInteger
                                     ] ;
                     rdfs:comment "Parameter values are holders for the values for a parmeter" ;
                     rdfs:label "Parameter value" .
 
 
-###  http://bbn.com/synbio/opil#ProtocolInterface
+###  http://bioprotocols.org/opil/v1#ProtocolInterface
 opil:ProtocolInterface rdf:type owl:Class ;
                        rdfs:subClassOf sbol:TopLevel ,
                                        owl:Thing ;
                        rdfs:label "Protocol Interface" .
 
 
-###  http://bbn.com/synbio/opil#SampleSet
+###  http://bioprotocols.org/opil/v1#SampleSet
 opil:SampleSet rdf:type owl:Class ;
                rdfs:subClassOf sbol:CombinatorialDerivation ,
-                               owl:Thing ;
+                               owl:Thing ,
+                               [ rdf:type owl:Restriction ;
+                                 owl:onProperty opil:replicates ;
+                                 owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+                                 owl:maxCardinality "1"^^xsd:nonNegativeInteger
+                               ] ; 
                rdfs:label "Sample set" .
 
 
-###  http://bbn.com/synbio/opil#Strain
-opil:Strain rdf:type owl:Class ;
-            rdfs:subClassOf sbol:Component ,
-                            owl:Thing ;
-            rdfs:comment "Strains have URIs pointing to SynBioHub instances. This is equivalent to owl:sameAs." ;
-            rdfs:label "Strain" .
-
-
-###  http://bbn.com/synbio/opil#StringParameter
+###  http://bioprotocols.org/opil/v1#StringParameter
 opil:StringParameter rdf:type owl:Class ;
                      rdfs:subClassOf opil:Parameter ;
                      rdfs:label "String parameter" .
 
 
-###  http://bbn.com/synbio/opil#StringValue
+###  http://bioprotocols.org/opil/v1#StringValue
 opil:StringValue rdf:type owl:Class ;
                  rdfs:subClassOf opil:ParameterValue ,
                                  [ rdf:type owl:Restriction ;
@@ -567,12 +567,13 @@ opil:StringValue rdf:type owl:Class ;
                                  ] ,
                                  [ rdf:type owl:Restriction ;
                                    owl:onProperty opil:value ;
+                                   owl:minCardinality "1"^^xsd:nonNegativeInteger ;
                                    owl:maxCardinality "1"^^xsd:nonNegativeInteger
                                  ] ;
                  rdfs:label "String value" .
 
 
-###  http://bbn.com/synbio/opil#TimeInterval
+###  http://bioprotocols.org/opil/v1#TimeInterval
 opil:TimeInterval rdf:type owl:Class ;
                   rdfs:subClassOf sbol:Identified ,
                                   owl:Thing ,
@@ -588,13 +589,13 @@ opil:TimeInterval rdf:type owl:Class ;
                                   ] .
 
 
-###  http://bbn.com/synbio/opil#URIParameter
+###  http://bioprotocols.org/opil/v1#URIParameter
 opil:URIParameter rdf:type owl:Class ;
                   rdfs:subClassOf opil:Parameter ;
                   rdfs:label "URIParameter" .
 
 
-###  http://bbn.com/synbio/opil#URIValue
+###  http://bioprotocols.org/opil/v1#URIValue
 opil:URIValue rdf:type owl:Class ;
               rdfs:subClassOf opil:ParameterValue ,
                               [ rdf:type owl:Restriction ;
@@ -607,6 +608,7 @@ opil:URIValue rdf:type owl:Class ;
                               ] ,
                               [ rdf:type owl:Restriction ;
                                 owl:onProperty opil:value ;
+                                owl:minCardinality "1"^^xsd:nonNegativeInteger ;
                                 owl:maxCardinality "1"^^xsd:nonNegativeInteger
                               ] ;
               rdfs:label "URIValue" .
@@ -628,47 +630,11 @@ om:RankineScale rdfs:subClassOf om:Function .
 #    Individuals
 #################################################################
 
-###  http://bbn.com/synbio/opil#pureNumber
+###  http://bioprotocols.org/opil/v1#pureNumber
 opil:pureNumber rdf:type owl:NamedIndividual ,
                          om:Unit ;
                 rdfs:comment "A unit type for Measures that are pure numbers, that is, do not have units. If the OM ontology provides such a unit, it cannot be readily found. A blank label is provided for convienence." ;
                 rdfs:label ""@en .
 
-
-[ owl:maxCardinality "1"^^xsd:nonNegativeInteger
-] .
-
-[ owl:maxCardinality "1"^^xsd:nonNegativeInteger
- ] .
-
-[ owl:maxCardinality "1"^^xsd:nonNegativeInteger
- ] .
-
-[ owl:maxCardinality "1"^^xsd:nonNegativeInteger
- ] .
-
-[ owl:maxCardinality "1"^^xsd:nonNegativeInteger
- ] .
-
-[ owl:maxCardinality "1"^^xsd:nonNegativeInteger
- ] .
-
-[ owl:maxCardinality "1"^^xsd:nonNegativeInteger
- ] .
-
-[ owl:maxCardinality "1"^^xsd:nonNegativeInteger
- ] .
-
-[ owl:maxCardinality "1"^^xsd:nonNegativeInteger
- ] .
-
-[ owl:maxCardinality "1"^^xsd:nonNegativeInteger
- ] .
-
-[ owl:maxCardinality "1"^^xsd:nonNegativeInteger
- ] .
-
-[ owl:maxCardinality "1"^^xsd:nonNegativeInteger
- ] .
 
 ###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi

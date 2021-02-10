@@ -31,7 +31,7 @@ class JsonLdWriter:
         # Define contexts
         context = {'@timeseries': 'http://bbn.com/synbio/sd2/timeseries#',
                    '@ncit': 'http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#',
-                   '@opil': 'http://bbn.com/synbio/opil#',
+                   '@opil': 'http://bioprotocols.org/opil/v1#',
                    '@om' : 'http://www.ontology-of-units-of-measure.org/resource/om-2/',
                    '@rdfs' : 'http://www.w3.org/2000/01/rdf-schema#',
                    '@abox' : 'http://bbn.com/synbio/sd2/abox#',
