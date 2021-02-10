@@ -389,7 +389,7 @@ class Query():
         if len(datatypes) > 1:
             raise Exception(f'Multiple ranges found for {property_uri} property. '
                             'Please specify owl:allValuesFrom restrictions for each domain class')
-
+        datatypes = response
         return datatypes
 
     @staticmethod
