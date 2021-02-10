@@ -324,6 +324,11 @@ opil:EnumeratedValue rdf:type owl:Class ;
                                      ] ,
                                      [ rdf:type owl:Restriction ;
                                        owl:onProperty opil:value ;
+                                       owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+                                       owl:maxCardinality "1"^^xsd:nonNegativeInteger
+                                     ] ,
+                                     [ rdf:type owl:Restriction ;
+                                       owl:onProperty opil:value ;
                                        owl:allValuesFrom xsd:string
                                      ] ;
                      rdfs:label "Enumerated value" .
