@@ -434,12 +434,12 @@ opil:Measurement rdf:type owl:Class ;
                                  owl:Thing ,
                                  [ rdf:type owl:Restriction ;
                                    owl:onProperty opil:instanceOfMeasurementType ;
-                                   owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                   owl:minCardinality "1"^^xsd:nonNegativeInteger ;
                                    owl:onClass opil:MeasurementType
                                  ] ,
                                  [ rdf:type owl:Restriction ;
                                    owl:onProperty opil:instanceOfMeasurementType ;
-                                   owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                   owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
                                    owl:onClass opil:MeasurementType
                                  ] ;
                  rdfs:label "Measurement" .
@@ -451,27 +451,27 @@ opil:MeasurementType rdf:type owl:Class ;
                                      owl:Thing ,
                                      [ rdf:type owl:Restriction ;
                                        owl:onProperty opil:allowedTime ;
-                                       owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                       owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
                                        owl:onClass opil:TimeInterval
                                      ] ,
                                      [ rdf:type owl:Restriction ;
                                        owl:onProperty opil:maxCount ;
-                                       owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                       owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
                                        owl:onDataRange xsd:integer
                                      ] ,
                                      [ rdf:type owl:Restriction ;
                                        owl:onProperty opil:minCount ;
-                                       owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                       owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
                                        owl:onDataRange xsd:integer
                                      ] ,
                                      [ rdf:type owl:Restriction ;
                                        owl:onProperty opil:required ;
-                                       owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                       owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
                                        owl:onDataRange xsd:boolean
                                      ] ,
                                      [ rdf:type owl:Restriction ;
                                        owl:onProperty opil:type ;
-                                       owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                       owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
                                        owl:onDataRange xsd:anyURI
                                      ] ;
                      rdfs:label "Measurement type" .
@@ -561,12 +561,12 @@ opil:TimeInterval rdf:type owl:Class ;
                                   owl:Thing ,
                                   [ rdf:type owl:Restriction ;
                                     owl:onProperty opil:maxTime ;
-                                    owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                    owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
                                     owl:onClass om:Measure
                                   ] ,
                                   [ rdf:type owl:Restriction ;
                                     owl:onProperty opil:minTime ;
-                                    owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                    owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
                                     owl:onClass om:Measure
                                   ] .
 
