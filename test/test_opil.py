@@ -167,7 +167,7 @@ class TestOpil(unittest.TestCase):
         m.instance_of = mt
         self.assertEqual(m.instance_of, mt.identity)
         self.assertEqual(type(mt.type), str)  # Confirm value is a string not list of characters
-        mt.allowed_time = TimeInterval()
+        mt.allowed_time = [TimeInterval()]
         mt.allowed_time.min_time = Measure(0, 'http://www.ontology-of-units-of-measure.org/resource/om-2#minute')
         mt.allowed_time.max_time = Measure(60,'http://www.ontology-of-units-of-measure.org/resource/om-2#minute')
         mt.minimum_interval = Measure(0.1, 'http://www.ontology-of-units-of-measure.org/resource/om-2#minute')

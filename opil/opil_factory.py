@@ -132,10 +132,8 @@ class OPILFactory():
                 datatype = sbol.utils.parse_class_name(datatype[0])
             else:
                 datatype = None
-            # cardinality = Query.query_cardinality(property_uri, rdf_type)
-            # if len(cardinality):
-            #     datatype = f'list of {datatype}'
-            log += f'\t{property_name}\t{datatype}\n'
+            lower_bound, upper_bound = Query.query_cardinality(property_uri, CLASS_URI)
+            log += f'\t{property_name}\t{datatype}\t{lower_bound}\t{upper_bound}\n'
         property_uris = Query.query_datatype_properties(CLASS_URI)
         for property_uri in property_uris:
             property_name = Query.query_label(property_uri).replace(' ', '_')
@@ -145,6 +143,7 @@ class OPILFactory():
             else:
                 datatype = None
             lower_bound, upper_bound = Query.query_cardinality(property_uri, CLASS_URI)            
+            log += f'\t{property_name}\t{datatype}\t{lower_bound}\t{upper_bound}\n'
 
         return log
 
@@ -412,3 +411,4 @@ log = ''
 for class_uri in Query.query_classes():
     log += OPILFactory.generate(class_uri)
 OPILFactory.__doc__ = log
+print(log)
