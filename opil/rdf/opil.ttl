@@ -126,14 +126,6 @@ opil:maxTime rdf:type owl:ObjectProperty ;
              rdfs:label "max time" .
 
 
-###  http://bbn.com/synbio/opil#measurement
-opil:measurement rdf:type owl:ObjectProperty ;
-                 rdfs:subPropertyOf opil:compositionalProperty ;
-                 rdfs:domain opil:SampleSet ;
-                 rdfs:range opil:Measurement ;
-                 rdfs:label "measurement" .
-
-
 ###  http://bbn.com/synbio/opil#minInterval
 opil:minInterval rdf:type owl:ObjectProperty ;
                  rdfs:subPropertyOf opil:compositionalProperty ;
