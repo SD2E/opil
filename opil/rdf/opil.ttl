@@ -447,27 +447,37 @@ opil:MeasurementType rdf:type owl:Class ;
                      rdfs:subClassOf sbol:Identified ,
                                      owl:Thing ,
                                      [ rdf:type owl:Restriction ;
-                                       owl:onProperty opil:allowedTime ;
+                                       owl:onProperty opil:minInterval ;
+                                       owl:minCardinality "0"^^xsd:nonNegativeInteger ;
                                        owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
                                        owl:onClass opil:TimeInterval
                                      ] ,
                                      [ rdf:type owl:Restriction ;
+                                       owl:onProperty opil:allowedTime ;
+                                       owl:minCardinality "0"^^xsd:nonNegativeInteger ;
+                                       owl:onClass opil:TimeInterval
+                                     ] ,
+                                     [ rdf:type owl:Restriction ;
                                        owl:onProperty opil:maxCount ;
+                                       owl:minCardinality "0"^^xsd:nonNegativeInteger ;
                                        owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
                                        owl:onDataRange xsd:integer
                                      ] ,
                                      [ rdf:type owl:Restriction ;
                                        owl:onProperty opil:minCount ;
+                                       owl:minCardinality "0"^^xsd:nonNegativeInteger ;
                                        owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
                                        owl:onDataRange xsd:integer
                                      ] ,
                                      [ rdf:type owl:Restriction ;
                                        owl:onProperty opil:required ;
+                                       owl:minCardinality "1"^^xsd:nonNegativeInteger ;
                                        owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
                                        owl:onDataRange xsd:boolean
                                      ] ,
                                      [ rdf:type owl:Restriction ;
                                        owl:onProperty opil:type ;
+                                       owl:minCardinality "1"^^xsd:nonNegativeInteger ;
                                        owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
                                        owl:onDataRange xsd:anyURI
                                      ] ;
