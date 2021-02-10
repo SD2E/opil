@@ -477,14 +477,6 @@ opil:MeasurementType rdf:type owl:Class ;
                      rdfs:label "Measurement type" .
 
 
-###  http://bbn.com/synbio/opil#Media
-opil:Media rdf:type owl:Class ;
-           rdfs:subClassOf sbol:Component ,
-                           owl:Thing ;
-           rdfs:comment "Media instances have a string value (such as a name) and could also have SynBioHub URI" ;
-           rdfs:label "Media" .
-
-
 ###  http://bbn.com/synbio/opil#Parameter
 opil:Parameter rdf:type owl:Class ;
                rdfs:subClassOf sbol:Identified ,
@@ -537,14 +529,6 @@ opil:SampleSet rdf:type owl:Class ;
                rdfs:subClassOf sbol:CombinatorialDerivation ,
                                owl:Thing ;
                rdfs:label "Sample set" .
-
-
-###  http://bbn.com/synbio/opil#Strain
-opil:Strain rdf:type owl:Class ;
-            rdfs:subClassOf sbol:Component ,
-                            owl:Thing ;
-            rdfs:comment "Strains have URIs pointing to SynBioHub instances. This is equivalent to owl:sameAs." ;
-            rdfs:label "Strain" .
 
 
 ###  http://bbn.com/synbio/opil#StringParameter
