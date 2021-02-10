@@ -98,16 +98,11 @@ opil:hasValue rdf:type owl:ObjectProperty ;
 ###  http://bioprotocols.org/opil/v1#instanceOf
 opil:instanceOf rdf:type owl:ObjectProperty ;
                 rdfs:domain opil:ExperimentalRequest ;
+                rdfs:domain opil:Measurement ;
                 rdfs:range opil:ProtocolInterface ;
+                rdfs:range opil:MeasurementType ;
                 rdfs:comment "" ;
                 rdfs:label "instance of" .
-
-
-###  http://bioprotocols.org/opil/v1#instanceOfMeasurementType
-opil:instanceOfMeasurementType rdf:type owl:ObjectProperty ;
-                               rdfs:domain opil:Measurement ;
-                               rdfs:range opil:Measurement ;
-                               rdfs:label "instance of" .
 
 
 ###  http://bioprotocols.org/opil/v1#maxMeasure
@@ -340,7 +335,9 @@ opil:ExperimentalRequest rdf:type owl:Class ;
                                          owl:Thing ,
                                          [ rdf:type owl:Restriction ;
                                            owl:onProperty opil:instanceOf ;
-                                           owl:maxCardinality "1"^^xsd:nonNegativeInteger
+                                           owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+                                           owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+                                           owl:allValuesFrom opil:ProtocolInterface
                                          ] ;
                          rdfs:label "Experimental request" .
 
@@ -430,14 +427,10 @@ opil:Measurement rdf:type owl:Class ;
                  rdfs:subClassOf sbol:Identified ,
                                  owl:Thing ,
                                  [ rdf:type owl:Restriction ;
-                                   owl:onProperty opil:instanceOfMeasurementType ;
+                                   owl:onProperty opil:instanceOf ;
                                    owl:minCardinality "1"^^xsd:nonNegativeInteger ;
-                                   owl:onClass opil:MeasurementType
-                                 ] ,
-                                 [ rdf:type owl:Restriction ;
-                                   owl:onProperty opil:instanceOfMeasurementType ;
                                    owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
-                                   owl:onClass opil:MeasurementType
+                                   owl:allValuesFrom opil:MeasurementType ;
                                  ] ;
                  rdfs:label "Measurement" .
 
