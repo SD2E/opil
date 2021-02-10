@@ -356,6 +356,7 @@ class Query():
 
     @staticmethod
     def query_property_datatype(property_uri, class_uri):
+        # Check for a restriction first on a specific property of a specific class
         query = '''
             SELECT distinct ?datatype
             WHERE 
@@ -369,7 +370,12 @@ class Query():
         response = Query.graph.query(query)
         response = [str(row[0]) for row in response]
         datatypes = response
-
+        if len(datatypes) > 1:
+            raise Exception(f'Conflicting owl:allValuesFrom restrictions found for values of {property_uri} property')
+        if len(datatypes) == 1:
+            return datatypes
+        # If no restrictions are found, then search for ranges.
+        # Ranges are more permissive, so more than one can range for a property can be found
         query = '''
             SELECT distinct ?datatype
             WHERE 
@@ -380,13 +386,11 @@ class Query():
             '''.format(property_uri, class_uri, property_uri)    
         response = Query.graph.query(query)
         response = [str(row[0]) for row in response]
-        datatypes.extend(response)
-        datatypes = list(set(datatypes))
-        #if len(datatypes) == 0:
-        #    logging.warn(f'{property_uri} datatype is undefined')
-        #if len(datatypes) > 1:
-        #    logging.warn(f'{property_uri} has more than one datatype')
-        return list(set(datatypes))
+        if len(datatypes) > 1:
+            raise Exception(f'Multiple ranges found for {property_uri} property. '
+                            'Please specify owl:allValuesFrom restrictions for each domain class')
+
+        return datatypes
 
     @staticmethod
     def query_label(property_uri):
