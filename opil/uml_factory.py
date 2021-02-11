@@ -127,14 +127,12 @@ class OPILFactory():
             if len(associative_properties) != len(set(associative_properties)):
                 print(f'{property_uri} is found more than once')
             property_name = Query.query_label(property_uri).replace(' ', '_')
-            cardinality = Query.query_cardinality(property_uri, class_uri)
-            if len(cardinality):
-                upper_bound = '1'
-            else:
+            lower_bound, upper_bound = Query.query_cardinality(property_uri, class_uri)
+            if upper_bound == inf:
                 upper_bound = '*'
             object_class = Query.query_range(property_uri)
             object_class = sbol.utils.parse_class_name(object_class)
-            arrow_label = f'{property_name} [0..{upper_bound}]'
+            arrow_label = f'{property_name} [{lower_bound}..{upper_bound}]'
             OPILFactory.create_association(dot, class_name, object_class, arrow_label)
             # self.__dict__[property_name] = sbol.ReferencedObject(self, property_uri, 0, upper_bound)
 
@@ -144,13 +142,12 @@ class OPILFactory():
                 print(f'{property_uri} is found more than once')
             property_name = Query.query_label(property_uri).replace(' ', '_')
             cardinality = Query.query_cardinality(property_uri, class_uri)
-            if len(cardinality):
-                upper_bound = '1'
-            else:
+            lower_bound, upper_bound = Query.query_cardinality(property_uri, class_uri)
+            if upper_bound == inf:
                 upper_bound = '*'
             object_class = Query.query_range(property_uri)
             object_class = sbol.utils.parse_class_name(object_class)
-            arrow_label = f'{property_name} [0..{upper_bound}]'
+            arrow_label = f'{property_name} [{lower_bound}..{upper_bound}]'
             OPILFactory.create_composition(dot, class_name, object_class, arrow_label)
 
         # Initialize datatype properties
@@ -164,14 +161,11 @@ class OPILFactory():
             if len(datatypes) > 1:  # This might indicate an error in the ontology
                 raise
             # Get the cardinality of this datatype property
-            cardinality = Query.query_cardinality(property_uri, class_uri)
-            if len(cardinality):
-                upper_bound = '1'
-            else:
+            lower_bound, upper_bound = Query.query_cardinality(property_uri, class_uri)
+            if upper_bound == inf:
                 upper_bound = '*'
-
             datatype = sbol.utils.parse_class_name(datatypes[0])
-            label += f'{property_name} [0..{upper_bound}]: {datatype}\\l'
+            label += f'{property_name} [{lower_bound}..{upper_bound}]: {datatype}\\l'
         label = '{' + label + '}'  # graphviz syntax for record-style label
         return label
 
@@ -208,7 +202,7 @@ class OPILFactory():
                 upper_bound = '1'
             else:
                 upper_bound = '*'
-            object_class = Query.query_range(property_uri)
+            object_class = Query.query_property_datatype(property_uri, CLASS_URI)[0]
             object_class = sbol.utils.parse_class_name(object_class)
             arrow_label = f'{property_name} [0..{upper_bound}]'
             OPILFactory.create_association(dot, CLASS_NAME, object_class, arrow_label)
@@ -224,7 +218,7 @@ class OPILFactory():
                 upper_bound = '1'
             else:
                 upper_bound = '*'
-            object_class = Query.query_range(property_uri)
+            object_class = Query.query_property_datatype(property_uri, CLASS_URI)[0]
             object_class = sbol.utils.parse_class_name(object_class)
             arrow_label = f'{property_name} [0..{upper_bound}]'
             OPILFactory.create_composition(dot, CLASS_NAME, object_class, arrow_label)
@@ -260,7 +254,7 @@ class Query():
     OWL = rdflib.URIRef('http://www.w3.org/2002/07/owl#')
     RDF = rdflib.URIRef('http://www.w3.org/1999/02/22-rdf-syntax-ns#')
     SBOL = rdflib.URIRef('http://sbols.org/v2#')
-    OPIL = rdflib.URIRef('http://bbn.com/synbio/opil#')
+    OPIL = rdflib.URIRef('http://bioprotocols.org/opil/v1#')
     graph = rdflib.Graph()
     graph.parse(posixpath.join(os.path.dirname(os.path.realpath(__file__)), 'rdf/opil.ttl'), format ='ttl')
     graph.parse(posixpath.join(os.path.dirname(os.path.realpath(__file__)), 'rdf/sbol3.ttl'), format ='ttl')
@@ -439,23 +433,34 @@ class Query():
 
     @staticmethod
     def query_cardinality(property_uri, class_uri):
+        # The OPIL ontology does not explicitly specify cardinality restrictions
+        # for every property, so some assumptions about defaults must be made
+        lower_bound = 0
+        upper_bound = inf
         query = '''
             SELECT distinct ?cardinality
             WHERE 
-            {{
+            {{{{
                 <{}> rdfs:subClassOf ?restriction .
                 ?restriction rdf:type owl:Restriction .
                 ?restriction owl:onProperty <{}> .
-                ?restriction owl:maxCardinality ?cardinality .
-            }}
+                ?restriction {{}} ?cardinality .
+            }}}}
             '''.format(class_uri, property_uri)
-        response = Query.graph.query(query)
+        response = Query.graph.query(query.format('owl:minCardinality'))
         response = [str(row[0]) for row in response]
-        cardinality = response
-        return cardinality
+        if len(response):
+            lower_bound = int(response[0])
+        response = Query.graph.query(query.format('owl:maxCardinality'))
+        response = [str(row[0]) for row in response]
+        if len(response):
+            upper_bound = int(response[0])
+        return (lower_bound, upper_bound)
+
 
     @staticmethod
     def query_property_datatype(property_uri, class_uri):
+        # Check for a restriction first on a specific property of a specific class
         query = '''
             SELECT distinct ?datatype
             WHERE 
@@ -469,7 +474,12 @@ class Query():
         response = Query.graph.query(query)
         response = [str(row[0]) for row in response]
         datatypes = response
-
+        if len(datatypes) > 1:
+            raise Exception(f'Conflicting owl:allValuesFrom restrictions found for values of {property_uri} property')
+        if len(datatypes) == 1:
+            return datatypes
+        # If no restrictions are found, then search for ranges.
+        # Ranges are more permissive, so more than one can range for a property can be found
         query = '''
             SELECT distinct ?datatype
             WHERE 
@@ -480,13 +490,11 @@ class Query():
             '''.format(property_uri, class_uri, property_uri)    
         response = Query.graph.query(query)
         response = [str(row[0]) for row in response]
-        datatypes.extend(response)
-        datatypes = list(set(datatypes))
-        #if len(datatypes) == 0:
-        #    logging.warn(f'{property_uri} datatype is undefined')
-        #if len(datatypes) > 1:
-        #    logging.warn(f'{property_uri} has more than one datatype')
-        return list(set(datatypes))
+        if len(datatypes) > 1:
+            raise Exception(f'Multiple ranges found for {property_uri} property. '
+                            'Please specify owl:allValuesFrom restrictions for each domain class')
+        datatypes = response
+        return datatypes
 
     @staticmethod
     def query_label(property_uri):
