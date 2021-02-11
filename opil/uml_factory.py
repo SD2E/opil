@@ -165,6 +165,8 @@ class OPILFactory():
             if upper_bound == inf:
                 upper_bound = '*'
             datatype = sbol.utils.parse_class_name(datatypes[0])
+            if datatype == 'anyURI':
+                datatype = 'URI'
             label += f'{property_name} [{lower_bound}..{upper_bound}]: {datatype}\\l'
         label = '{' + label + '}'  # graphviz syntax for record-style label
         return label
@@ -197,14 +199,12 @@ class OPILFactory():
             if len(associative_properties) != len(set(associative_properties)):
                 print(f'{property_uri} is found more than once')
             property_name = Query.query_label(property_uri).replace(' ', '_')
-            cardinality = Query.query_cardinality(property_uri, CLASS_URI)
-            if len(cardinality):
-                upper_bound = '1'
-            else:
+            lower_bound, upper_bound = Query.query_cardinality(property_uri, class_uri)
+            if upper_bound == inf:
                 upper_bound = '*'
             object_class = Query.query_property_datatype(property_uri, CLASS_URI)[0]
             object_class = sbol.utils.parse_class_name(object_class)
-            arrow_label = f'{property_name} [0..{upper_bound}]'
+            arrow_label = f'{property_name} [{lower_bound}..{upper_bound}]'
             OPILFactory.create_association(dot, CLASS_NAME, object_class, arrow_label)
             # self.__dict__[property_name] = sbol.ReferencedObject(self, property_uri, 0, upper_bound)
 
@@ -213,14 +213,12 @@ class OPILFactory():
             if len(compositional_properties) != len(set(compositional_properties)):
                 print(f'{property_uri} is found more than once')
             property_name = Query.query_label(property_uri).replace(' ', '_')
-            cardinality = Query.query_cardinality(property_uri, CLASS_URI)
-            if len(cardinality):
-                upper_bound = '1'
-            else:
+            lower_bound, upper_bound = Query.query_cardinality(property_uri, class_uri)
+            if upper_bound == inf:
                 upper_bound = '*'
             object_class = Query.query_property_datatype(property_uri, CLASS_URI)[0]
             object_class = sbol.utils.parse_class_name(object_class)
-            arrow_label = f'{property_name} [0..{upper_bound}]'
+            arrow_label = f'{property_name} [{lower_bound}..{upper_bound}]'
             OPILFactory.create_composition(dot, CLASS_NAME, object_class, arrow_label)
 
         # Initialize datatype properties
@@ -234,14 +232,14 @@ class OPILFactory():
             if len(datatypes) > 1:  # This might indicate an error in the ontology
                 raise
             # Get the cardinality of this datatype property
-            cardinality = Query.query_cardinality(property_uri, CLASS_URI)
-            if len(cardinality):
-                upper_bound = '1'
-            else:
+            lower_bound, upper_bound = Query.query_cardinality(property_uri, class_uri)
+            if upper_bound == inf:
                 upper_bound = '*'
 
             datatype = sbol.utils.parse_class_name(datatypes[0])
-            label += f'{property_name} [0..{upper_bound}]: {datatype}\\l'
+            if datatype == 'anyURI':
+                datatype = 'URI'
+            label += f'{property_name} [{lower_bound}..{upper_bound}]: {datatype}\\l'
         label = '{' + label + '}'  # graphviz syntax for record-style label
         OPILFactory.create_uml_record(dot, CLASS_NAME, label)
         if not dot_graph:
