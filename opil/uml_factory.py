@@ -17,7 +17,19 @@ class OPILFactory():
     __doc__ = ''  # Documentation string
 
     @staticmethod
-    def create_uml_record(dot_graph, class_name, label):
+    def make_qname(class_uri):
+        class_name = sbol.utils.parse_class_name(class_uri)
+        prefix = ''
+        if str(Query.SBOL) in class_uri:
+            prefix = 'sbol:'
+        elif str(Query.OM) in class_uri:
+            prefix = 'om:'
+        qname = prefix + class_name
+        return qname
+
+    @staticmethod
+    def create_uml_record(dot_graph, class_uri, label):
+        class_name = sbol.utils.parse_class_name(class_uri)
         node_format = {
             'label' : None,
             'fontname' : 'Bitstream Vera Sans',
@@ -28,7 +40,9 @@ class OPILFactory():
         dot_graph.node(class_name, **node_format)
 
     @staticmethod
-    def create_association(dot_graph, subject_class, object_class, label):
+    def create_association(dot_graph, subject_uri, object_uri, label):
+        subject_class = sbol.utils.parse_class_name(subject_uri)
+        object_class = sbol.utils.parse_class_name(object_uri)
         association_relationship = {
                 'label' : None,
                 'arrowtail' : 'odiamond',
@@ -39,10 +53,13 @@ class OPILFactory():
             } 
         association_relationship['label'] = label
         dot_graph.edge(subject_class, object_class, **association_relationship)
-        label = '{' + object_class + '|}'
-        OPILFactory.create_uml_record(dot_graph, object_class, label)
+        qname = OPILFactory.make_qname(object_uri)
+        label = '{' + qname + '|}'
+        OPILFactory.create_uml_record(dot_graph, object_uri, label)
 
-    def create_composition(dot_graph, subject_class, object_class, label):
+    def create_composition(dot_graph, subject_uri, object_uri, label):
+        subject_class = sbol.utils.parse_class_name(subject_uri)
+        object_class = sbol.utils.parse_class_name(object_uri)
         composition_relationship = {
                 'label' : None,
                 'arrowtail' : 'diamond',
@@ -53,10 +70,13 @@ class OPILFactory():
             } 
         composition_relationship['label'] = label
         dot_graph.edge(subject_class, object_class, **composition_relationship)
-        label = '{' + object_class + '|}'
-        OPILFactory.create_uml_record(dot_graph, object_class, label)
+        qname = OPILFactory.make_qname(object_uri)
+        label = '{' + qname + '|}'
+        OPILFactory.create_uml_record(dot_graph, object_uri, label)
 
-    def create_inheritance(dot_graph, superclass, subclass):
+    def create_inheritance(dot_graph, superclass_uri, subclass_uri):
+        superclass = sbol.utils.parse_class_name(superclass_uri)
+        subclass = sbol.utils.parse_class_name(subclass_uri)
         inheritance_relationship = {
                 'label' : None,
                 'arrowtail' : 'empty',
@@ -65,8 +85,9 @@ class OPILFactory():
                 'dir' : 'back'
             } 
         dot_graph.edge(superclass, subclass, **inheritance_relationship)
-        label = '{' + superclass + '|}'
-        OPILFactory.create_uml_record(dot_graph, superclass, label)
+        qname = OPILFactory.make_qname(superclass_uri)
+        label = '{' + qname + '|}'
+        OPILFactory.create_uml_record(dot_graph, superclass_uri, label)
 
     @staticmethod
     def generate(class_uri, drawing_method_callback, dot_graph=None):
@@ -95,17 +116,18 @@ class OPILFactory():
         else:
             dot = graphviz.Digraph(class_name)
 
-        label = f'{class_name}|'
+        qname = OPILFactory.make_qname(class_uri)
+        label = f'{qname}|'
         label = '{' + label + '}'  # graphviz syntax for record-style label
-        OPILFactory.create_uml_record(dot, class_name, label)
+        OPILFactory.create_uml_record(dot, class_uri, label)
 
         for uri in subclass_uris:
             subclass_name = sbol.utils.parse_class_name(uri)
-            OPILFactory.create_inheritance(dot, class_name, subclass_name)
+            OPILFactory.create_inheritance(dot, class_uri, uri)
             #label = f'{subclass_name}|'
             #label = '{' + label + '}'  # graphviz syntax for record-style label
             label = OPILFactory.label_properties(uri)
-            OPILFactory.create_uml_record(dot, subclass_name, label)
+            OPILFactory.create_uml_record(dot, uri, label)
 
         if not dot_graph:
             source = graphviz.Source(dot.source.replace('\\\\', '\\'))
@@ -115,7 +137,9 @@ class OPILFactory():
     @staticmethod
     def label_properties(class_uri):
         class_name = sbol.utils.parse_class_name(class_uri)
-        label = f'{class_name}|'
+        qname = OPILFactory.make_qname(class_uri)
+        label = f'{qname}|'
+
         # Object properties can be either compositional or associative
         property_uris = Query.query_object_properties(class_uri)
         compositional_properties = Query.query_compositional_properties(class_uri)
@@ -130,10 +154,9 @@ class OPILFactory():
             lower_bound, upper_bound = Query.query_cardinality(property_uri, class_uri)
             if upper_bound == inf:
                 upper_bound = '*'
-            object_class = Query.query_range(property_uri)
-            object_class = sbol.utils.parse_class_name(object_class)
+            object_class_uri = Query.query_range(property_uri)
             arrow_label = f'{property_name} [{lower_bound}..{upper_bound}]'
-            OPILFactory.create_association(dot, class_name, object_class, arrow_label)
+            OPILFactory.create_association(dot, class_uri, object_class_uri, arrow_label)
             # self.__dict__[property_name] = sbol.ReferencedObject(self, property_uri, 0, upper_bound)
 
         # Initialize compositional properties
@@ -145,10 +168,9 @@ class OPILFactory():
             lower_bound, upper_bound = Query.query_cardinality(property_uri, class_uri)
             if upper_bound == inf:
                 upper_bound = '*'
-            object_class = Query.query_range(property_uri)
-            object_class = sbol.utils.parse_class_name(object_class)
+            object_class_uri = Query.query_range(property_uri)
             arrow_label = f'{property_name} [{lower_bound}..{upper_bound}]'
-            OPILFactory.create_composition(dot, class_name, object_class, arrow_label)
+            OPILFactory.create_composition(dot, class_uri, object_class_uri, arrow_label)
 
         # Initialize datatype properties
         property_uris = Query.query_datatype_properties(class_uri)
@@ -179,14 +201,16 @@ class OPILFactory():
         SUPERCLASS_NAME = sbol.utils.parse_class_name(superclass_uri)
 
         log = ''
-        label = f'{CLASS_NAME}|'
+        prefix = ''
+        qname = OPILFactory.make_qname(class_uri)
+        label = f'{qname}|'
 
         if dot_graph:
             dot = dot_graph
         else:
             dot = graphviz.Digraph(CLASS_NAME)
 
-        OPILFactory.create_inheritance(dot, SUPERCLASS_NAME, CLASS_NAME)
+        OPILFactory.create_inheritance(dot, superclass_uri, class_uri)
 
         # Object properties can be either compositional or associative
         property_uris = Query.query_object_properties(CLASS_URI)
@@ -202,10 +226,9 @@ class OPILFactory():
             lower_bound, upper_bound = Query.query_cardinality(property_uri, class_uri)
             if upper_bound == inf:
                 upper_bound = '*'
-            object_class = Query.query_property_datatype(property_uri, CLASS_URI)[0]
-            object_class = sbol.utils.parse_class_name(object_class)
+            object_class_uri = Query.query_property_datatype(property_uri, CLASS_URI)[0]
             arrow_label = f'{property_name} [{lower_bound}..{upper_bound}]'
-            OPILFactory.create_association(dot, CLASS_NAME, object_class, arrow_label)
+            OPILFactory.create_association(dot, class_uri, object_class_uri, arrow_label)
             # self.__dict__[property_name] = sbol.ReferencedObject(self, property_uri, 0, upper_bound)
 
         # Initialize compositional properties
@@ -216,10 +239,9 @@ class OPILFactory():
             lower_bound, upper_bound = Query.query_cardinality(property_uri, class_uri)
             if upper_bound == inf:
                 upper_bound = '*'
-            object_class = Query.query_property_datatype(property_uri, CLASS_URI)[0]
-            object_class = sbol.utils.parse_class_name(object_class)
+            object_class_uri = Query.query_property_datatype(property_uri, CLASS_URI)[0]
             arrow_label = f'{property_name} [{lower_bound}..{upper_bound}]'
-            OPILFactory.create_composition(dot, CLASS_NAME, object_class, arrow_label)
+            OPILFactory.create_composition(dot, class_uri, object_class_uri, arrow_label)
 
         # Initialize datatype properties
         property_uris = Query.query_datatype_properties(CLASS_URI)
@@ -241,7 +263,7 @@ class OPILFactory():
                 datatype = 'URI'
             label += f'{property_name} [{lower_bound}..{upper_bound}]: {datatype}\\l'
         label = '{' + label + '}'  # graphviz syntax for record-style label
-        OPILFactory.create_uml_record(dot, CLASS_NAME, label)
+        OPILFactory.create_uml_record(dot, class_uri, label)
         if not dot_graph:
             source = graphviz.Source(dot.source.replace('\\\\', '\\'))
             source.render(f'./uml/{CLASS_NAME}')
@@ -251,8 +273,10 @@ class Query():
     filename='sbol.rdf'
     OWL = rdflib.URIRef('http://www.w3.org/2002/07/owl#')
     RDF = rdflib.URIRef('http://www.w3.org/1999/02/22-rdf-syntax-ns#')
-    SBOL = rdflib.URIRef('http://sbols.org/v2#')
+    SBOL = rdflib.URIRef('http://sbols.org/v3#')
     OPIL = rdflib.URIRef('http://bioprotocols.org/opil/v1#')
+    OM = rdflib.URIRef('http://www.ontology-of-units-of-measure.org/resource/om-2/')
+
     graph = rdflib.Graph()
     graph.parse(posixpath.join(os.path.dirname(os.path.realpath(__file__)), 'rdf/opil.ttl'), format ='ttl')
     graph.parse(posixpath.join(os.path.dirname(os.path.realpath(__file__)), 'rdf/sbol3.ttl'), format ='ttl')
