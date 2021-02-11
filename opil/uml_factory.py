@@ -151,6 +151,7 @@ class OPILFactory():
             if len(associative_properties) != len(set(associative_properties)):
                 print(f'{property_uri} is found more than once')
             property_name = Query.query_label(property_uri).replace(' ', '_')
+            property_name = OPILFactory.make_qname(property_uri)
             lower_bound, upper_bound = Query.query_cardinality(property_uri, class_uri)
             if upper_bound == inf:
                 upper_bound = '*'
@@ -164,6 +165,7 @@ class OPILFactory():
             if len(compositional_properties) != len(set(compositional_properties)):
                 print(f'{property_uri} is found more than once')
             property_name = Query.query_label(property_uri).replace(' ', '_')
+            property_name = OPILFactory.make_qname(property_uri)
             cardinality = Query.query_cardinality(property_uri, class_uri)
             lower_bound, upper_bound = Query.query_cardinality(property_uri, class_uri)
             if upper_bound == inf:
@@ -176,6 +178,8 @@ class OPILFactory():
         property_uris = Query.query_datatype_properties(class_uri)
         for property_uri in property_uris:
             property_name = Query.query_label(property_uri).replace(' ', '_')
+            property_name = OPILFactory.make_qname(property_uri)
+
             # Get the datatype of this property
             datatypes = Query.query_property_datatype(property_uri, class_uri)
             if len(datatypes) == 0:
@@ -223,6 +227,7 @@ class OPILFactory():
             if len(associative_properties) != len(set(associative_properties)):
                 print(f'{property_uri} is found more than once')
             property_name = Query.query_label(property_uri).replace(' ', '_')
+            property_name = OPILFactory.make_qname(property_uri)
             lower_bound, upper_bound = Query.query_cardinality(property_uri, class_uri)
             if upper_bound == inf:
                 upper_bound = '*'
@@ -236,6 +241,7 @@ class OPILFactory():
             if len(compositional_properties) != len(set(compositional_properties)):
                 print(f'{property_uri} is found more than once')
             property_name = Query.query_label(property_uri).replace(' ', '_')
+            property_name = OPILFactory.make_qname(property_uri)
             lower_bound, upper_bound = Query.query_cardinality(property_uri, class_uri)
             if upper_bound == inf:
                 upper_bound = '*'
@@ -247,6 +253,8 @@ class OPILFactory():
         property_uris = Query.query_datatype_properties(CLASS_URI)
         for property_uri in property_uris:
             property_name = Query.query_label(property_uri).replace(' ', '_')
+            property_name = OPILFactory.make_qname(property_uri)
+            
             # Get the datatype of this property
             datatypes = Query.query_property_datatype(property_uri, CLASS_URI)
             if len(datatypes) == 0:
