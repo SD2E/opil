@@ -1,3 +1,4 @@
+from .opil_factory import Query
 import sbol3 as sbol
 from sbol3 import set_namespace
 from sbol3 import CombinatorialDerivation, Component, Measure, VariableFeature
@@ -254,7 +255,7 @@ class OPILFactory():
         for property_uri in property_uris:
             property_name = Query.query_label(property_uri).replace(' ', '_')
             property_name = OPILFactory.make_qname(property_uri)
-            
+
             # Get the datatype of this property
             datatypes = Query.query_property_datatype(property_uri, CLASS_URI)
             if len(datatypes) == 0:
@@ -562,15 +563,4 @@ class Query():
         object_class = response[0]
         return object_class
 
-log = ''
-for class_uri in Query.query_classes():
-    class_name = sbol.utils.parse_class_name(class_uri)
-    dot = graphviz.Digraph(class_name)
-    # dot.graph_attr['splines'] = 'ortho'
-    OPILFactory.generate(class_uri, OPILFactory.draw_class_definition, dot)
-    OPILFactory.generate(class_uri, OPILFactory.draw_abstraction_hierarchy, dot)
-    source = graphviz.Source(dot.source.replace('\\\\', '\\'))
-    source.render(f'./uml/{class_name}_definition_and_abstraction')
 
-
-OPILFactory.__doc__ = log

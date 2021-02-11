@@ -415,4 +415,3 @@ log = ''
 for class_uri in Query.query_classes():
     log += OPILFactory.generate(class_uri)
 OPILFactory.__doc__ = log
-print(log)
