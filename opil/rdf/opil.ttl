@@ -579,12 +579,12 @@ opil:TimeInterval rdf:type owl:Class ;
                                   owl:Thing ,
                                   [ rdf:type owl:Restriction ;
                                     owl:onProperty opil:maxTime ;
-                                    owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                    owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
                                     owl:onClass om:Measure
                                   ] ,
                                   [ rdf:type owl:Restriction ;
                                     owl:onProperty opil:minTime ;
-                                    owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                    owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
                                     owl:onClass om:Measure
                                   ] .
 
