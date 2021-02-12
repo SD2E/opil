@@ -14,6 +14,7 @@ class UMLFactory():
 
     def __init__(self, opil_factory, output_path):
         self.query = opil_factory.query
+        self.opil_factory = opil_factory
         for class_uri in self.query.query_classes():
             class_name = sbol.utils.parse_class_name(class_uri)
             dot = graphviz.Digraph(class_name)
@@ -25,7 +26,7 @@ class UMLFactory():
             source.render(posixpath.join(output_path, outfile))
 
     def generate(self, class_uri, drawing_method_callback, dot_graph=None):
-        if opil_factory.namespace not in class_uri:
+        if self.opil_factory.namespace not in class_uri:
             return ''
         superclass_uri = self.query.query_superclass(class_uri)
         self.generate(superclass_uri, drawing_method_callback, dot_graph)
@@ -89,8 +90,6 @@ class UMLFactory():
                 upper_bound = '*'
             object_class_uri = self.query.query_range(property_uri)
             arrow_label = f'{property_name} [{lower_bound}..{upper_bound}]'
-            create_association(dot, class_uri, object_class_uri, arrow_label)
-            # self.__dict__[property_name] = sbol.ReferencedObject(self, property_uri, 0, upper_bound)
 
         # Initialize compositional properties
         for property_uri in compositional_properties:
@@ -104,7 +103,6 @@ class UMLFactory():
                 upper_bound = '*'
             object_class_uri = self.query.query_range(property_uri)
             arrow_label = f'{property_name} [{lower_bound}..{upper_bound}]'
-            create_composition(dot, class_uri, object_class_uri, arrow_label)
 
         # Initialize datatype properties
         property_uris = self.query.query_datatype_properties(class_uri)
