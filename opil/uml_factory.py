@@ -12,7 +12,7 @@ from math import inf
 
 class UMLFactory():
 
-    def __init__(self, opil_factory):
+    def __init__(self, opil_factory, output_path):
         self.query = opil_factory.query
         for class_uri in self.query.query_classes():
             class_name = sbol.utils.parse_class_name(class_uri)
@@ -22,7 +22,7 @@ class UMLFactory():
             self.generate(class_uri, self.draw_abstraction_hierarchy, dot)
             source = graphviz.Source(dot.source.replace('\\\\', '\\'))
             outfile = f'{class_name}_abstraction_hierarchy'
-            source.render(posixpath.join(OUTPUT_PATH, outfile))
+            source.render(posixpath.join(output_path, outfile))
 
     def generate(self, class_uri, drawing_method_callback, dot_graph=None):
         if opil_factory.namespace not in class_uri:
@@ -129,8 +129,7 @@ class UMLFactory():
         label = '{' + label + '}'  # graphviz syntax for record-style label
         return label
 
-    @staticmethod
-    def draw_class_definition(class_uri, superclass_uri, dot_graph=None):
+    def draw_class_definition(self, class_uri, superclass_uri, dot_graph=None):
 
         CLASS_URI = class_uri
         CLASS_NAME = sbol.utils.parse_class_name(class_uri)
@@ -220,7 +219,6 @@ def format_qname(class_uri):
     qname = prefix + class_name
     return qname
 
-@staticmethod
 def create_uml_record(dot_graph, class_uri, label):
     class_name = sbol.utils.parse_class_name(class_uri)
     node_format = {
@@ -232,7 +230,6 @@ def create_uml_record(dot_graph, class_uri, label):
     node_format['label'] = label
     dot_graph.node(class_name, **node_format)
 
-@staticmethod
 def create_association(dot_graph, subject_uri, object_uri, label):
     subject_class = sbol.utils.parse_class_name(subject_uri)
     object_class = sbol.utils.parse_class_name(object_uri)
