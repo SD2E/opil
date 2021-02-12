@@ -21,13 +21,7 @@ Import as follows:
 import opil
 ```
 
-The OPIL data model is encoded as an ontology using the Web Ontology Language (OWL). (A Turtle serialization of the OPIL ontology can be found in the 'rdf' directory.) The module's API is dynamically generated directly from this OWL specification immediately upon import of the module into the user's Python environment. The ontology specifies the Python classes, their attributes, their types, and their cardinality. The user can print details of the data model as follows:
-
-```
-opil.help()
-```
-
-This will list the classes, their attributes, and their types. 
+The OPIL data model is encoded as an ontology using the Web Ontology Language (OWL). (A Turtle serialization of the OPIL ontology can be found in the 'rdf' directory.) The module's API is dynamically generated directly from this OWL specification immediately upon import of the module into the user's Python environment. The ontology specifies the Python classes, their attributes, their types, and their cardinality.
 
 ## Working with OPIL Documents
 
@@ -77,3 +71,48 @@ print(validation_report)
 ```
 
 This returns a `ValidationReport` object which has a boolean status field, `is_valid`, that indicates whether the `Document` is valid, and a `message` field which provides a text description of any validation issues that were identified.
+
+## Running OPIL as an executable
+
+The opil module can also be run as an executable. This provides options for displaying a summary of the data model, generating UML figures for documentation, and for prototyping data models from arbitrary ontologies besides OPIL.
+
+The basic pattern for using OPIL as an executable is as follows: 
+```
+python3 -m opil
+```
+
+This can be followed by additional flags as follows:
+```
+usage: -m [-h] [-i INPUT] [-n NAMESPACE] [-d DOCUMENTATION] [-v]
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -i INPUT, --input INPUT
+                        Input ontology
+  -n NAMESPACE, --namespace NAMESPACE
+                        Ontology namespace
+  -d DOCUMENTATION, --documentation DOCUMENTATION
+                        Output directory for UML
+  -v, --verbose         Print data model as it is generated
+```
+
+Verbose mode displays a summary of the data model. This lists each class, its properties, their datatype, and lower and upper cardinalities, as shown below.
+
+```
+MeasurementType
+---------------
+	allowed_time	TimeInterval	0	inf
+	min_interval	Measure	0	1
+	max_count	integer	0	1
+	type	anyURI	1	1
+	min_count	integer	0	1
+	required	boolean	1	1
+```
+
+### Working with arbitrary ontologies
+
+To work with arbitrary ontologies, both a file and namespace for the ontology must be provided. For example, the following usage will input the PAML ontology, display a visual summary, and generate UML diagrams in a directory called `uml`:
+
+```
+python3 -m opil -i ../paml/paml.ttl -n http://bioprotocols.org/paml# -d uml -v
+```
