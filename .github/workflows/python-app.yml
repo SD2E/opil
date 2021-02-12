@@ -34,4 +34,4 @@ jobs:
     - name: Run regression tests
       run: |
         pip install .
-        python -m unittest discover
+        python test/test_opil.py
