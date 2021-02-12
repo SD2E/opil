@@ -1,7 +1,8 @@
-from .uml_factory import Query
 from .opil_factory import OPILFactory
-
+from .uml_factory import UMLFactory
+from .query import Query
 import argparse
+import posixpath
 import os
 
 
@@ -14,36 +15,33 @@ parser.add_argument(
     help="Input ontology",
 )
 parser.add_argument(
-    "-o",
-    "--output",
-    help="Output path for files"
+    "-n",
+    "--namespace",
+    help="Ontology namespace",
+)
+parser.add_argument(
+    "-d",
+    "--documentation",
+    help="Output directory for UML"
 )
 
 # Generate a dictionary from the command-line arguments
 args_dict = vars(parser.parse_args())
+if args_dict['input'] and not args_dict['namespace']:
+    raise Exception('If specifying an input ontology, a namespace must also be specified')
 
 # Import ontology
-default_ontology = f'{MODULE_PATH}/rdf/opil.ttl'
-with open(default_ontology, 'r') as o:
-    for r in o:
-        print(r)
-
-# Print data model
-print(OPILFactory.__doc__)
+default_ontology = posixpath.join(MODULE_PATH, 'rdf/opil.ttl')
+opil_path = posixpath.join(os.path.dirname(os.path.realpath(__file__)), 'rdf/opil.ttl')
+if not args_dict['input']:
+    opil_factory = OPILFactory(opil_path, Query.OPIL, verbose=True)
+else:
+    opil_factory = OPILFactory(args_dict['input'], args_dict['namespace'], verbose=True)
 
 # Generate documentation
-if args_dict['output']:
-    OUTPUT_PATH = args_dict['output']
+if args_dict['documentation']:
+    OUTPUT_PATH = args_dict['documentation']
     if not os.path.exists(OUTPUT_PATH):
         os.mkdir(OUTPUT_PATH)
-    #for class_uri in Query.query_classes():
-        #class_name = sbol.utils.parse_class_name(class_uri)
-        #dot = graphviz.Digraph(class_name)
-        ## dot.graph_attr['splines'] = 'ortho'
-        #OPILFactory.generate(class_uri, OPILFactory.draw_class_definition, dot)
-        ## OPILFactory.generate(class_uri, OPILFactory.draw_abstraction_hierarchy, dot)
-        #source = graphviz.Source(dot.source.replace('\\\\', '\\'))
-        ## source.render(f'./uml/{class_name}_definition_and_abstraction')
-        #source.render(f'{OUTPUT_PATH}/{class_name}')
-
+    UMLFactory(opil_factory)
 
