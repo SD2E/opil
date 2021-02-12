@@ -141,7 +141,7 @@ class Query():
         response = self.graph.query(query)
         response = [str(row[0]) for row in response]
         property_types.extend(response) 
-        return property_types
+        return list(set(property_types))
 
     def query_datatype_properties(self, class_uri):
         query =     '''
