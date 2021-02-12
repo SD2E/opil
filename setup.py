@@ -14,7 +14,8 @@ setup(name='opil',
             'sparqlwrapper>=1.8.5',
             'pyshacl>=0.13.3',
             'python-dateutil>=2.8.1',
-            'requests'
+            'requests',
+            'graphviz'
       ],
       packages=['opil'],
       package_data={'opil': ['rdf/*', 'sparql/*']},

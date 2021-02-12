@@ -178,3 +178,6 @@ class TestOpil(unittest.TestCase):
         p.protocol_measurement_type = [mt]
         doc.add(e)
         doc.add(p)
+
+if __name__ == '__main__':
+    unittest.main()
