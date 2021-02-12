@@ -6,6 +6,7 @@ import graphviz
 import rdflib
 import os
 import posixpath
+import argparse
 #import logging
 from math import inf
 
@@ -20,7 +21,8 @@ class UMLFactory():
             self.generate(class_uri, self.draw_class_definition, dot)
             self.generate(class_uri, self.draw_abstraction_hierarchy, dot)
             source = graphviz.Source(dot.source.replace('\\\\', '\\'))
-            source.render(posixpath.join(OUTPUT_PATH, class_name))
+            outfile = f'{class_name}_abstraction_hierarchy'
+            source.render(posixpath.join(OUTPUT_PATH, outfile))
 
     def generate(self, class_uri, drawing_method_callback, dot_graph=None):
         if opil_factory.namespace not in class_uri:
