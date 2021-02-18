@@ -64,12 +64,12 @@ class OPILFactory():
         if verbose:
             print(docstring)
 
-    def generate(self, class_uri):
+    def generate(self, class_uri, log=''):
 
         if self.namespace not in class_uri: 
             return ''
         superclass_uri = OPILFactory.query.query_superclass(class_uri)
-        self.generate(superclass_uri)  # Recurse into superclasses
+        log += self.generate(superclass_uri, log)  # Recurse into superclasses
 
         CLASS_URI = class_uri
         CLASS_NAME = sbol.utils.parse_class_name(class_uri)
@@ -79,8 +79,8 @@ class OPILFactory():
             return ''
 
         #Logging
-        log = f'\n{CLASS_NAME}\n'
-        log += '-' * (len(log) - 2) + '\n'
+        log += f'\n{CLASS_NAME}\n'
+        log += '-' * (len(CLASS_NAME) - 2) + '\n'
 
         # Define constructor
         def __init__(self, identity=None, type_uri=CLASS_URI):
@@ -157,7 +157,6 @@ class OPILFactory():
                 datatype = None
             lower_bound, upper_bound = OPILFactory.query.query_cardinality(property_uri, CLASS_URI)            
             log += f'\t{property_name}\t{datatype}\t{lower_bound}\t{upper_bound}\n'
-
         return log
 
 class UMLFactory():
@@ -171,8 +170,11 @@ class UMLFactory():
             class_name = sbol.utils.parse_class_name(class_uri)
             dot = graphviz.Digraph(class_name)
             # dot.graph_attr['splines'] = 'ortho'
-            self.generate(class_uri, self.draw_class_definition, dot)
+
+            # Order matters here, as the label for an entity
+            # will depend on the last rendering method called
             self.generate(class_uri, self.draw_abstraction_hierarchy, dot)
+            self.generate(class_uri, self.draw_class_definition, dot)
             source = graphviz.Source(dot.source.replace('\\\\', '\\'))
             outfile = f'{class_name}_abstraction_hierarchy'
             source.render(posixpath.join(output_path, outfile))
