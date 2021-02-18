@@ -170,8 +170,11 @@ class UMLFactory():
             class_name = sbol.utils.parse_class_name(class_uri)
             dot = graphviz.Digraph(class_name)
             # dot.graph_attr['splines'] = 'ortho'
-            self.generate(class_uri, self.draw_class_definition, dot)
+
+            # Order matters here, as the label for an entity
+            # will depend on the last rendering method called
             self.generate(class_uri, self.draw_abstraction_hierarchy, dot)
+            self.generate(class_uri, self.draw_class_definition, dot)
             source = graphviz.Source(dot.source.replace('\\\\', '\\'))
             outfile = f'{class_name}_abstraction_hierarchy'
             source.render(posixpath.join(output_path, outfile))
