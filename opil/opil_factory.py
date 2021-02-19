@@ -211,12 +211,10 @@ class UMLFactory():
 
         for uri in subclass_uris:
             subclass_name = sbol.utils.parse_class_name(uri)
-            create_inheritance(dot, class_uri, uri)
-            #label = f'{subclass_name}|'
-            #label = '{' + label + '}'  # graphviz syntax for record-style label
+            #create_inheritance(dot, class_uri, uri)
             label = self.label_properties(uri)
             create_uml_record(dot, uri, label)
-
+            self.draw_class_definition(uri, class_uri, dot)
         # if not dot_graph:
         #     source = graphviz.Source(dot.source.replace('\\\\', '\\'))
         #     source.render(f'./uml/{class_name}_abstraction_hierarchy')
