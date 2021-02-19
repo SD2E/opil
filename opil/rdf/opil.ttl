@@ -66,7 +66,7 @@ opil:defaultValue rdf:type owl:ObjectProperty ;
 ###  http://bioprotocols.org/opil/v1#hasMeasure
 opil:hasMeasure rdf:type owl:ObjectProperty ;
                 rdfs:subPropertyOf opil:compositionalProperty ;
-                rdfs:domain opil:ParameterValue ;
+                rdfs:domain opil:MeasureValue ;
                 rdfs:range om:Measure ;
                 rdfs:label "has measure" .
 
@@ -295,7 +295,9 @@ opil:BooleanValue rdf:type owl:Class ;
                   rdfs:subClassOf opil:ParameterValue ,
                                   [ rdf:type owl:Restriction ;
                                     owl:onProperty opil:valueOf ;
-                                    owl:allValuesFrom opil:BooleanParameter
+                                    owl:allValuesFrom opil:BooleanParameter ;
+                                    owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+                                    owl:maxCardinality "1"^^xsd:nonNegativeInteger
                                   ] ,
                                   [ rdf:type owl:Restriction ;
                                     owl:onProperty opil:value ;
@@ -324,6 +326,8 @@ opil:EnumeratedValue rdf:type owl:Class ;
                      rdfs:subClassOf opil:ParameterValue ,
                                      [ rdf:type owl:Restriction ;
                                        owl:onProperty opil:valueOf ;
+                                       owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+                                       owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
                                        owl:allValuesFrom opil:EnumeratedParameter
                                      ] ,
                                      [ rdf:type owl:Restriction ;
@@ -378,6 +382,8 @@ opil:IntegerValue rdf:type owl:Class ;
                   rdfs:subClassOf opil:ParameterValue ,
                                   [ rdf:type owl:Restriction ;
                                     owl:onProperty opil:valueOf ;
+                                    owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+                                    owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
                                     owl:allValuesFrom opil:IntegerParameter
                                   ] ,
                                   [ rdf:type owl:Restriction ;
@@ -423,6 +429,8 @@ opil:MeasureValue rdf:type owl:Class ;
                                   ] ,
                                   [ rdf:type owl:Restriction ;
                                     owl:onProperty opil:valueOf ;
+                                    owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+                                    owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
                                     owl:allValuesFrom opil:MeasureParameter
                                   ] ,
                                   [ rdf:type owl:Restriction ;
@@ -518,10 +526,7 @@ opil:ParameterValue rdf:type owl:Class ;
                                     owl:Thing ,
                                     [ rdf:type owl:Restriction ;
                                       owl:onProperty opil:valueOf ;
-                                      owl:allValuesFrom opil:Parameter
-                                    ] ,
-                                    [ rdf:type owl:Restriction ;
-                                      owl:onProperty opil:valueOf ;
+                                      owl:allValuesFrom opil:Parameter ;
                                       owl:minCardinality "1"^^xsd:nonNegativeInteger ;
                                       owl:maxCardinality "1"^^xsd:nonNegativeInteger
                                     ] ;
@@ -559,7 +564,9 @@ opil:StringValue rdf:type owl:Class ;
                  rdfs:subClassOf opil:ParameterValue ,
                                  [ rdf:type owl:Restriction ;
                                    owl:onProperty opil:valueOf ;
-                                   owl:allValuesFrom opil:StringParameter
+                                   owl:allValuesFrom opil:StringParameter ;
+                                   owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+                                   owl:maxCardinality "1"^^xsd:nonNegativeInteger
                                  ] ,
                                  [ rdf:type owl:Restriction ;
                                    owl:onProperty opil:value ;
@@ -600,7 +607,9 @@ opil:URIValue rdf:type owl:Class ;
               rdfs:subClassOf opil:ParameterValue ,
                               [ rdf:type owl:Restriction ;
                                 owl:onProperty opil:valueOf ;
-                                owl:allValuesFrom opil:URIParameter
+                                owl:allValuesFrom opil:URIParameter ;
+                                owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+                                owl:maxCardinality "1"^^xsd:nonNegativeInteger
                               ] ,
                               [ rdf:type owl:Restriction ;
                                 owl:onProperty opil:value ;
