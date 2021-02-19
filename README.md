@@ -1,5 +1,5 @@
 # opil
-foo
+
 ![opil](https://github.com/sd2e/opil/workflows/opil/badge.svg?branch=github_actions_ci)
 
 The Open Protocol Interface Language (OPIL) is intended as a standard data model for protocol interfaces. This repository represents an initial OPIL implementation. 
