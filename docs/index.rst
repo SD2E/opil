@@ -3,8 +3,6 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Testing webhook...
-
 Welcome to OPIL documentation!
 ===================================
 The Open Protocol Interface Language (OPIL) provides a data model for cloud-lab web-APIs. 
