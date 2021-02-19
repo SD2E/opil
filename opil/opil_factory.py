@@ -238,10 +238,9 @@ class UMLFactory():
             property_name = OPILFactory.query.query_label(property_uri).replace(' ', '_')
             property_name = format_qname(property_uri)
             lower_bound, upper_bound = OPILFactory.query.query_cardinality(property_uri, class_uri)
-            if upper_bound == inf:
-                upper_bound = '*'
+            cardinality = self.label_cardinality(lower_bound, upper_bound)
             object_class_uri = OPILFactory.query.query_property_datatype(property_uri, class_uri)
-            arrow_label = f'{property_name} [{lower_bound}..{upper_bound}]'
+            arrow_label = f'{property_name} {cardinality}'
 
         # Label compositional properties
         for property_uri in compositional_properties:
@@ -251,10 +250,9 @@ class UMLFactory():
             property_name = format_qname(property_uri)
             cardinality = OPILFactory.query.query_cardinality(property_uri, class_uri)
             lower_bound, upper_bound = OPILFactory.query.query_cardinality(property_uri, class_uri)
-            if upper_bound == inf:
-                upper_bound = '*'
+            cardinality = self.label_cardinality(lower_bound, upper_bound)
             object_class_uri = OPILFactory.query.query_property_datatype(property_uri, class_uri)
-            arrow_label = f'{property_name} [{lower_bound}..{upper_bound}]'
+            arrow_label = f'{property_name} {cardinality}'
 
         # Label datatype properties
         property_uris = OPILFactory.query.query_datatype_properties(class_uri)
@@ -270,14 +268,24 @@ class UMLFactory():
                 raise
             # Get the cardinality of this datatype property
             lower_bound, upper_bound = OPILFactory.query.query_cardinality(property_uri, class_uri)
-            if upper_bound == inf:
-                upper_bound = '*'
+            cardinality = self.label_cardinality(lower_bound, upper_bound)
             datatype = sbol.utils.parse_class_name(datatypes[0])
             if datatype == 'anyURI':
                 datatype = 'URI'
-            label += f'{property_name} [{lower_bound}..{upper_bound}]: {datatype}\\l'
+            label += f'{property_name} {cardinality}: {datatype}\\l'
         label = '{' + label + '}'  # graphviz syntax for record-style label
         return label
+
+    def label_cardinality(self, lower_bound, upper_bound):
+        if upper_bound == inf:
+            upper_bound = '*'
+        if lower_bound == upper_bound:  # Most common in case of required singleton
+            cardinality = f'{upper_bound}'
+        else:
+            cardinality = f'{lower_bound}..{upper_bound}'
+        cardinality = f'[{cardinality}]'
+        return cardinality
+
 
     def draw_class_definition(self, class_uri, superclass_uri, dot_graph=None):
 
@@ -310,10 +318,9 @@ class UMLFactory():
             property_name = OPILFactory.query.query_label(property_uri).replace(' ', '_')
             property_name = format_qname(property_uri)
             lower_bound, upper_bound = OPILFactory.query.query_cardinality(property_uri, class_uri)
-            if upper_bound == inf:
-                upper_bound = '*'
+            cardinality = self.label_cardinality(lower_bound, upper_bound)
             object_class_uri = OPILFactory.query.query_property_datatype(property_uri, CLASS_URI)[0]
-            arrow_label = f'{property_name} [{lower_bound}..{upper_bound}]'
+            arrow_label = f'{property_name} {cardinality}'
             create_association(dot, class_uri, object_class_uri, arrow_label)
             # self.__dict__[property_name] = sbol.ReferencedObject(self, property_uri, 0, upper_bound)
 
@@ -324,10 +331,9 @@ class UMLFactory():
             property_name = OPILFactory.query.query_label(property_uri).replace(' ', '_')
             property_name = format_qname(property_uri)
             lower_bound, upper_bound = OPILFactory.query.query_cardinality(property_uri, class_uri)
-            if upper_bound == inf:
-                upper_bound = '*'
+            cardinality = self.label_cardinality(lower_bound, upper_bound)
             object_class_uri = OPILFactory.query.query_property_datatype(property_uri, CLASS_URI)[0]
-            arrow_label = f'{property_name} [{lower_bound}..{upper_bound}]'
+            arrow_label = f'{property_name} {cardinality}'
             create_composition(dot, class_uri, object_class_uri, arrow_label)
 
         # Initialize datatype properties
@@ -344,13 +350,11 @@ class UMLFactory():
                 raise
             # Get the cardinality of this datatype property
             lower_bound, upper_bound = OPILFactory.query.query_cardinality(property_uri, class_uri)
-            if upper_bound == inf:
-                upper_bound = '*'
-
+            cardinality = self.label_cardinality(lower_bound, upper_bound)
             datatype = sbol.utils.parse_class_name(datatypes[0])
             if datatype == 'anyURI':
                 datatype = 'URI'
-            label += f'{property_name} [{lower_bound}..{upper_bound}]: {datatype}\\l'
+            label += f'{property_name} {cardinality}: {datatype}\\l'
         label = '{' + label + '}'  # graphviz syntax for record-style label
         create_uml_record(dot, class_uri, label)
         # if not dot_graph:
