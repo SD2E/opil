@@ -2,7 +2,7 @@ from .query import Query
 from .shacl_validator import ShaclValidator
 
 import sbol3 as sbol
-from sbol3 import set_namespace
+from sbol3 import set_namespace, PYSBOL3_MISSING
 from sbol3 import CombinatorialDerivation, Component, Measure, VariableFeature
 # pySBOL extension classes are aliased because they are not present in SBOL-OWL
 from sbol3 import CustomTopLevel as TopLevel
@@ -85,7 +85,10 @@ class OPILFactory():
         # Define constructor
         def __init__(self, identity=None, type_uri=CLASS_URI):
             Base = globals()[SUPERCLASS_NAME]
-            Base.__init__(self, identity=identity, type_uri=CLASS_URI)
+            if SUPERCLASS_NAME == 'CombinatorialDerivation':
+                CombinatorialDerivation.__init__(self, identity, PYSBOL3_MISSING, type_uri=CLASS_URI)
+            else:
+                Base.__init__(self, identity=identity, type_uri=CLASS_URI)
             self.type_uri = CLASS_URI
 
             # Object properties can be either compositional or associative
