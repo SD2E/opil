@@ -12,6 +12,10 @@ TEST_FILES = os.path.join(MODULE_LOCATION, 'test_files')
 
 class TestOpil(unittest.TestCase):
 
+    @classmethod
+    def setUpClass(cls):
+        set_namespace('http://example.org')
+
     def test_valid(self):
         doc = Document()
         p = ProtocolInterface('p')
@@ -178,6 +182,19 @@ class TestOpil(unittest.TestCase):
         p.protocol_measurement_type = [mt]
         doc.add(e)
         doc.add(p)
+
+    def test_positional_arguments(self):
+        # Some SBOL core classes have positional arguments in their constructor.
+        # Instantiating OPIL subclasses of these was failing because OPIL did not
+        # support positional arguments.
+        # See issue #148
+        doc = Document()
+        template = Component('design', 'http://foo.org/bar')
+        doc.add(template)
+        sample_space = SampleSet('conditions', template)
+        sample_space.name = "HTC culture condition design"
+        doc.add(sample_space)
+        doc.read_string(doc.write_string('turtle'), 'turtle')
 
 if __name__ == '__main__':
     unittest.main()
