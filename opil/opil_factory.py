@@ -83,12 +83,12 @@ class OPILFactory():
         log += '-' * (len(CLASS_NAME) - 2) + '\n'
 
         # Define constructor
-        def __init__(self, identity=None, type_uri=CLASS_URI, **kwargs):
+        def __init__(self, identity=None, type_uri=CLASS_URI):
             Base = globals()[SUPERCLASS_NAME]
             if SUPERCLASS_NAME == 'CombinatorialDerivation':
                 CombinatorialDerivation.__init__(self, identity, PYSBOL3_MISSING, type_uri=CLASS_URI)
             else:
-                Base.__init__(self, identity, type_uri=CLASS_URI)
+                Base.__init__(self, identity=identity, type_uri=CLASS_URI)
             self.type_uri = CLASS_URI
 
             # Object properties can be either compositional or associative
