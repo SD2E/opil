@@ -435,46 +435,47 @@ def create_inheritance(dot_graph, superclass_uri, subclass_uri):
 
 MODULE_PATH = os.path.dirname(os.path.abspath(__file__))
 
-parser = argparse.ArgumentParser()
-parser.add_argument(
-    "-i",
-    "--input",
-    help="Input ontology",
-)
-parser.add_argument(
-    "-n",
-    "--namespace",
-    help="Ontology namespace",
-)
-parser.add_argument(
-    "-d",
-    "--documentation",
-    help="Output directory for UML"
-)
-parser.add_argument(
-    "-v",
-    "--verbose",
-    help="Print data model as it is generated",
-    default=False,
-    action='store_true'
-)
+# parser = argparse.ArgumentParser()
+# parser.add_argument(
+#     "-i",
+#     "--input",
+#     help="Input ontology",
+# )
+# parser.add_argument(
+#     "-n",
+#     "--namespace",
+#     help="Ontology namespace",
+# )
+# parser.add_argument(
+#     "-d",
+#     "--documentation",
+#     help="Output directory for UML"
+# )
+# parser.add_argument(
+#     "-v",
+#     "--verbose",
+#     help="Print data model as it is generated",
+#     default=False,
+#     action='store_true'
+# )
 
-# Generate a dictionary from the command-line arguments
-args_dict = vars(parser.parse_args())
-if args_dict['input'] and not args_dict['namespace']:
-    raise Exception('If specifying an input ontology, a namespace must also be specified')
+# # Generate a dictionary from the command-line arguments
+# args_dict = vars(parser.parse_args())
+# if args_dict['input'] and not args_dict['namespace']:
+#     raise Exception('If specifying an input ontology, a namespace must also be specified')
 
-# Import ontology
+# # Import ontology
 default_ontology = posixpath.join(MODULE_PATH, 'rdf/opil.ttl')
 opil_path = posixpath.join(os.path.dirname(os.path.realpath(__file__)), 'rdf/opil.ttl')
-if not args_dict['input']:
-    opil_factory = OPILFactory(opil_path, Query.OPIL, args_dict['verbose'])
-else:
-    opil_factory = OPILFactory(args_dict['input'], args_dict['namespace'], args_dict['verbose'])
+# if not args_dict['input']:
+#     opil_factory = OPILFactory(opil_path, Query.OPIL, args_dict['verbose'])
+# else:
+#     opil_factory = OPILFactory(args_dict['input'], args_dict['namespace'], args_dict['verbose'])
 
-# Generate documentation
-if args_dict['documentation']:
-    OUTPUT_PATH = args_dict['documentation']
-    if not os.path.exists(OUTPUT_PATH):
-        os.mkdir(OUTPUT_PATH)
-    UMLFactory(opil_factory, OUTPUT_PATH)
+# # Generate documentation
+# if args_dict['documentation']:
+#     OUTPUT_PATH = args_dict['documentation']
+#     if not os.path.exists(OUTPUT_PATH):
+#         os.mkdir(OUTPUT_PATH)
+#     UMLFactory(opil_factory, OUTPUT_PATH)
+opil_factory = OPILFactory(opil_path, Query.OPIL)
