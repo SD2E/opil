@@ -1,5 +1,6 @@
 from opil import *
-from sbol3 import TextProperty, Measure
+from sbol3 import set_namespace, TextProperty, Measure, Component
+from sbol_factory import ShaclValidator
 import rdflib
 
 from math import inf

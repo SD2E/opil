@@ -6,7 +6,7 @@ from setuptools import setup
 
 setup(name='opil',
       description='Open Protocol Interface Language (OPIL)',
-      version='1.0b3.post2',
+      version='1.0b4',
       install_requires=[
             'sbol3==1.0a6',
             'rdflib>=5.0.0',
@@ -14,6 +14,7 @@ setup(name='opil',
             'sparqlwrapper>=1.8.5',
             'pyshacl>=0.13.3',
             'python-dateutil>=2.8.1',
+            'sbol_factory==1.0a1',
             'requests',
             'graphviz'
       ],
