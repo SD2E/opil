@@ -2,9 +2,10 @@ from .query import Query
 from .shacl_validator import ShaclValidator
 
 import sbol3 as sbol
+
+# pySBOL extension classes are aliased because they are not present in SBOL-OWL
 from sbol3 import set_namespace, PYSBOL3_MISSING
 from sbol3 import CombinatorialDerivation, Component, Measure, VariableFeature
-# pySBOL extension classes are aliased because they are not present in SBOL-OWL
 from sbol3 import CustomTopLevel as TopLevel
 from sbol3 import CustomIdentified as Identified
 from math import inf
@@ -54,9 +55,10 @@ class OPILFactory():
 
     query = None
 
-    def __init__(self, ontology_path, ontology_namespace, verbose=False):
+    def __init__(self, module_scope, ontology_path, ontology_namespace, verbose=False):
         self.namespace = rdflib.URIRef(ontology_namespace)
         self.doc = ''
+        self.scope = module_scope
         docstring = ''
         OPILFactory.query = Query(ontology_path)
         for class_uri in OPILFactory.query.query_classes():
@@ -135,8 +137,9 @@ class OPILFactory():
         # Instantiate metaclass
         attribute_dict = {}
         attribute_dict['__init__'] = __init__
-        Class = type(CLASS_NAME, (globals()[SUPERCLASS_NAME],), attribute_dict)
+        Class = type(CLASS_NAME, (self.scope[SUPERCLASS_NAME],), attribute_dict)
         globals()[CLASS_NAME] = Class
+        self.scope[CLASS_NAME] = Class
         sbol.Document.register_builder(str(CLASS_URI), Class)
 
         # Print out properties -- this is for logging only
@@ -433,49 +436,3 @@ def create_inheritance(dot_graph, superclass_uri, subclass_uri):
     create_uml_record(dot_graph, superclass_uri, label)
 
 
-MODULE_PATH = os.path.dirname(os.path.abspath(__file__))
-
-# parser = argparse.ArgumentParser()
-# parser.add_argument(
-#     "-i",
-#     "--input",
-#     help="Input ontology",
-# )
-# parser.add_argument(
-#     "-n",
-#     "--namespace",
-#     help="Ontology namespace",
-# )
-# parser.add_argument(
-#     "-d",
-#     "--documentation",
-#     help="Output directory for UML"
-# )
-# parser.add_argument(
-#     "-v",
-#     "--verbose",
-#     help="Print data model as it is generated",
-#     default=False,
-#     action='store_true'
-# )
-
-# # Generate a dictionary from the command-line arguments
-# args_dict = vars(parser.parse_args())
-# if args_dict['input'] and not args_dict['namespace']:
-#     raise Exception('If specifying an input ontology, a namespace must also be specified')
-
-# # Import ontology
-default_ontology = posixpath.join(MODULE_PATH, 'rdf/opil.ttl')
-opil_path = posixpath.join(os.path.dirname(os.path.realpath(__file__)), 'rdf/opil.ttl')
-# if not args_dict['input']:
-#     opil_factory = OPILFactory(opil_path, Query.OPIL, args_dict['verbose'])
-# else:
-#     opil_factory = OPILFactory(args_dict['input'], args_dict['namespace'], args_dict['verbose'])
-
-# # Generate documentation
-# if args_dict['documentation']:
-#     OUTPUT_PATH = args_dict['documentation']
-#     if not os.path.exists(OUTPUT_PATH):
-#         os.mkdir(OUTPUT_PATH)
-#     UMLFactory(opil_factory, OUTPUT_PATH)
-opil_factory = OPILFactory(opil_path, Query.OPIL)
