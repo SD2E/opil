@@ -29,7 +29,7 @@ class TestOpil(unittest.TestCase):
         # Parameters are forbidden to have more than one name
         doc = Document()
         protocol = ProtocolInterface('protocol')
-        p = Parameter('param')
+        p = Parameter()
         p.__dict__['name'] = TextProperty(p, 'http://bioprotocols.org/opil/v1#name', 0, inf)
         p.name = ['foo', 'bar']
         protocol.has_parameter = [p]
@@ -45,12 +45,12 @@ class TestOpil(unittest.TestCase):
         # A Parameter with required == True must have ParameterValue specified
         doc = Document()
         protocol = ProtocolInterface('protocol')
-        p = Parameter('p')
+        p = Parameter()
         p.required = True
         protocol.has_parameter = [p]
 
         er = ExperimentalRequest('er')
-        v = ParameterValue('v')
+        v = ParameterValue()
         er.has_parameter_value = [v]
 
         er.instance_of = protocol
@@ -67,7 +67,7 @@ class TestOpil(unittest.TestCase):
         # See issue 38
         doc = Document()
         protocol = ProtocolInterface('protocol')
-        param = Parameter('param')
+        param = Parameter()
         doc.add(protocol)
         protocol.has_parameter = [param]
         object_ids = [o.identity for o in doc.objects]
@@ -166,9 +166,13 @@ class TestOpil(unittest.TestCase):
     def test_measurement(self):
         # Confirm functionality of Measurement and MeasurementType part of data model
         doc = Document()
-        mt = MeasurementType('mt')
+        p = ProtocolInterface('p')
+        mt = MeasurementType()
+        p.protocol_measurement_type = [mt]
         mt.type = 'foo'
-        m = Measurement('m')
+        e = ExperimentalRequest('e')
+        m = Measurement()
+        e.measurements = [m]
         m.instance_of = mt
         self.assertEqual(m.instance_of, mt.identity)
         self.assertEqual(type(mt.type), str)  # Confirm value is a string not list of characters
@@ -177,10 +181,6 @@ class TestOpil(unittest.TestCase):
         mt.allowed_time.max_time = Measure(60,'http://www.ontology-of-units-of-measure.org/resource/om-2#minute')
         mt.minimum_interval = Measure(0.1, 'http://www.ontology-of-units-of-measure.org/resource/om-2#minute')
         m.time = [ Measure(50, 'http://www.ontology-of-units-of-measure.org/resource/om-2#minute') ]
-        p = ProtocolInterface('p')
-        e = ExperimentalRequest('e')
-        e.measurements = [m]
-        p.protocol_measurement_type = [mt]
         doc.add(e)
         doc.add(p)
 

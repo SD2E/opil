@@ -118,7 +118,7 @@ class StrateosOpilGenerator():
             # The 'type' value indicates what Parameter subclass should be used.
             # Form the Strateos dotname from the section name and parameter name
             param_type = param_dict['type']
-            self.handle_type(param_type, param_name, param_dict,
+            self.handle_type(param_type, param_dict,
                              param_name)
 
         # Add parameters to ProtocolInterface
@@ -131,60 +131,60 @@ class StrateosOpilGenerator():
 
         return self.doc
 
-    def handle_type(self, param_type, id_string, param_dict, dotname):
+    def handle_type(self, param_type, param_dict, dotname):
         '''
         The handle_type method selects the method for parsing the parameter JSON object
         based on its type field
         '''
 
-        # Sanitize id
-        if id_string[0].isnumeric():
-            id_string = '_' + id_string
+        # # Sanitize id
+        # if id_string[0].isnumeric():
+        #     id_string = '_' + id_string
 
         if param_type == 'group' or param_type == 'group+':
-            self.handle_group(id_string, param_dict, dotname)
+            self.handle_group(param_dict, dotname)
         elif param_type == 'group-choice':
-            self.handle_group_choice(id_string, param_dict, dotname)
+            self.handle_group_choice(param_dict, dotname)
         else:
             handler = StrateosOpilGenerator.type_handlers[param_type]
-            param = handler(self, id_string, param_dict, dotname)
+            param = handler(self, param_dict, dotname)
             if 'description' in param_dict.keys():
                 param.description = param_dict['description']
             self.param_list.append(param)
 
-    def handle_string(self, id_string, param_dict, dotname):
-        param = opil.StringParameter(id_string)
+    def handle_string(self, param_dict, dotname):
+        param = opil.StringParameter()
         if 'label' in param_dict:
             param.name = param_dict['label']
         self.add_dotname(param, dotname)
         if 'default' in param_dict:
-            default = opil.StringValue(id_string + '_default')
+            default = opil.StringValue()
             default.value = param_dict['default']
             param.default_value = default
         if 'required' in param_dict:
             param.required = True
         return param
 
-    def handle_integer(self, id_string, param_dict, dotname):
-        param = opil.IntegerParameter(id_string)
+    def handle_integer(self, param_dict, dotname):
+        param = opil.IntegerParameter()
         if 'label' in param_dict:
             param.name = param_dict['label']
         self.add_dotname(param, dotname)
         if 'default' in param_dict:
-            default = opil.IntegerValue(id_string + '_default')
+            default = opil.IntegerValue()
             default.value = param_dict['default']
             param.default_value = default
         if 'required' in param_dict:
             param.required = True
         return param
 
-    def handle_measure(self, id_string, param_dict, dotname):
+    def handle_measure(self, param_dict, dotname):
         '''
         Volume, length, and time types map to MeasureParameters
         Default values are MeasureValue instances with om:Measure
         instances carrying the numerical values and units
         '''
-        param = opil.MeasureParameter(id_string)
+        param = opil.MeasureParameter()
         if 'label' in param_dict:
             param.name = param_dict['label']
         self.add_dotname(param, dotname)
@@ -193,7 +193,7 @@ class StrateosOpilGenerator():
             i = 0
             while not SUCCESS:
                 try:
-                    default_instance = opil.MeasureValue(id_string + '_default' + str(i))
+                    default_instance = opil.MeasureValue()
                     SUCCESS = True
                 except ValueError:
                     i += 1
@@ -210,28 +210,27 @@ class StrateosOpilGenerator():
                 # then use the opil:pureNumber Unit instance
                 value = default_value
                 unit_iri = 'http://bioprotocols.org/opil/v1#pureNumber'
-            measure_name = id_string + '_default_measure'
-            measure = sbol3.Measure(value, unit_iri, identity=measure_name)
+            measure = sbol3.Measure(value, unit_iri)
             default_instance.has_measure = measure
             param.default_value = default_instance
         if 'required' in param_dict:
             param.required = True
         return param
 
-    def handle_bool(self, id_string, param_dict, dotname):
-        param = opil.BooleanParameter(id_string)
+    def handle_bool(self, param_dict, dotname):
+        param = opil.BooleanParameter()
         if 'label' in param_dict:
             param.name = param_dict['label']
         self.add_dotname(param, dotname)
         if 'default' in param_dict:
-            default = opil.BooleanValue(id_string + '_default')
+            default = opil.BooleanValue()
             default.value = param_dict['default']
             param.default_value = default
         if 'required' in param_dict:
             param.required = True
         return param
 
-    def handle_group(self, id_string, param_dict, dotname):
+    def handle_group(self, param_dict, dotname):
         '''
         The group type is basically just a container for other
         input types
@@ -240,13 +239,13 @@ class StrateosOpilGenerator():
             inputs_dict = param_dict['inputs']
             for key in inputs_dict:
                 type = inputs_dict[key]['type']
-                self.handle_type(type, key, inputs_dict[key], dotname + '.' + key)
+                self.handle_type(type, inputs_dict[key], dotname + '.' + key)
 
-    def handle_choice(self, id_string, param_dict, dotname):
+    def handle_choice(self, param_dict, dotname):
         '''
         Choice type maps to Enumerated parameters
         '''
-        param = opil.EnumeratedParameter(id_string)
+        param = opil.EnumeratedParameter()
         if 'label' in param_dict:
             param.name = param_dict['label']
         self.add_dotname(param, dotname)
@@ -259,14 +258,14 @@ class StrateosOpilGenerator():
             param.required = True
         return param
 
-    def handle_group_choice(self, id_string, param_dict, dotname):
+    def handle_group_choice(self, param_dict, dotname):
         '''
         The group-choice type contains an 'options' list of parameters
         '''
         params = []
         if 'options' in param_dict:
              dict_list = param_dict['options']
-             param = self.handle_type('choice', id_string, param_dict, dotname)
+             param = self.handle_type('choice', param_dict, dotname)
              for d in dict_list:
                 inputs_dict = d['inputs']
                 for key in inputs_dict:
@@ -274,7 +273,7 @@ class StrateosOpilGenerator():
                     type = param_dict['type']
                     # Use special syntax for choices
                     option_dotname = dotname + '.|.' + d['value'] + '.' + key
-                    self.handle_type(type, key, param_dict, option_dotname)
+                    self.handle_type(type, param_dict, option_dotname)
 
     def add_dotname(self, param, dotname):
         # Add the dotname as an annotation property in Strateos namespace
