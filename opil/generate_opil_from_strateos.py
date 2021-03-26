@@ -80,7 +80,7 @@ class StrateosOpilGenerator():
                                             protocol_params)
 
         # Write out the document to a file
-        document.bind('opil', opil.Query.OPIL)  # Set namespace prefix
+        document.bind('opil', 'http://bioprotocols.org/opil/v1#')  # Set namespace prefix
 
         # Use Ntriples serialization to avoid rdflib issue with literal
         # data types that occurs with Turtle serialization
