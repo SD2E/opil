@@ -388,7 +388,7 @@ opil:IntegerValue rdf:type owl:Class ;
                                   ] ,
                                   [ rdf:type owl:Restriction ;
                                     owl:onProperty opil:value ;
-                                    owl:allValuesFrom xsd:int
+                                    owl:allValuesFrom xsd:integer
                                   ] ,
                                   [ rdf:type owl:Restriction ;
                                     owl:onProperty opil:value ;

@@ -1,11 +1,15 @@
 from opil import *
-from sbol3 import TextProperty, Measure
-import rdflib
+from opil import __factory__
+from sbol3 import set_namespace, TextProperty, Measure, Component, SBOL_TOP_LEVEL
+from sbol_factory import ShaclValidator
 
+from rdflib import Graph
+import rdflib.compare
 from math import inf
 import unittest
 import os
 import json
+
 
 MODULE_LOCATION = os.path.dirname(os.path.abspath(__file__))
 TEST_FILES = os.path.join(MODULE_LOCATION, 'test_files')
@@ -14,7 +18,7 @@ class TestOpil(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        set_namespace('http://example.org')
+        sbol.set_namespace('http://example.org')
 
     def test_valid(self):
         doc = Document()
@@ -28,7 +32,7 @@ class TestOpil(unittest.TestCase):
         # Parameters are forbidden to have more than one name
         doc = Document()
         protocol = ProtocolInterface('protocol')
-        p = Parameter('param')
+        p = Parameter()
         p.__dict__['name'] = TextProperty(p, 'http://bioprotocols.org/opil/v1#name', 0, inf)
         p.name = ['foo', 'bar']
         protocol.has_parameter = [p]
@@ -44,12 +48,12 @@ class TestOpil(unittest.TestCase):
         # A Parameter with required == True must have ParameterValue specified
         doc = Document()
         protocol = ProtocolInterface('protocol')
-        p = Parameter('p')
+        p = Parameter()
         p.required = True
         protocol.has_parameter = [p]
 
         er = ExperimentalRequest('er')
-        v = ParameterValue('v')
+        v = ParameterValue()
         er.has_parameter_value = [v]
 
         er.instance_of = protocol
@@ -66,7 +70,7 @@ class TestOpil(unittest.TestCase):
         # See issue 38
         doc = Document()
         protocol = ProtocolInterface('protocol')
-        param = Parameter('param')
+        param = Parameter()
         doc.add(protocol)
         protocol.has_parameter = [param]
         object_ids = [o.identity for o in doc.objects]
@@ -94,6 +98,7 @@ class TestOpil(unittest.TestCase):
         doc = Document()
         doc.read(os.path.join(TEST_FILES, 'opil_output.xml'), 'xml')
         report = doc.validate()
+        print(report.message)
         self.assertTrue(report.is_valid)
 
     def test_growth_curve(self):
@@ -149,6 +154,8 @@ class TestOpil(unittest.TestCase):
                                          document_dict['inputs'])
         report = doc.validate()
         self.assertTrue(report.is_valid)
+        for o in doc.objects:
+            self.assertIn(SBOL_TOP_LEVEL, o._rdf_types)
 
     def test_cell_free_bioswitches(self):
         with open(os.path.join(TEST_FILES, 'CellFreeRiboswitches.json')) as f:
@@ -165,9 +172,13 @@ class TestOpil(unittest.TestCase):
     def test_measurement(self):
         # Confirm functionality of Measurement and MeasurementType part of data model
         doc = Document()
-        mt = MeasurementType('mt')
+        p = ProtocolInterface('p')
+        mt = MeasurementType()
+        p.protocol_measurement_type = [mt]
         mt.type = 'foo'
-        m = Measurement('m')
+        e = ExperimentalRequest('e')
+        m = Measurement()
+        e.measurements = [m]
         m.instance_of = mt
         self.assertEqual(m.instance_of, mt.identity)
         self.assertEqual(type(mt.type), str)  # Confirm value is a string not list of characters
@@ -176,10 +187,6 @@ class TestOpil(unittest.TestCase):
         mt.allowed_time.max_time = Measure(60,'http://www.ontology-of-units-of-measure.org/resource/om-2#minute')
         mt.minimum_interval = Measure(0.1, 'http://www.ontology-of-units-of-measure.org/resource/om-2#minute')
         m.time = [ Measure(50, 'http://www.ontology-of-units-of-measure.org/resource/om-2#minute') ]
-        p = ProtocolInterface('p')
-        e = ExperimentalRequest('e')
-        e.measurements = [m]
-        p.protocol_measurement_type = [mt]
         doc.add(e)
         doc.add(p)
 
@@ -191,10 +198,56 @@ class TestOpil(unittest.TestCase):
         doc = Document()
         template = Component('design', 'http://foo.org/bar')
         doc.add(template)
-        sample_space = SampleSet('conditions', template)
-        sample_space.name = "HTC culture condition design"
+
+        # Confirm arbitrary arguments list (positional) and keywords work
+        sample_space = SampleSet('conditions', template, name='foo')
+
+        # Confirm keyword arguments work
+        self.assertEqual(sample_space.name, 'foo')
         doc.add(sample_space)
-        doc.read_string(doc.write_string('turtle'), 'turtle')
+
+        doc2 = Document()
+        doc2.read_string(doc.write_string('turtle'), 'turtle')
+        self.assertTrue(compare_documents(doc, doc2))
+
+    def test_is_top_level(self):
+        self.assertTrue(__factory__.query.is_top_level('http://bioprotocols.org/opil/v1#SampleSet'))
+        self.assertTrue(__factory__.query.is_top_level('http://sbols.org/v3#TopLevel'))
+        self.assertFalse(__factory__.query.is_top_level('http://sbols.org/v3#Identified'))
+
+    def test_required(self):
+        # Confirm that required arguments are propagated from super constructors, i.e., in this
+        # example `template` is propagated from CombinatorialDerivation constructor.
+        # Also, because this is a TopLevel, `identity` should be the first required argument
+        required = __factory__.query.query_required_properties('http://bioprotocols.org/opil/v1#SampleSet')
+        self.assertEqual(required, ['identity', 'template', 'replicates'])
+
+        required = __factory__.query.query_required_properties('http://bioprotocols.org/opil/v1#EnumeratedValue')
+        # non-TopLevel should not have identity as a required property
+        self.assertNotIn('identity', required)
+
+        # Because the superclass of EnumeratedValue, ParameterValue, also has a restriction
+        # on `value_of` property, it was appearing twice in the list of required arguments
+        self.assertNotEqual(required.count('value_of'), 2)
+
+
+def compare_documents(doc1, doc2):
+    # Now compare the graphs in RDF
+    g1 = doc1.graph()
+    iso1 = rdflib.compare.to_isomorphic(g1)
+    g2 = doc2.graph()
+    iso2 = rdflib.compare.to_isomorphic(g2)
+    rdf_diff = rdflib.compare.graph_diff(iso1, iso2)
+    if rdf_diff[1] or rdf_diff[2]:
+        print('Detected %d different RDF triples in %s' %
+              (len(rdf_diff[1]) + len(rdf_diff[2]), test_path))
+        for stmt in rdf_diff[1]:
+            print('Only in original: %r', stmt)
+        for stmt in rdf_diff[2]:
+            print('Only in loaded: %r', stmt)
+        print('Differences in RDF detected')
+        return False
+    return True
 
 if __name__ == '__main__':
     unittest.main()
