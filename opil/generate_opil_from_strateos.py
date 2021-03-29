@@ -80,7 +80,7 @@ class StrateosOpilGenerator():
                                             protocol_params)
 
         # Write out the document to a file
-        document.bind('opil', opil.Query.OPIL)  # Set namespace prefix
+        document.bind('opil', 'http://bioprotocols.org/opil/v1#')  # Set namespace prefix
 
         # Use Ntriples serialization to avoid rdflib issue with literal
         # data types that occurs with Turtle serialization
@@ -126,7 +126,6 @@ class StrateosOpilGenerator():
             self.protocol.has_parameter = self.param_list.copy()
             self.param_list = []
         except:
-            print(self.param_list)
             raise
 
         return self.doc
@@ -237,9 +236,22 @@ class StrateosOpilGenerator():
         '''
         if 'inputs' in param_dict:
             inputs_dict = param_dict['inputs']
-            for key in inputs_dict:
-                type = inputs_dict[key]['type']
-                self.handle_type(type, inputs_dict[key], dotname + '.' + key)
+            # Some group parameters contain both a `magnitude` and `unit` object
+            # These are collapsed to create a single MeasureParameter object
+            if 'magnitude' in inputs_dict and 'unit' in inputs_dict:
+                self.handle_type('decimal', inputs_dict['magnitude'], dotname)
+                p = self.param_list[-1]
+                if p.default_value is not None:
+                    default_measure = p.default_value.has_measure
+                    unit = inputs_dict['unit']['default']
+                    if unit == 'mM':
+                        default_measure.unit = 'http://www.ontology-of-units-of-measure.org/resource/om-2/millimolair'
+                    else:
+                        raise(f'Cannot convert {p.name}. Units of {unit} are not recognized')
+            else:
+                for key in inputs_dict:
+                    type = inputs_dict[key]['type']
+                    self.handle_type(type, inputs_dict[key], dotname + '.' + key)
 
     def handle_choice(self, param_dict, dotname):
         '''

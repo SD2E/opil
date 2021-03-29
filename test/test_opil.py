@@ -154,8 +154,20 @@ class TestOpil(unittest.TestCase):
                                          document_dict['inputs'])
         report = doc.validate()
         self.assertTrue(report.is_valid)
+
+        # Confirm all top level objects in Document are treated like
+        # extension objects with the additional top level RDF typee
         for o in doc.objects:
             self.assertIn(SBOL_TOP_LEVEL, o._rdf_types)
+
+        # Confirm that JSON objects containing both a `magnitude` and `unit` object
+        # are collapsed to create a single MeasureParameter object. See #159
+        m = doc.find('http://strateos.com/ObstacleCourse/MeasureParameter6')
+        self.assertEqual(TextProperty(m, 'http://strateos.com/dotname', 0, 1).get(),
+                         'reagent_info.kill_switch.|.true.kill_switch_final_conc')
+        self.assertEqual(m.default_value.has_measure.unit,
+                         'http://www.ontology-of-units-of-measure.org/resource/om-2/millimolair')
+
 
     def test_cell_free_bioswitches(self):
         with open(os.path.join(TEST_FILES, 'CellFreeRiboswitches.json')) as f:
@@ -230,6 +242,16 @@ class TestOpil(unittest.TestCase):
         # on `value_of` property, it was appearing twice in the list of required arguments
         self.assertNotEqual(required.count('value_of'), 2)
 
+    def test_inheritance(self):
+        sp = StringParameter()
+        self.assertNotIn('http://bioprotocols.org/opil/v1#Parameter', sp._rdf_types)
+        self.assertIn('http://bioprotocols.org/opil/v1#StringParameter', sp._rdf_types)
+        self.assertEqual(len(sp._rdf_types), 2)
+        template = Component('design', 'http://foo.org/bar')
+        s = SampleSet('conditions', template)
+        self.assertNotIn('http://sbols.org/v3#CombinatorialDerivation', s._rdf_types)
+        self.assertIn('http://bioprotocols.org/opil/v1#SampleSet', s._rdf_types)
+        self.assertEqual(len(s._rdf_types), 2)
 
 def compare_documents(doc1, doc2):
     # Now compare the graphs in RDF
