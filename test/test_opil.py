@@ -242,6 +242,19 @@ class TestOpil(unittest.TestCase):
         # on `value_of` property, it was appearing twice in the list of required arguments
         self.assertNotEqual(required.count('value_of'), 2)
 
+        doc = Document()
+        er = ExperimentalRequest('er')
+        doc.add(er)
+        mv = MeasureValue()
+        mv.has_measure = Measure(100, 'foo')
+        er.has_parameter_value = [mv]
+
+        # results = doc.validate()
+        # print(results.is_valid)
+        # print(results.message)
+        # with self.assertRaises(TypeError):
+        #     m = MeasureValue()
+
     def test_inheritance(self):
         sp = StringParameter()
         self.assertNotIn('http://bioprotocols.org/opil/v1#Parameter', sp._rdf_types)
@@ -252,6 +265,16 @@ class TestOpil(unittest.TestCase):
         self.assertNotIn('http://sbols.org/v3#CombinatorialDerivation', s._rdf_types)
         self.assertIn('http://bioprotocols.org/opil/v1#SampleSet', s._rdf_types)
         self.assertEqual(len(s._rdf_types), 2)
+
+    def test_name(self):
+        # Test name is in the opil namespace, not the sbol namespace
+        p = Parameter()
+        p.name = 'foo'
+        p.foo = TextProperty(p, 'http://sbols.org/v3#name', 0, 1)
+        p.bar = TextProperty(p, 'http://bioprotocols.org/opil/v1#name', 0, 1)
+        self.assertIsNone(p.foo)
+        self.assertEqual(p.bar, 'foo')
+
 
 def compare_documents(doc1, doc2):
     # Now compare the graphs in RDF
