@@ -8,7 +8,7 @@
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix sbol: <http://sbols.org/v3#> .
-@prefix xplan: <http://sift.net/xplan> .
+@prefix xplan: <http://sift.net/xplan#> .
 
 <http://sift.net/xplan>
   a owl:Ontology ;
