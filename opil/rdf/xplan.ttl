@@ -1,0 +1,28 @@
+# baseURI: http://sift.net/xplan
+# imports: http://bbn.com/synbio/opil
+# prefix: xplan
+
+@prefix : <http://sift.net/xplan#> .
+@prefix opil: <http://bioprotocols.org/opil/v1#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sbol: <http://sbols.org/v3#> .
+@prefix xplan: <http://sift.net/xplan> .
+
+<http://sift.net/xplan>
+  a owl:Ontology ;
+  rdfs:comment "This onotology provides XPlan-specific extensions to OPIL." ;
+  owl:imports <http://bbn.com/synbio/opil> ;
+  owl:versionInfo "0.1" ;
+.
+
+#################################################################
+#    XPlan Request
+#################################################################
+
+###  http://sift.net/xplan#XPlanRequest
+xplan:XPlanRequest rdf:type owl:Class ;
+                       rdfs:subClassOf sbol:TopLevel ,
+                                       owl:Thing ;
+                       rdfs:label "XPlanRequest" .

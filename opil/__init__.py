@@ -9,4 +9,8 @@ __factory__ = SBOLFactory(locals(),
                           posixpath.join(os.path.dirname(os.path.realpath(__file__)),
                                          'rdf/opil.ttl'),
                           'http://bioprotocols.org/opil/v1#')
+__xplan_factory__ = SBOLFactory(locals(),
+                        posixpath.join(os.path.dirname(os.path.realpath(__file__)),
+                                       'rdf/xplan.ttl'),
+                        'http://sift.net/xplan')
 __umlfactory__ = UMLFactory(__factory__)
