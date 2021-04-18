@@ -213,6 +213,8 @@ class TestOpil(unittest.TestCase):
 
         # Confirm arbitrary arguments list (positional) and keywords work
         sample_space = SampleSet('conditions', template, name='foo')
+        with self.assertRaises(TypeError):
+            sample_space = SampleSet('conditions')  # Missing required positional argument `template`
 
         # Confirm keyword arguments work
         self.assertEqual(sample_space.name, 'foo')
