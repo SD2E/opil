@@ -33,6 +33,7 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Run regression tests
       run: |
-        pip install git+https://github.com/SynBioDex/sbol_factory.git
         pip install .
+        pip uninstall --yes sbol_factory
+        pip install git+https://github.com/SynBioDex/sbol_factory.git
         python test/test_opil.py
