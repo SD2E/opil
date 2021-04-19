@@ -122,11 +122,16 @@ class StrateosOpilGenerator():
                              param_name)
 
         # Add parameters to ProtocolInterface
-        try:
-            self.protocol.has_parameter = self.param_list.copy()
-            self.param_list = []
-        except:
-            raise
+        self.protocol.has_parameter = self.param_list.copy()
+
+        # Set `value_of` back-pointer; this has to be done after the Parameter
+        # is added to the Document so that it has a valid identity assigned
+        for p in self.protocol.has_parameter:
+            if p.default_value is not None:
+                p.default_value.value_of = p
+
+        # Clear parameter cache, in case the user runs the parser again
+        self.param_list = []
 
         return self.doc
 

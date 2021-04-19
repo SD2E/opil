@@ -181,6 +181,13 @@ class TestOpil(unittest.TestCase):
         report = doc.validate()
         self.assertTrue(report.is_valid)
 
+        # Make sure `value_of` back-pointer is set
+        # (This issue was due to StrateosOpilGenerator not setting the value_of,
+        # and is not unique to this schema) 
+        for p in protocol.has_parameter:
+            if p.default_value:
+                self.assertEqual(p.default_value.value_of, p.identity)
+
     def test_measurement(self):
         # Confirm functionality of Measurement and MeasurementType part of data model
         doc = Document()
