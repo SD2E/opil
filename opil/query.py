@@ -1,6 +1,5 @@
 import rdflib
 import os
-import posixpath
 from math import inf
 
 class Query():
@@ -16,7 +15,7 @@ class Query():
     def __init__(self, ontology_path):
         graph = rdflib.Graph()
         graph.parse(ontology_path, format=rdflib.util.guess_format(ontology_path))
-        graph.parse(posixpath.join(os.path.dirname(os.path.realpath(__file__)), 'rdf/sbol3.ttl'), format ='ttl')
+        graph.parse(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'rdf/sbol3.ttl'), format ='ttl')
         graph.namespace_manager.bind('sbol', Query.SBOL)
         graph.namespace_manager.bind('opil', Query.OPIL)
         graph.namespace_manager.bind('owl', Query.OWL)
