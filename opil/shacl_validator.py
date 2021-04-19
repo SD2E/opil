@@ -1,10 +1,10 @@
 from rdflib import Graph
 from pyshacl import validate
 import os
-import posixpath
+
 
 def abs_path(relative_path):  # Expand path based on module installation directory
-    return posixpath.join(os.path.dirname(os.path.realpath(__file__)), relative_path)
+    return os.path.join(os.path.dirname(os.path.realpath(__file__)), relative_path)
 
 class ShaclValidator:
 
