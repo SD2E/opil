@@ -248,6 +248,17 @@ class StrateosOpilGenerator():
                         default_measure.unit = 'http://www.ontology-of-units-of-measure.org/resource/om-2/millimolair'
                     else:
                         raise(f'Cannot convert {p.name}. Units of {unit} are not recognized')
+            # `value` and `units` are used in CellFreeBioswitches
+            elif 'value' in inputs_dict and 'units' in inputs_dict:
+                self.handle_type('decimal', inputs_dict['value'], dotname)
+                p = self.param_list[-1]
+                if p.default_value is not None:
+                    default_measure = p.default_value.has_measure
+                    unit = inputs_dict['units']['default']
+                    if unit == 'uM':
+                        default_measure.unit = 'http://www.ontology-of-units-of-measure.org/resource/om-2/micromolair'
+                    else:
+                        raise(f'Cannot convert {p.name}. Units of {unit} are not recognized')
             else:
                 for key in inputs_dict:
                     type = inputs_dict[key]['type']
