@@ -122,11 +122,16 @@ class StrateosOpilGenerator():
                              param_name)
 
         # Add parameters to ProtocolInterface
-        try:
-            self.protocol.has_parameter = self.param_list.copy()
-            self.param_list = []
-        except:
-            raise
+        self.protocol.has_parameter = self.param_list.copy()
+
+        # Set `value_of` back-pointer; this has to be done after the Parameter
+        # is added to the Document so that it has a valid identity assigned
+        for p in self.protocol.has_parameter:
+            if p.default_value is not None:
+                p.default_value.value_of = p
+
+        # Clear parameter cache, in case the user runs the parser again
+        self.param_list = []
 
         return self.doc
 
@@ -246,6 +251,17 @@ class StrateosOpilGenerator():
                     unit = inputs_dict['unit']['default']
                     if unit == 'mM':
                         default_measure.unit = 'http://www.ontology-of-units-of-measure.org/resource/om-2/millimolair'
+                    else:
+                        raise(f'Cannot convert {p.name}. Units of {unit} are not recognized')
+            # `value` and `units` are used in CellFreeBioswitches
+            elif 'value' in inputs_dict and 'units' in inputs_dict:
+                self.handle_type('decimal', inputs_dict['value'], dotname)
+                p = self.param_list[-1]
+                if p.default_value is not None:
+                    default_measure = p.default_value.has_measure
+                    unit = inputs_dict['units']['default']
+                    if unit == 'uM':
+                        default_measure.unit = 'http://www.ontology-of-units-of-measure.org/resource/om-2/micromolair'
                     else:
                         raise(f'Cannot convert {p.name}. Units of {unit} are not recognized')
             else:
