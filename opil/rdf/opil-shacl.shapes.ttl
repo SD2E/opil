@@ -5,6 +5,7 @@
 
 @prefix om: <http://www.ontology-of-units-of-measure.org/resource/om-2/> .
 @prefix opil: <http://bioprotocols.org/opil/v1#> .
+@prefix sbol: <http://sbols.org/v3#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
@@ -34,7 +35,7 @@ shacl:ParameterShape
 	a sh:NodeShape ;
 	sh:targetClass opil:Parameter ;
 	sh:property [
-		sh:path opil:name ;
+		sh:path sbol:name ;
 		sh:maxCount 1 ;
 		sh:datatype xsd:string ;
 	] ;

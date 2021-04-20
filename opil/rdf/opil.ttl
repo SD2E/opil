@@ -239,10 +239,10 @@ opil:minValue rdf:type owl:DatatypeProperty ;
 
 
 ###  http://bioprotocols.org/opil/v1#name
-opil:name rdf:type owl:DatatypeProperty ;
-          rdfs:range xsd:string ;
-          rdfs:comment "Entities might be required to have a name that could be distinct from rdfs:label" ;
-          rdfs:label "name" .
+#opil:name rdf:type owl:DatatypeProperty ;
+#          rdfs:range xsd:string ;
+#          rdfs:comment "Entities might be required to have a name that could be distinct from rdfs:label" ;
+#          rdfs:label "name" .
 
 
 ###  http://bioprotocols.org/opil/v1#replicates
@@ -509,7 +509,7 @@ opil:Parameter rdf:type owl:Class ;
                                  owl:allValuesFrom xsd:boolean
                                ] ,
                                [ rdf:type owl:Restriction ;
-                                 owl:onProperty opil:name ;
+                                 owl:onProperty sbol:name ;
                                  owl:maxCardinality "1"^^xsd:nonNegativeInteger
                                ] ,
                                [ rdf:type owl:Restriction ;
