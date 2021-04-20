@@ -276,14 +276,25 @@ class TestOpil(unittest.TestCase):
         self.assertEqual(len(s._rdf_types), 2)
 
     def test_name(self):
-        # Test name is in the opil namespace, not the sbol namespace
-        p = Parameter()
-        p.name = 'foo'
-        p.foo = TextProperty(p, 'http://sbols.org/v3#name', 0, 1)
-        p.bar = TextProperty(p, 'http://bioprotocols.org/opil/v1#name', 0, 1)
-        self.assertIsNone(p.foo)
-        self.assertEqual(p.bar, 'foo')
+        # # Test name is in the opil namespace, not the sbol namespace
+        # p = Parameter()
+        # p.name = 'foo'
+        # p.foo = TextProperty(p, 'http://sbols.org/v3#name', 0, 1)
+        # p.bar = TextProperty(p, 'http://bioprotocols.org/opil/v1#name', 0, 1)
+        # self.assertIsNone(p.foo)
+        # self.assertEqual(p.bar, 'foo')
 
+        # Test SHACL validation requiring Parameter has name
+        doc = Document()
+        protocol = ProtocolInterface('pro')
+        doc.add(protocol)
+        p = Parameter()
+        protocol.has_parameter = [p]
+        # report = doc.validate()
+        # self.assertFalse(report.is_valid)
+        # p.name = 'foo'
+        report = doc.validate()
+        self.assertTrue(report.is_valid)
 
 def compare_documents(doc1, doc2):
     # Now compare the graphs in RDF
