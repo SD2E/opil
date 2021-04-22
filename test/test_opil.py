@@ -1,6 +1,6 @@
 from opil import *
 from opil import __factory__
-from sbol3 import set_namespace, TextProperty, Measure, Component, SBOL_TOP_LEVEL
+from sbol3 import set_namespace, TextProperty, Measure, Component, TopLevel, SBOL_TOP_LEVEL
 from sbol_factory import ShaclValidator
 
 from rdflib import Graph
@@ -215,6 +215,8 @@ class TestOpil(unittest.TestCase):
         # support positional arguments.
         # See issue #148
         doc = Document()
+        p = ProtocolInterface('p')
+        doc.add(p)
         template = Component('design', 'http://foo.org/bar')
         doc.add(template)
 
@@ -227,8 +229,10 @@ class TestOpil(unittest.TestCase):
         self.assertEqual(sample_space.name, 'foo')
         doc.add(sample_space)
 
+        p.sample_sets = [sample_space]
         doc2 = Document()
         doc2.read_string(doc.write_string('turtle'), 'turtle')
+        sample_space = isinstance(doc2.find(sample_space.identity), TopLevel)
         self.assertTrue(compare_documents(doc, doc2))
 
     def test_is_top_level(self):
