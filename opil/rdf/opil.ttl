@@ -163,7 +163,6 @@ opil:protocolMeasurementType rdf:type owl:ObjectProperty ;
 
 ###  http://bioprotocols.org/opil/v1#sampleSet
 opil:sampleSet rdf:type owl:ObjectProperty ;
-               rdfs:subPropertyOf opil:compositionalProperty ;
                rdfs:domain opil:ExperimentalRequest ;
                rdfs:range opil:SampleSet ;
                rdfs:label "sample set" .
