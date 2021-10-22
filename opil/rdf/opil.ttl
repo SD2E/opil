@@ -12,7 +12,7 @@
 
 <http://bioprotocols.org/opil/v1> rdf:type owl:Ontology ;
                               owl:imports <http://sbols.org/v3> ,
-                                          om: ;
+                                          <http://www.ontology-of-units-of-measure.org/resource/om-2> ;
                               rdfs:comment "This is the Open Protocol Interface Languge (OPIL) ontology." ;
                               owl:versionInfo "0.3" .
 
